@@ -1,0 +1,127 @@
+import React from "react";
+import employerLogo from "../../asset/undraw_businessman_97x4.png";
+import workerLogo from "../../asset/undraw_work_time_lhoj.png";
+import solverLogo from "../../asset/undraw_conference_speaker_6nt7.png";
+import { toast } from "react-toastify";
+import { Redirect } from "react-router-dom";
+
+const {
+  createAccount,
+  registerEmployer,
+  registerWorker,
+  registerSolver,
+} = require("../../utils/transaction");
+
+class Register extends React.Component {
+  constructor() {
+    super();
+    this.state = {
+      checked: false,
+      account: createAccount(),
+    };
+  }
+
+  render() {
+    if (this.state.redirect) {
+      return <Redirect to={this.state.redirect} />;
+    }
+    const role = ["Worker", "Employer", "Solver"];
+    const logo = [workerLogo, employerLogo, solverLogo];
+    const action = [registerWorker, registerEmployer, registerSolver];
+    const motto = [
+      "WORK LIKE NEVER BEFORE",
+      "HIRE WITH BUILT-IN TRUST",
+      "SOLVE DISPUTE WITH YOUR VOICE",
+    ];
+    return (
+      <div className="row">
+        <div className="col-3 details">
+          <div>
+            <img
+              className="img-fluid d-md-flex d-lg-flex d-xl-flex justify-content-md-center justify-content-lg-center"
+              src={logo[this.props.index]}
+              style={{ width: "70%", margin: "0px" }}
+              width="200px"
+              height="200px"
+              alt="img"
+            />
+            <p
+              className="text-left"
+              style={{
+                fontFamily: "Poppins, sans-serif",
+                fontSize: "30px",
+                fontWeight: "bold",
+              }}
+            >
+              {motto[this.props.index]}
+            </p>
+          </div>
+        </div>
+        <div className="col">
+          <p
+            style={{
+              backgroundColor: "#ef233c",
+              color: "rgb(255,255,255)",
+              fontWeight: "bold",
+              fontSize: "14px",
+              padding: "10px",
+            }}
+          >
+            IMPORTANT! Please write down passphrase below, if you lost this
+            passphrase, you will lose access to your account!
+          </p>
+          <p style={{ fontWeight: "bold", marginBottom: "0px" }}>Public Key</p>
+          <p>{this.state.account.publicKey}</p>
+          <p style={{ fontWeight: "bold", marginBottom: "0px" }}>Address</p>
+          <p>{this.state.account.address}</p>
+          <p style={{ fontWeight: "bold", marginBottom: "0px" }}>Passphrase</p>
+          <p>{this.state.account.passphrase}</p>
+          <div className="form-check" style={{ marginBottom: "16px" }}>
+            <input
+              className="form-check-input"
+              type="checkbox"
+              id="formCheck-1"
+              onChange={(event) =>
+                this.setState({
+                  checked: event.target.checked,
+                })
+              }
+            />
+            <label className="form-check-label" htmlFor="formCheck-1">
+              i have write down above passphrase
+            </label>
+          </div>
+          <div className="d-flex justify-content-end justify-content-xl-end">
+            <button
+              className="btn btn-primary text-center"
+              type="button"
+              style={{ backgroundColor: "rgb(248,0,47)", width: "250px" }}
+              disabled={!this.state.checked}
+              onClick={async () => {
+                try {
+                  const res = await action[this.props.index](
+                    this.state.account.passphrase
+                  );
+                  if (res.meta.status) {
+                    toast.success("Login Successful! Happy Collaborating!");
+                    sessionStorage.setItem(
+                      "secret",
+                      this.state.account.passphrase
+                    );
+                    this.setState({ redirect: "/app" });
+                  }
+                } catch (err) {
+                  toast.error(err.message);
+                }
+              }}
+            >
+              Register As {role[this.props.index]}
+            </button>
+          </div>
+        </div>
+      </div>
+    );
+  }
+}
+
+export default Register;
