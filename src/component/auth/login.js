@@ -2,12 +2,12 @@ import React from "react";
 import "./login.css";
 import { getAccounts } from "../../utils/tools";
 import { getAddressFromPassphrase } from "@liskhq/lisk-cryptography";
-import employerLogo from "../../asset/undraw_businessman_97x4.png";
-import workerLogo from "../../asset/undraw_work_time_lhoj.png";
-import solverLogo from "../../asset/undraw_conference_speaker_6nt7.png";
+import employerLogo from "../../asset/undraw_businessman_97x4.svg";
+import workerLogo from "../../asset/undraw_Work_time_re_hdyv.svg";
+import solverLogo from "../../asset/undraw_conference_speaker_6nt7.svg";
 import { toast } from "react-toastify";
 
-import { Redirect } from "react-router-dom";
+import { Link, Redirect } from "react-router-dom";
 import Register from "./register";
 
 const login = async (userPassphrase) => {
@@ -92,9 +92,7 @@ class Login extends React.Component {
             <img
               className="img-fluid d-md-flex d-lg-flex d-xl-flex justify-content-md-center justify-content-lg-center justify-content-xl-center"
               src={workerLogo}
-              style={{ width: "70%", margin: "auto" }}
-              width="200px"
-              height="200px"
+              style={{ height: "200px", margin: "auto", display: "block" }}
               alt="I Am A Worker"
             />
             <p
@@ -102,7 +100,7 @@ class Login extends React.Component {
               style={{
                 fontFamily: "Poppins, sans-serif",
                 fontSize: "30px",
-                fontWeight: "bold",
+                marginTop: "20px",
               }}
             >
               I Am A Worker
@@ -122,9 +120,7 @@ class Login extends React.Component {
             <img
               className="img-fluid d-md-flex d-lg-flex d-xl-flex justify-content-md-center justify-content-lg-center justify-content-xl-center"
               src={employerLogo}
-              style={{ width: "65%", margin: "auto" }}
-              width="250px"
-              height="250px"
+              style={{ margin: "auto", height: "200px", display: "block" }}
               alt="I Am An Employer"
             />
             <p
@@ -132,7 +128,7 @@ class Login extends React.Component {
               style={{
                 fontFamily: "Poppins, sans-serif",
                 fontSize: "30px",
-                fontWeight: "bold",
+                marginTop: "20px",
               }}
             >
               I Am An Employer
@@ -152,9 +148,7 @@ class Login extends React.Component {
             <img
               className="img-fluid d-md-flex d-lg-flex d-xl-flex justify-content-md-center justify-content-lg-center justify-content-xl-center"
               src={solverLogo}
-              style={{ width: "100%" }}
-              width="250px"
-              height="250px"
+              style={{ height: "200px", display: "block" }}
               alt="I Am A Solver"
             />
             <p
@@ -162,7 +156,7 @@ class Login extends React.Component {
               style={{
                 fontFamily: "Poppins, sans-serif",
                 fontSize: "30px",
-                fontWeight: "bold",
+                marginTop: "20px",
               }}
             >
               I Am A Solver
@@ -179,24 +173,26 @@ class Login extends React.Component {
         style={{ minHeight: "100vh", height: "100%" }}
       >
         <div id="overlay" style={{ minHeight: "100vh", height: "100%" }}>
-          <p
-            className="text-right"
-            style={{
-              fontFamily: "Poppins, sans-serif",
-              color: "rgb(255,255,255)",
-              fontSize: "30px",
-              letterSpacing: 0,
-              fontWeight: 900,
-              marginTop: 0,
-              marginBottom: "0px",
-              paddingTop: "30px",
-              paddingRight: "30px",
-              fontStyle: "normal",
-              paddingBottom: "30px",
-            }}
-          >
-            Collabolancer
-          </p>
+          <Link to="/">
+            <p
+              className="text-right"
+              style={{
+                fontFamily: "Poppins, sans-serif",
+                color: "rgb(255,255,255)",
+                fontSize: "30px",
+                letterSpacing: 0,
+                fontWeight: 900,
+                marginTop: 0,
+                marginBottom: "0px",
+                paddingTop: "30px",
+                paddingRight: "30px",
+                fontStyle: "normal",
+                paddingBottom: "30px",
+              }}
+            >
+              Collabolancer
+            </p>
+          </Link>
           <p
             className="main-head"
             style={{

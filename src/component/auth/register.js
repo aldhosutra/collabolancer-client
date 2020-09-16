@@ -1,7 +1,7 @@
 import React from "react";
-import employerLogo from "../../asset/undraw_businessman_97x4.png";
-import workerLogo from "../../asset/undraw_work_time_lhoj.png";
-import solverLogo from "../../asset/undraw_conference_speaker_6nt7.png";
+import employerLogo from "../../asset/undraw_businessman_97x4.svg";
+import workerLogo from "../../asset/undraw_Work_time_re_hdyv.svg";
+import solverLogo from "../../asset/undraw_conference_speaker_6nt7.svg";
 import { toast } from "react-toastify";
 import { Redirect } from "react-router-dom";
 
@@ -40,17 +40,18 @@ class Register extends React.Component {
             <img
               className="img-fluid d-md-flex d-lg-flex d-xl-flex justify-content-md-center justify-content-lg-center"
               src={logo[this.props.index]}
-              style={{ width: "70%", margin: "0px" }}
+              style={{ width: "70%", margin: "auto", display: "block" }}
               width="200px"
               height="200px"
               alt="img"
             />
             <p
-              className="text-left"
+              className="text-center"
               style={{
                 fontFamily: "Poppins, sans-serif",
                 fontSize: "30px",
                 fontWeight: "bold",
+                marginTop: "25px",
               }}
             >
               {motto[this.props.index]}
