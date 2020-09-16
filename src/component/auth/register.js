@@ -72,11 +72,17 @@ class Register extends React.Component {
             passphrase, you will lose access to your account!
           </p>
           <p style={{ fontWeight: "bold", marginBottom: "0px" }}>Public Key</p>
-          <p>{this.state.account.publicKey}</p>
+          <p style={{ overflowWrap: "break-word" }}>
+            {this.state.account.publicKey}
+          </p>
           <p style={{ fontWeight: "bold", marginBottom: "0px" }}>Address</p>
-          <p>{this.state.account.address}</p>
+          <p style={{ overflowWrap: "break-word" }}>
+            {this.state.account.address}
+          </p>
           <p style={{ fontWeight: "bold", marginBottom: "0px" }}>Passphrase</p>
-          <p>{this.state.account.passphrase}</p>
+          <p style={{ overflowWrap: "break-word" }}>
+            {this.state.account.passphrase}
+          </p>
           <div className="form-check" style={{ marginBottom: "16px" }}>
             <input
               className="form-check-input"

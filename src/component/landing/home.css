@@ -123,9 +123,16 @@
     -ms-flex: 0 0 100%;
     flex: 0 0 100%;
     max-width: 100%;
+    padding: 30px !important;
   }
+  .motto-container {
+    padding-top: 30% !important;
+  }
+}
+
+@media (max-width: 572px) {
   .motto h1 {
-    font-size: 55px !important;
+    font-size: 40px !important;
   }
 }
 

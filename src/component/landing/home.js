@@ -63,13 +63,14 @@ class Home extends React.Component {
             </div>
           </nav>
         </div>
-        <div style={{ width: "100%", minHeight: "100vh" }}>
+        <div className="container">
           <div
-            className="row d-flex flex-wrap-reverse"
+            className="row d-flex flex-wrap-reverse motto-container"
             style={{
               marginLeft: "0px",
               marginRight: "0px",
               paddingTop: "10%",
+              paddingBottom: "10%",
             }}
           >
             <div className="col-8 motto" style={{ padding: "60px" }}>
@@ -82,7 +83,9 @@ class Home extends React.Component {
               >
                 <strong>Stop Bidding,</strong>
                 <br />
-                <strong>Start Collaborating</strong>
+                <strong style={{ color: "#ef233c" }}>
+                  Start Collaborating
+                </strong>
               </h1>
               <p
                 className="text-justify"
@@ -111,297 +114,300 @@ class Home extends React.Component {
           </div>
         </div>
         <div className="whyus">
-          <h1
-            className="text-center"
-            style={{
-              fontFamily: "Poppins, sans-serif",
-              marginBottom: "30px",
-              marginTop: "30px",
-            }}
-          >
-            <strong>Why Blockchain?</strong>
-          </h1>
-          <p
-            className="text-center subwhyus"
-            style={{ fontFamily: "Poppins, sans-serif" }}
-          >
-            Blockchain technology has disrupted many sectors of our everyday
-            life. Believe it or not, Freelancers Marketplace will be next
-            blockchain-disrupted sector, and Collabolancer will be a part of
-            that. Here's Why!
-          </p>
-          <div className="row" style={{ marginBottom: "30px" }}>
-            <div className="col" style={{ padding: "5px" }}>
-              <div
-                className="shadow"
-                style={{
-                  backgroundColor: "#ffffff",
-                  padding: "60px",
-                  margin: "10px",
-                  height: "520px",
-                }}
-              >
+          <div className="container">
+            <h1
+              className="text-center"
+              style={{
+                fontFamily: "Poppins, sans-serif",
+                marginBottom: "30px",
+                marginTop: "30px",
+              }}
+            >
+              <strong>Why Blockchain?</strong>
+            </h1>
+            <p
+              className="text-center subwhyus"
+              style={{ fontFamily: "Poppins, sans-serif" }}
+            >
+              Blockchain technology has disrupted many sectors of our everyday
+              life. Believe it or not, Freelancers Marketplace will be next
+              blockchain-disrupted sector, and Collabolancer will be a part of
+              that. Here's Why!
+            </p>
+            <div className="row" style={{ marginBottom: "30px" }}>
+              <div className="col" style={{ padding: "5px" }}>
                 <div
-                  className="d-xl-flex"
+                  className="shadow"
                   style={{
-                    width: "180px",
-                    height: "180px",
-                    backgroundImage: "url(" + trustless + ")",
-                    backgroundSize: "contain",
-                    backgroundRepeat: "no-repeat",
-                    backgroundPosition: "center",
-                    marginBottom: "10px",
-                    marginRight: "auto",
-                    marginLeft: "auto",
-                  }}
-                />
-                <h1
-                  className="text-center"
-                  style={{
-                    fontFamily: "Poppins, sans-serif",
-                    fontSize: "28px",
+                    backgroundColor: "#ffffff",
+                    padding: "60px",
+                    margin: "10px",
+                    height: "520px",
                   }}
                 >
-                  <strong>Trustless</strong>
-                </h1>
-                <p
-                  className="text-center"
-                  style={{
-                    fontFamily: "Poppins, sans-serif",
-                    fontSize: "17px",
-                  }}
-                >
-                  Collabolancer is based on Smart Contract Technology, enabling
-                  trustless contact between you, your team, and employer
-                </p>
+                  <div
+                    className="d-xl-flex"
+                    style={{
+                      width: "180px",
+                      height: "180px",
+                      backgroundImage: "url(" + trustless + ")",
+                      backgroundSize: "contain",
+                      backgroundRepeat: "no-repeat",
+                      backgroundPosition: "center",
+                      marginBottom: "10px",
+                      marginRight: "auto",
+                      marginLeft: "auto",
+                    }}
+                  />
+                  <h1
+                    className="text-center"
+                    style={{
+                      fontFamily: "Poppins, sans-serif",
+                      fontSize: "28px",
+                    }}
+                  >
+                    <strong>Trustless</strong>
+                  </h1>
+                  <p
+                    className="text-center"
+                    style={{
+                      fontFamily: "Poppins, sans-serif",
+                      fontSize: "17px",
+                    }}
+                  >
+                    Collabolancer is based on Smart Contract Technology,
+                    enabling trustless contact between you, your team, and
+                    employer
+                  </p>
+                </div>
               </div>
-            </div>
-            <div className="col" style={{ padding: "5px" }}>
-              <div
-                className="shadow"
-                style={{
-                  backgroundColor: "#ffffff",
-                  padding: "60px",
-                  margin: "10px",
-                  height: "520px",
-                }}
-              >
+              <div className="col" style={{ padding: "5px" }}>
                 <div
-                  className="d-xl-flex"
+                  className="shadow"
                   style={{
-                    width: "180px",
-                    height: "180px",
-                    backgroundImage: "url(" + collaboration + ")",
-                    backgroundSize: "contain",
-                    backgroundRepeat: "no-repeat",
-                    backgroundPosition: "center",
-                    marginBottom: "10px",
-                    marginRight: "auto",
-                    marginLeft: "auto",
-                  }}
-                />
-                <h1
-                  className="text-center"
-                  style={{
-                    fontFamily: "Poppins, sans-serif",
-                    fontSize: "28px",
+                    backgroundColor: "#ffffff",
+                    padding: "60px",
+                    margin: "10px",
+                    height: "520px",
                   }}
                 >
-                  <strong>Collaboration</strong>
-                </h1>
-                <p
-                  className="text-center"
-                  style={{
-                    fontFamily: "Poppins, sans-serif",
-                    fontSize: "17px",
-                  }}
-                >
-                  By utilizing trustless ecosystem, now you can seamlessly
-                  collaborate with other over the world, something that never
-                  possible before!
-                </p>
+                  <div
+                    className="d-xl-flex"
+                    style={{
+                      width: "180px",
+                      height: "180px",
+                      backgroundImage: "url(" + collaboration + ")",
+                      backgroundSize: "contain",
+                      backgroundRepeat: "no-repeat",
+                      backgroundPosition: "center",
+                      marginBottom: "10px",
+                      marginRight: "auto",
+                      marginLeft: "auto",
+                    }}
+                  />
+                  <h1
+                    className="text-center"
+                    style={{
+                      fontFamily: "Poppins, sans-serif",
+                      fontSize: "28px",
+                    }}
+                  >
+                    <strong>Collaboration</strong>
+                  </h1>
+                  <p
+                    className="text-center"
+                    style={{
+                      fontFamily: "Poppins, sans-serif",
+                      fontSize: "17px",
+                    }}
+                  >
+                    By utilizing trustless ecosystem, now you can seamlessly
+                    collaborate with other over the world, something that never
+                    possible before!
+                  </p>
+                </div>
               </div>
-            </div>
-            <div className="col" style={{ padding: "5px" }}>
-              <div
-                className="shadow"
-                style={{
-                  margin: "10px",
-                  backgroundColor: "#ffffff",
-                  padding: "60px",
-                  height: "520px",
-                }}
-              >
+              <div className="col" style={{ padding: "5px" }}>
                 <div
-                  className="d-xl-flex"
+                  className="shadow"
                   style={{
-                    width: "180px",
-                    height: "180px",
-                    backgroundImage: "url(" + lowFee + ")",
-                    backgroundSize: "contain",
-                    backgroundRepeat: "no-repeat",
-                    backgroundPosition: "center",
-                    marginBottom: "10px",
-                    marginRight: "auto",
-                    marginLeft: "auto",
-                  }}
-                />
-                <h1
-                  className="text-center"
-                  style={{
-                    fontFamily: "Poppins, sans-serif",
-                    fontSize: "28px",
+                    margin: "10px",
+                    backgroundColor: "#ffffff",
+                    padding: "60px",
+                    height: "520px",
                   }}
                 >
-                  <strong>Low Fees</strong>
-                </h1>
-                <p
-                  className="text-center"
-                  style={{
-                    fontFamily: "Poppins, sans-serif",
-                    fontSize: "17px",
-                  }}
-                >
-                  Because there is no third party involved, fees is being cut
-                  extremely. Starting now, earn more, worry less
-                </p>
+                  <div
+                    className="d-xl-flex"
+                    style={{
+                      width: "180px",
+                      height: "180px",
+                      backgroundImage: "url(" + lowFee + ")",
+                      backgroundSize: "contain",
+                      backgroundRepeat: "no-repeat",
+                      backgroundPosition: "center",
+                      marginBottom: "10px",
+                      marginRight: "auto",
+                      marginLeft: "auto",
+                    }}
+                  />
+                  <h1
+                    className="text-center"
+                    style={{
+                      fontFamily: "Poppins, sans-serif",
+                      fontSize: "28px",
+                    }}
+                  >
+                    <strong>Low Fees</strong>
+                  </h1>
+                  <p
+                    className="text-center"
+                    style={{
+                      fontFamily: "Poppins, sans-serif",
+                      fontSize: "17px",
+                    }}
+                  >
+                    Because there is no third party involved, fees is being cut
+                    extremely. Starting now, earn more, worry less
+                  </p>
+                </div>
               </div>
-            </div>
-            <div className="col" style={{ padding: "5px" }}>
-              <div
-                className="shadow"
-                style={{
-                  backgroundColor: "#ffffff",
-                  padding: "60px",
-                  margin: "10px",
-                  height: "520px",
-                }}
-              >
+              <div className="col" style={{ padding: "5px" }}>
                 <div
-                  className="d-xl-flex"
+                  className="shadow"
                   style={{
-                    width: "180px",
-                    height: "180px",
-                    backgroundImage: "url(" + cashback + ")",
-                    backgroundSize: "contain",
-                    backgroundRepeat: "no-repeat",
-                    backgroundPosition: "center",
-                    marginBottom: "10px",
-                    marginRight: "auto",
-                    marginLeft: "auto",
-                  }}
-                />
-                <h1
-                  className="text-center"
-                  style={{
-                    fontFamily: "Poppins, sans-serif",
-                    fontSize: "28px",
+                    backgroundColor: "#ffffff",
+                    padding: "60px",
+                    margin: "10px",
+                    height: "520px",
                   }}
                 >
-                  <strong>Cashback</strong>
-                </h1>
-                <p
-                  className="text-center"
-                  style={{
-                    fontFamily: "Poppins, sans-serif",
-                    fontSize: "17px",
-                  }}
-                >
-                  Collabolancer aim to give incentive to every
-                  collaboration-related action. Because Collaboration Matters!
-                </p>
+                  <div
+                    className="d-xl-flex"
+                    style={{
+                      width: "180px",
+                      height: "180px",
+                      backgroundImage: "url(" + cashback + ")",
+                      backgroundSize: "contain",
+                      backgroundRepeat: "no-repeat",
+                      backgroundPosition: "center",
+                      marginBottom: "10px",
+                      marginRight: "auto",
+                      marginLeft: "auto",
+                    }}
+                  />
+                  <h1
+                    className="text-center"
+                    style={{
+                      fontFamily: "Poppins, sans-serif",
+                      fontSize: "28px",
+                    }}
+                  >
+                    <strong>Cashback</strong>
+                  </h1>
+                  <p
+                    className="text-center"
+                    style={{
+                      fontFamily: "Poppins, sans-serif",
+                      fontSize: "17px",
+                    }}
+                  >
+                    Collabolancer aim to give incentive to every
+                    collaboration-related action. Because Collaboration Matters!
+                  </p>
+                </div>
               </div>
-            </div>
-            <div className="col" style={{ padding: "5px" }}>
-              <div
-                className="shadow"
-                style={{
-                  backgroundColor: "#ffffff",
-                  padding: "60px",
-                  margin: "10px",
-                  height: "520px",
-                }}
-              >
+              <div className="col" style={{ padding: "5px" }}>
                 <div
-                  className="d-xl-flex"
+                  className="shadow"
                   style={{
-                    width: "180px",
-                    height: "180px",
-                    backgroundImage: "url(" + immutable + ")",
-                    backgroundSize: "contain",
-                    backgroundRepeat: "no-repeat",
-                    backgroundPosition: "center",
-                    marginBottom: "10px",
-                    marginRight: "auto",
-                    marginLeft: "auto",
-                  }}
-                />
-                <h1
-                  className="text-center"
-                  style={{
-                    fontFamily: "Poppins, sans-serif",
-                    fontSize: "28px",
+                    backgroundColor: "#ffffff",
+                    padding: "60px",
+                    margin: "10px",
+                    height: "520px",
                   }}
                 >
-                  <strong>Immutable</strong>
-                </h1>
-                <p
-                  className="text-center"
-                  style={{
-                    fontFamily: "Poppins, sans-serif",
-                    fontSize: "17px",
-                  }}
-                >
-                  Every contribution or submission that you send, are recorded
-                  on immutable record of Infromation. You can own your file and
-                  control it your way!
-                </p>
+                  <div
+                    className="d-xl-flex"
+                    style={{
+                      width: "180px",
+                      height: "180px",
+                      backgroundImage: "url(" + immutable + ")",
+                      backgroundSize: "contain",
+                      backgroundRepeat: "no-repeat",
+                      backgroundPosition: "center",
+                      marginBottom: "10px",
+                      marginRight: "auto",
+                      marginLeft: "auto",
+                    }}
+                  />
+                  <h1
+                    className="text-center"
+                    style={{
+                      fontFamily: "Poppins, sans-serif",
+                      fontSize: "28px",
+                    }}
+                  >
+                    <strong>Immutable</strong>
+                  </h1>
+                  <p
+                    className="text-center"
+                    style={{
+                      fontFamily: "Poppins, sans-serif",
+                      fontSize: "17px",
+                    }}
+                  >
+                    Every contribution or submission that you send, are stored
+                    on immutable record of Infromation. You can own your file
+                    and control it your way, forever!
+                  </p>
+                </div>
               </div>
-            </div>
-            <div className="col" style={{ padding: "5px" }}>
-              <div
-                className="shadow"
-                style={{
-                  margin: "10px",
-                  backgroundColor: "#ffffff",
-                  padding: "60px",
-                  height: "520px",
-                }}
-              >
+              <div className="col" style={{ padding: "5px" }}>
                 <div
-                  className="d-xl-flex"
+                  className="shadow"
                   style={{
-                    width: "180px",
-                    height: "180px",
-                    backgroundImage: "url(" + democratize + ")",
-                    backgroundSize: "contain",
-                    backgroundRepeat: "no-repeat",
-                    backgroundPosition: "center",
-                    marginBottom: "10px",
-                    marginRight: "auto",
-                    marginLeft: "auto",
-                  }}
-                />
-                <h1
-                  className="text-center"
-                  style={{
-                    fontFamily: "Poppins, sans-serif",
-                    fontSize: "28px",
+                    margin: "10px",
+                    backgroundColor: "#ffffff",
+                    padding: "60px",
+                    height: "520px",
                   }}
                 >
-                  <strong>Democratize</strong>
-                </h1>
-                <p
-                  className="text-center"
-                  style={{
-                    fontFamily: "Poppins, sans-serif",
-                    fontSize: "17px",
-                  }}
-                >
-                  Collabolancer provides a democratic-inspired method of
-                  settling your dispute using wisdom of the crowd. Your Vote
-                  Matters!
-                </p>
+                  <div
+                    className="d-xl-flex"
+                    style={{
+                      width: "180px",
+                      height: "180px",
+                      backgroundImage: "url(" + democratize + ")",
+                      backgroundSize: "contain",
+                      backgroundRepeat: "no-repeat",
+                      backgroundPosition: "center",
+                      marginBottom: "10px",
+                      marginRight: "auto",
+                      marginLeft: "auto",
+                    }}
+                  />
+                  <h1
+                    className="text-center"
+                    style={{
+                      fontFamily: "Poppins, sans-serif",
+                      fontSize: "28px",
+                    }}
+                  >
+                    <strong>Democratize</strong>
+                  </h1>
+                  <p
+                    className="text-center"
+                    style={{
+                      fontFamily: "Poppins, sans-serif",
+                      fontSize: "17px",
+                    }}
+                  >
+                    Collabolancer provides a democratic-inspired method of
+                    settling your dispute using wisdom of the crowd. Your Vote
+                    Matters!
+                  </p>
+                </div>
               </div>
             </div>
           </div>

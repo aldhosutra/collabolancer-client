@@ -173,103 +173,109 @@ class Login extends React.Component {
         style={{ minHeight: "100vh", height: "100%" }}
       >
         <div id="overlay" style={{ minHeight: "100vh", height: "100%" }}>
-          <Link to="/">
+          <div className="container">
+            <Link to="/">
+              <p
+                className="text-right"
+                style={{
+                  fontFamily: "Poppins, sans-serif",
+                  color: "rgb(255,255,255)",
+                  fontSize: "30px",
+                  letterSpacing: 0,
+                  fontWeight: 900,
+                  marginTop: 0,
+                  marginBottom: "0px",
+                  paddingTop: "30px",
+                  paddingRight: "30px",
+                  fontStyle: "normal",
+                  paddingBottom: "30px",
+                }}
+              >
+                Collabolancer
+              </p>
+            </Link>
             <p
-              className="text-right"
+              className="main-head"
               style={{
                 fontFamily: "Poppins, sans-serif",
+                fontWeight: "bold",
                 color: "rgb(255,255,255)",
-                fontSize: "30px",
-                letterSpacing: 0,
-                fontWeight: 900,
-                marginTop: 0,
-                marginBottom: "0px",
-                paddingTop: "30px",
+                paddingLeft: "30px",
                 paddingRight: "30px",
-                fontStyle: "normal",
-                paddingBottom: "30px",
+                marginBottom: "30px",
               }}
             >
-              Collabolancer
+              COLLABORATING IS JUST A FEW CLICKS AWAY
             </p>
-          </Link>
-          <p
-            className="main-head"
-            style={{
-              fontFamily: "Poppins, sans-serif",
-              fontWeight: "bold",
-              color: "rgb(255,255,255)",
-              paddingLeft: "30px",
-              paddingRight: "30px",
-              marginBottom: "30px",
-            }}
-          >
-            COLLABORATING IS JUST A FEW CLICKS AWAY
-          </p>
-          <div
-            className="justify-content-xl-center align-items-xl-center"
-            style={{
-              backgroundColor: "#ffffff",
-              fontFamily: "Poppins, sans-serif",
-              margin: "auto",
-              paddingRight: "30px",
-              paddingLeft: "30px",
-              marginRight: "30px",
-              marginLeft: "30px",
-              paddingTop: "30px",
-              paddingBottom: "30px",
-              marginBottom: "30px",
-            }}
-          >
-            <div className="text-center" style={{ marginBottom: "30px" }}>
-              <button
-                className="btn btn-primary border rounded-0"
-                type="button"
-                style={{
-                  width: "150px",
-                  color:
-                    this.state.index === 0 ? "rgb(255,255,255)" : "rgb(0,0,0)",
-                  backgroundColor:
-                    this.state.index === 0 ? "#2b2d42" : "rgb(255,255,255)",
-                }}
-                onClick={() =>
-                  this.setState({
-                    index: 0,
-                    regIndex: -1,
-                  })
-                }
-              >
-                Login
-              </button>
-              <button
-                className="btn btn-secondary border rounded-0"
-                type="button"
-                style={{
-                  width: "150px",
-                  color:
-                    this.state.index === 1 ? "rgb(255,255,255)" : "rgb(0,0,0)",
-                  backgroundColor:
-                    this.state.index === 1 ? "#2b2d42" : "rgb(255,255,255)",
-                }}
-                onClick={() =>
-                  this.setState((state) => ({
-                    ...state,
-                    index: 1,
-                  }))
-                }
-              >
-                Register
-              </button>
+            <div
+              className="justify-content-xl-center align-items-xl-center"
+              style={{
+                backgroundColor: "#ffffff",
+                fontFamily: "Poppins, sans-serif",
+                margin: "auto",
+                paddingRight: "30px",
+                paddingLeft: "30px",
+                marginRight: "30px",
+                marginLeft: "30px",
+                paddingTop: "30px",
+                paddingBottom: "30px",
+                marginBottom: "30px",
+              }}
+            >
+              <div className="text-center" style={{ marginBottom: "30px" }}>
+                <button
+                  className="btn btn-primary border rounded-0"
+                  type="button"
+                  style={{
+                    width: "150px",
+                    color:
+                      this.state.index === 0
+                        ? "rgb(255,255,255)"
+                        : "rgb(0,0,0)",
+                    backgroundColor:
+                      this.state.index === 0 ? "#2b2d42" : "rgb(255,255,255)",
+                  }}
+                  onClick={() =>
+                    this.setState({
+                      index: 0,
+                      regIndex: -1,
+                    })
+                  }
+                >
+                  Login
+                </button>
+                <button
+                  className="btn btn-secondary border rounded-0"
+                  type="button"
+                  style={{
+                    width: "150px",
+                    color:
+                      this.state.index === 1
+                        ? "rgb(255,255,255)"
+                        : "rgb(0,0,0)",
+                    backgroundColor:
+                      this.state.index === 1 ? "#2b2d42" : "rgb(255,255,255)",
+                  }}
+                  onClick={() =>
+                    this.setState((state) => ({
+                      ...state,
+                      index: 1,
+                    }))
+                  }
+                >
+                  Register
+                </button>
+              </div>
+              {this.state.regIndex > -1 ? (
+                <Register index={this.state.regIndex} />
+              ) : (
+                tab[this.state.index]
+              )}
             </div>
-            {this.state.regIndex > -1 ? (
-              <Register index={this.state.regIndex} />
-            ) : (
-              tab[this.state.index]
-            )}
+            <p className="invisible" style={{ marginBottom: "0px" }}>
+              (c) Collabolancer
+            </p>
           </div>
-          <p className="invisible" style={{ marginBottom: "0px" }}>
-            (c) Collabolancer
-          </p>
         </div>
       </div>
     );
