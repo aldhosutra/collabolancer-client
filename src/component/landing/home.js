@@ -1,6 +1,7 @@
 import React from "react";
 import { Link } from "react-router-dom";
 import "./home.css";
+import logoColor from "../../asset/collabolancer.svg";
 import headerImage from "../../asset/undraw_work_together_h63l.svg";
 import trustless from "../../asset/undraw_verified_tw20.svg";
 import collaboration from "../../asset/undraw_connected_world_wuay.svg";
@@ -9,6 +10,7 @@ import cashback from "../../asset/undraw_gifts_btw0.svg";
 import immutable from "../../asset/undraw_security_o890.svg";
 import democratize from "../../asset/undraw_voting_nvu7.svg";
 import Footer from "../general/footer";
+import Quote from "../general/quote";
 
 class Home extends React.Component {
   render() {
@@ -25,6 +27,11 @@ class Home extends React.Component {
                 style={{
                   fontFamily: "Poppins, sans-serif",
                   color: "rgb(248,0,47)",
+                  backgroundImage: "url(" + logoColor + ")",
+                  backgroundSize: "contain",
+                  backgroundRepeat: "no-repeat",
+                  backgroundPosition: "left",
+                  paddingLeft: "35px",
                 }}
               >
                 Collabolancer
@@ -412,31 +419,7 @@ class Home extends React.Component {
             </div>
           </div>
         </div>
-        <div style={{ backgroundColor: "#ef233c", padding: "30px" }}>
-          <p
-            className="text-center"
-            style={{
-              color: "rgb(255,255,255)",
-              fontFamily: "Poppins, sans-serif",
-              fontSize: "20px",
-            }}
-          >
-            <em>“Great things in business are never done by one person;</em>
-            <br />
-            <em>they're done by a team of people”</em>
-          </p>
-          <p
-            className="text-center"
-            style={{
-              fontFamily: "Poppins, sans-serif",
-              color: "rgb(255,255,255)",
-              marginBottom: "0px",
-              fontSize: "20px",
-            }}
-          >
-            <strong>Steve Jobs</strong>
-          </p>
-        </div>
+        <Quote />
         <Footer />
       </div>
     );

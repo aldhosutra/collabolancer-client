@@ -4,17 +4,21 @@ import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
 import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import Home from "./component/landing/home";
+import Browse from "./component/app/browse";
 
 function App() {
   return (
     <Router>
       <ToastContainer autoClose={3000} />
       <Switch>
-        <Route exact="true" path="/">
+        <Route exact={true} path="/">
           <Home />
         </Route>
         <Route path="/auth">
           <Login />
+        </Route>
+        <Route exact={true} path="/app">
+          <Browse />
         </Route>
       </Switch>
     </Router>

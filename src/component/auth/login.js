@@ -10,31 +10,42 @@ import { toast } from "react-toastify";
 import { Link, Redirect } from "react-router-dom";
 import Register from "./register";
 
+const { ACCOUNT } = require("../../transactions/constants");
+
 const login = async (userPassphrase) => {
-  let ret = false;
-  const userAddress = getAddressFromPassphrase(userPassphrase);
-  await getAccounts({
-    limit: 1,
-    address: userAddress,
-  })
-    .then((res) => {
-      if (res.data.length) {
-        toast.success("Login Successful! Happy Collaborating!");
-        sessionStorage.setItem("secret", userPassphrase);
-        ret = true;
-      } else {
-        toast.warning("No valid account found, check passphrase.");
-      }
+  if (userPassphrase) {
+    let ret = false;
+    const userAddress = getAddressFromPassphrase(userPassphrase);
+    await getAccounts({
+      limit: 1,
+      address: userAddress,
     })
-    .catch((err) => {
-      toast.error(err.message);
-    });
-  return ret;
+      .then((res) => {
+        if (
+          [ACCOUNT.EMPLOYER, ACCOUNT.WORKER, ACCOUNT.SOLVER].includes(
+            res.data[0].asset.type
+          )
+        ) {
+          toast.success("Login Successful! Happy Collaborating!");
+          sessionStorage.setItem("secret", userPassphrase);
+          ret = true;
+        } else {
+          toast.warning("No valid account found, check passphrase.");
+        }
+      })
+      .catch((err) => {
+        toast.error(err.message);
+      });
+    return ret;
+  } else {
+    toast.warning("Passphrase are empty, check again!");
+    return false;
+  }
 };
 
 class Login extends React.Component {
-  constructor(props) {
-    super(props);
+  constructor() {
+    super();
     this.state = {
       signInPassphrase: "",
       index: 0,
@@ -81,6 +92,7 @@ class Login extends React.Component {
       <div className="row">
         <div
           className="col details"
+          style={{ padding: "30px" }}
           onClick={() =>
             this.setState((state) => ({
               ...state,
@@ -99,7 +111,7 @@ class Login extends React.Component {
               className="text-center"
               style={{
                 fontFamily: "Poppins, sans-serif",
-                fontSize: "30px",
+                fontSize: "25px",
                 marginTop: "20px",
               }}
             >
@@ -109,6 +121,7 @@ class Login extends React.Component {
         </div>
         <div
           className="col details"
+          style={{ padding: "30px" }}
           onClick={() =>
             this.setState((state) => ({
               ...state,
@@ -127,7 +140,7 @@ class Login extends React.Component {
               className="text-center"
               style={{
                 fontFamily: "Poppins, sans-serif",
-                fontSize: "30px",
+                fontSize: "25px",
                 marginTop: "20px",
               }}
             >
@@ -137,6 +150,7 @@ class Login extends React.Component {
         </div>
         <div
           className="col details"
+          style={{ padding: "30px" }}
           onClick={() =>
             this.setState((state) => ({
               ...state,
@@ -155,7 +169,7 @@ class Login extends React.Component {
               className="text-center"
               style={{
                 fontFamily: "Poppins, sans-serif",
-                fontSize: "30px",
+                fontSize: "25px",
                 marginTop: "20px",
               }}
             >
