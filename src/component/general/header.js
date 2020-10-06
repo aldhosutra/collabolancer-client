@@ -2,41 +2,17 @@
 import React from "react";
 import logoColor from "../../asset/collabolancer.svg";
 import { Redirect } from "react-router-dom";
-import { getAccounts } from "../../utils/tools";
 import { toast } from "react-toastify";
 import "./header.css";
-const {
-  getAddressAndPublicKeyFromPassphrase,
-} = require("@liskhq/lisk-cryptography");
+const { utils } = require("@liskhq/lisk-transactions");
 
 class Header extends React.Component {
   constructor() {
     super();
     this.state = {
-      account: null,
       navbarShow: false,
     };
-    this.onLoad = this.onLoad.bind(this);
     this.logout = this.logout.bind(this);
-  }
-
-  onLoad() {
-    if (sessionStorage.getItem("secret")) {
-      const timeout = 3000;
-      getAccounts({
-        address: getAddressAndPublicKeyFromPassphrase(
-          sessionStorage.getItem("secret")
-        ).address,
-      }).then((res) => {
-        if (res.data.length === 0) {
-          setTimeout(() => {
-            this.onLoad();
-          }, timeout);
-        } else {
-          this.setState({ account: res.data[0] });
-        }
-      });
-    }
   }
 
   logout() {
@@ -45,15 +21,11 @@ class Header extends React.Component {
     this.setState({ redirect: "/" });
   }
 
-  componentDidMount() {
-    this.onLoad();
-  }
-
   render() {
     if (this.state.redirect) {
       return <Redirect to={this.state.redirect} />;
     }
-    return sessionStorage.getItem("secret") ? (
+    return (
       <div style={{ fontFamily: "Poppins, sans-serif", height: "70px" }}>
         <nav
           className="navbar navbar-light navbar-expand-md navigation-clean border rounded-0 fixed-top"
@@ -82,9 +54,9 @@ class Header extends React.Component {
                   fontWeight: "bold",
                 }}
               >
-                {this.state.account ? (
-                  this.state.account.asset.type.charAt(0).toUpperCase() +
-                  this.state.account.asset.type.slice(1)
+                {this.props.account ? (
+                  this.props.account.asset.type.charAt(0).toUpperCase() +
+                  this.props.account.asset.type.slice(1)
                 ) : (
                   <div
                     className="spinner-border text-light"
@@ -121,9 +93,9 @@ class Header extends React.Component {
                   "visibility 0.6s ease-in-out, -webkit-transform 0.6s ease-in-out",
               }}
             >
-              <div class="offcanvas-header mt-3">
+              <div className="offcanvas-header mt-3">
                 <button
-                  class="btn btn-outline-danger btn-close float-right"
+                  className="btn btn-outline-danger btn-close float-right"
                   onClick={() =>
                     this.setState((state) => ({
                       ...state,
@@ -133,7 +105,7 @@ class Header extends React.Component {
                 >
                   x
                 </button>
-                <h5 class="py-2 text-black">Menu</h5>
+                <h5 className="py-2 text-black">Menu</h5>
               </div>
               <ul className="nav navbar-nav d-md-flex ml-auto justify-content-md-end">
                 <li className="nav-item" role="presentation">
@@ -169,7 +141,7 @@ class Header extends React.Component {
                     marginRight: "20px",
                   }}
                 >
-                  {this.state.account ? (
+                  {this.props.account ? (
                     <a
                       className="dropdown-toggle nav-link"
                       data-toggle="dropdown"
@@ -178,7 +150,7 @@ class Header extends React.Component {
                       style={{
                         backgroundImage:
                           'url("https://avatar.lisk.ws/' +
-                          this.state.account.address +
+                          this.props.account.address +
                           '")',
                         backgroundPosition: "left",
                         backgroundSize: "contain",
@@ -186,7 +158,7 @@ class Header extends React.Component {
                         paddingLeft: "50px",
                       }}
                     >
-                      {this.state.account.address}
+                      {this.props.account.address}
                     </a>
                   ) : (
                     <div
@@ -219,8 +191,10 @@ class Header extends React.Component {
                       style={{ color: "#ef233c" }}
                     >
                       Balance:{" "}
-                      {this.state.account
-                        ? this.state.account.balance + " CLNC"
+                      {this.props.account
+                        ? utils
+                            .convertBeddowsToLSK(this.props.account.balance)
+                            .toString() + " CLNC"
                         : "(Loading...)"}
                     </a>
                     <a
@@ -238,8 +212,6 @@ class Header extends React.Component {
           </div>
         </nav>
       </div>
-    ) : (
-      <Redirect to={{ pathname: "/auth" }} />
     );
   }
 }

@@ -1,0 +1,21 @@
+.page-link {
+  color: #ef233c !important;
+}
+
+.page-item .disabled {
+  background-color: #2b2d42 !important;
+}
+
+.page-item.active {
+  background-color: #ef233c !important;
+}
+
+.page-item.active .page-link {
+  color: white !important;
+  background-color: #ef233c !important;
+  border-color: #ef233c !important;
+}
+
+.page-item.disabled .page-link {
+  color: #8d99ae !important;
+}

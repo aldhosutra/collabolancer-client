@@ -1,7 +1,7 @@
 import React from "react";
 import quote from "./quote.json";
 
-class Quote extends React.Component {
+class Quote extends React.PureComponent {
   render() {
     const randomQuote =
       quote.data[Math.floor(Math.random() * quote.data.length)];

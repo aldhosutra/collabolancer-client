@@ -1,7 +1,7 @@
 import React from "react";
 import "./footer.css";
 
-class Footer extends React.Component {
+class Footer extends React.PureComponent {
   render() {
     return (
       <div

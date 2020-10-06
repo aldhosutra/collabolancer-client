@@ -60,6 +60,7 @@ const registerEmployer = async (employerPassphrase) => {
     })
     .catch((err) => {
       console.log(err);
+      ret = err;
     });
   return ret;
 };
@@ -78,6 +79,7 @@ const registerWorker = async (workerPassphrase) => {
     })
     .catch((err) => {
       console.log(err);
+      ret = err;
     });
   return ret;
 };
@@ -96,11 +98,47 @@ const registerSolver = async (solverPassphrase) => {
     })
     .catch((err) => {
       console.log(err);
+      ret = err;
     });
   return ret;
 };
 
-const postProject = () => {};
+const postProject = async (
+  senderPassphrase,
+  title,
+  description,
+  category,
+  prize,
+  maxTime,
+  maxRevision
+) => {
+  let ret;
+  const projectAccount = createAccount();
+  const tx = new PostProjectTransaction({
+    asset: {
+      projectPublicKey: projectAccount.publicKey,
+      title: title,
+      description: description,
+      category: category,
+      prize: prize,
+      maxTime: maxTime,
+      maxRevision: maxRevision,
+    },
+    networkIdentifier: networkIdentifier,
+    timestamp: utils.getTimeFromBlockchainEpoch(),
+  });
+  tx.sign(senderPassphrase);
+  await api.transactions
+    .broadcast(tx.toJSON())
+    .then((res) => {
+      ret = res;
+    })
+    .catch((err) => {
+      console.log(err);
+      ret = err;
+    });
+  return ret;
+};
 
 const postProposal = () => {};
 
