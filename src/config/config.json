@@ -1,4 +1,5 @@
 {
   "nodes": ["http://localhost:4000"],
-  "extendedAPI": "http://localhost:4001"
+  "extendedAPI": "http://localhost:4001",
+  "sessionExpireMilliseconds": 900000
 }

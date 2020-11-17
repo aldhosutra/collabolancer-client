@@ -6,7 +6,7 @@ const {
   getPrivateAndPublicKeyFromPassphrase,
   getAddressFromPublicKey,
 } = require("@liskhq/lisk-cryptography");
-const { utils } = require("@liskhq/lisk-transactions");
+const { utils, TransferTransaction } = require("@liskhq/lisk-transactions");
 const {
   RegisterEmployerTransaction,
   RegisterWorkerTransaction,
@@ -33,6 +33,29 @@ const networkIdentifier = getNetworkIdentifier(
 );
 
 const api = new APIClient(config.nodes);
+
+const transfer = async (recipientId, amount, passphrase) => {
+  let ret;
+  const tx = new TransferTransaction({
+    asset: {
+      amount: amount,
+      recipientId: recipientId,
+    },
+    networkIdentifier: networkIdentifier,
+    timestamp: utils.getTimeFromBlockchainEpoch(),
+  });
+  tx.sign(passphrase);
+  await api.transactions
+    .broadcast(tx.toJSON())
+    .then((res) => {
+      ret = res;
+    })
+    .catch((err) => {
+      console.log(err);
+      ret = err;
+    });
+  return ret;
+};
 
 const createAccount = () => {
   const passphrase = Mnemonic.generateMnemonic();
@@ -140,7 +163,36 @@ const postProject = async (
   return ret;
 };
 
-const postProposal = () => {};
+const postProposal = async (
+  senderPassphrase,
+  projectPublicKey,
+  pitching,
+  term
+) => {
+  let ret;
+  const proposalAccount = createAccount();
+  const tx = new PostProposalTransaction({
+    asset: {
+      proposalPublicKey: proposalAccount.publicKey,
+      projectPublicKey: projectPublicKey,
+      pitching: pitching,
+      term: term,
+    },
+    networkIdentifier: networkIdentifier,
+    timestamp: utils.getTimeFromBlockchainEpoch(),
+  });
+  tx.sign(senderPassphrase);
+  await api.transactions
+    .broadcast(tx.toJSON())
+    .then((res) => {
+      ret = res;
+    })
+    .catch((err) => {
+      console.log(err);
+      ret = err;
+    });
+  return ret;
+};
 
 const joinTeam = () => {};
 
@@ -169,6 +221,7 @@ const voteDispute = () => {};
 const closeDispute = () => {};
 
 module.exports = {
+  transfer,
   createAccount,
   registerEmployer,
   registerWorker,

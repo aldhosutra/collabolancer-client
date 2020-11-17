@@ -1,3 +1,4 @@
+// eslint-disable-next-line no-redeclare
 /* global BigInt */
 
 const { store_account_get } = require("./utils");
@@ -133,8 +134,7 @@ class PostProposalTransaction extends BaseTransaction {
     }
     if (
       this.asset.term.roleList.length != 0 &&
-      (!this.asset.term.maxTime ||
-        typeof this.asset.term.maxTime !== "number" ||
+      (typeof this.asset.term.maxTime !== "number" ||
         this.asset.term.maxTime < 0)
     ) {
       errors.push(
@@ -143,14 +143,13 @@ class PostProposalTransaction extends BaseTransaction {
           this.id,
           ".asset.term.maxTime",
           this.asset.term.maxTime,
-          "term.maxTime is required in collaboration mode, must be valid number and greater than zero"
+          "term.maxTime is required in collaboration mode, must be valid number and greater or equal to zero"
         )
       );
     }
     if (
       this.asset.term.roleList.length != 0 &&
-      (!this.asset.term.maxRevision ||
-        typeof this.asset.term.maxRevision !== "number" ||
+      (typeof this.asset.term.maxRevision !== "number" ||
         this.asset.term.maxRevision < 0)
     ) {
       errors.push(
@@ -159,7 +158,7 @@ class PostProposalTransaction extends BaseTransaction {
           this.id,
           ".asset.term.maxRevision",
           this.asset.term.maxRevision,
-          "term.maxRevision is required in collaboration mode, must be valid number and greater than zero"
+          "term.maxRevision is required in collaboration mode, must be valid number and greater or equal to zero"
         )
       );
     }
@@ -339,7 +338,7 @@ class PostProposalTransaction extends BaseTransaction {
                 typeof this.asset.term.distribution.value !== "undefined" &&
                 this.asset.term.roleList.length != 0
                   ? this.asset.term.distribution.value
-                  : 0,
+                  : 100,
             },
           },
           status: STATUS.PROPOSAL.APPLIED,
@@ -371,8 +370,9 @@ class PostProposalTransaction extends BaseTransaction {
           .round()
           .toString();
         if (
+          proposalAsset.term.roleList.length != 0 &&
           proposalAsset.term.distribution.mode ==
-          MISCELLANEOUS.DISTRIBUTION.ALL_EQUAL
+            MISCELLANEOUS.DISTRIBUTION.ALL_EQUAL
         ) {
           proposalAsset.term.commitmentFee = utils
             .BigNum(leaderPortion)
@@ -380,8 +380,9 @@ class PostProposalTransaction extends BaseTransaction {
             .round()
             .toString();
         } else if (
+          proposalAsset.term.roleList.length != 0 &&
           proposalAsset.term.distribution.mode ==
-          MISCELLANEOUS.DISTRIBUTION.LEADER_FIRST
+            MISCELLANEOUS.DISTRIBUTION.LEADER_FIRST
         ) {
           proposalAsset.term.commitmentFee = utils
             .BigNum(projectAccount.asset.prize)
@@ -397,12 +398,26 @@ class PostProposalTransaction extends BaseTransaction {
           .add(projectAsset.commitmentFee)
           .toString();
         projectAsset.proposal.unshift(proposalAccount.publicKey);
-        projectAsset.activity.unshift(this.id);
+        projectAsset.activity.unshift({
+          timestamp: this.timestamp,
+          id: this.id,
+          type: this.type,
+        });
         const senderAsset = {
           joined: [],
           ...sender.asset,
         };
         senderAsset.joined.unshift(projectAccount.publicKey);
+        senderAsset.log.unshift({
+          timestamp: this.timestamp,
+          id: this.id,
+          type: this.type,
+          value: utils.BigNum(0).sub(projectAsset.commitmentFee).toString(),
+        });
+        senderAsset.earning = utils
+          .BigNum(senderAsset.earning)
+          .sub(projectAsset.commitmentFee)
+          .toString();
         store.account.set(sender.address, {
           ...sender,
           balance: utils
@@ -466,6 +481,11 @@ class PostProposalTransaction extends BaseTransaction {
     if (joinedIndex > -1) {
       senderAsset.joined.splice(joinedIndex, 1);
     }
+    senderAsset.log.shift();
+    senderAsset.earning = utils
+      .BigNum(senderAsset.earning)
+      .add(projectAsset.commitmentFee)
+      .toString();
     store.account.set(sender.address, {
       ...sender,
       balance: utils

@@ -32,7 +32,7 @@ class NoData extends React.PureComponent {
                 textAlign: "center",
               }}
             >
-              No Data
+              {this.props.message ? this.props.message : "No Data"}
             </p>
             <button
               onClick={() => window.location.reload()}
@@ -45,9 +45,10 @@ class NoData extends React.PureComponent {
                 marginRight: "auto",
                 display: "block",
                 fontSize: "14px",
+                fontFamily: "Poppins, sans-serif",
               }}
             >
-              Reload Page
+              <strong>Reload Page</strong>
             </button>
           </div>
         </div>

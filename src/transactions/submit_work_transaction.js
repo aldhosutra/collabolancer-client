@@ -14,6 +14,8 @@ const { getAddressFromPublicKey } = require("@liskhq/lisk-cryptography");
  * Required:
  * this.asset.submissionPublicKey [@fresh]
  * this.asset.proposalPublicKey
+ * this.asset.fileextension
+ * this.asset.filemime
  * this.asset.filename
  * this.asset.filedata
  */
@@ -89,6 +91,31 @@ class SubmitWorkTransaction extends BaseTransaction {
           ".asset.submissionPublicKey",
           this.asset.submissionPublicKey,
           "submissionPublicKey is required, and must be string"
+        )
+      );
+    }
+    if (
+      !this.asset.fileextension ||
+      typeof this.asset.fileextension !== "string"
+    ) {
+      errors.push(
+        new TransactionError(
+          'Invalid "asset.fileextension" defined on transaction',
+          this.id,
+          ".asset.filemime",
+          this.asset.fileextension,
+          "fileextension is required, and must be string"
+        )
+      );
+    }
+    if (!this.asset.filemime || typeof this.asset.filemime !== "string") {
+      errors.push(
+        new TransactionError(
+          'Invalid "asset.filemime" defined on transaction',
+          this.id,
+          ".asset.filemime",
+          this.asset.filemime,
+          "filemime is required, and must be string"
         )
       );
     }
@@ -262,6 +289,8 @@ class SubmitWorkTransaction extends BaseTransaction {
           project: projectAccount.publicKey,
           proposal: proposalAccount.publicKey,
           time: this.timestamp,
+          extension: this.asset.fileextension,
+          mime: this.asset.filemime,
           filename: this.asset.filename,
           dataTransaction: this.id,
         };
@@ -287,7 +316,11 @@ class SubmitWorkTransaction extends BaseTransaction {
           ...projectAccount.asset,
           status: STATUS.PROJECT.SUBMITTED,
         };
-        projectAsset.activity.unshift(this.id);
+        projectAsset.activity.unshift({
+          timestamp: this.timestamp,
+          id: this.id,
+          type: this.type,
+        });
         projectAsset.freezedFund = utils
           .BigNum(projectAsset.freezedFund)
           .sub(proposalAsset.potentialEarning)
@@ -296,6 +329,7 @@ class SubmitWorkTransaction extends BaseTransaction {
           .BigNum(projectAsset.freezedFee)
           .sub(projectAsset.commitmentFee)
           .toString();
+        senderAsset.file.unshift(submissionAccount.publicKey);
         projectAsset.submission.unshift(submissionAccount.publicKey);
         store.account.set(submissionAccount.address, {
           ...submissionAccount,
@@ -365,6 +399,12 @@ class SubmitWorkTransaction extends BaseTransaction {
     );
     if (projectSubmissionIndex > -1) {
       projectAsset.submission.splice(projectSubmissionIndex, 1);
+    }
+    const workerTeamIndex = senderAsset.file.indexOf(
+      submissionAccount.publicKey
+    );
+    if (workerTeamIndex > -1) {
+      senderAsset.file.splice(workerTeamIndex, 1);
     }
     projectAsset.activity.shift();
     projectAsset.freezedFund = utils

@@ -5,6 +5,7 @@ import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import Home from "./component/landing/home";
 import Browse from "./component/app/browse";
+import Project from "./component/project/project";
 
 function App() {
   return (
@@ -19,6 +20,9 @@ function App() {
         </Route>
         <Route exact={true} path="/app">
           <Browse />
+        </Route>
+        <Route exact={true} path="/app/project/:projectPublicKey">
+          <Project />
         </Route>
       </Switch>
     </Router>

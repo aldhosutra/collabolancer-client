@@ -1,13 +1,13 @@
 import React from "react";
 import "./login.css";
-import { getAccounts } from "../../utils/tools";
+import { getAccounts, setSession, getSession } from "../../utils/tools";
 import { getAddressFromPassphrase } from "@liskhq/lisk-cryptography";
 import employerLogo from "../../asset/undraw_businessman_97x4.svg";
 import workerLogo from "../../asset/undraw_Work_time_re_hdyv.svg";
 import solverLogo from "../../asset/undraw_conference_speaker_6nt7.svg";
 import { toast } from "react-toastify";
 
-import { Link, Redirect } from "react-router-dom";
+import { Link, Redirect, withRouter } from "react-router-dom";
 import Register from "./register";
 
 const { ACCOUNT } = require("../../transactions/constants");
@@ -27,14 +27,14 @@ const login = async (userPassphrase) => {
           )
         ) {
           toast.success("Login Successful! Happy Collaborating!");
-          sessionStorage.setItem("secret", userPassphrase);
+          setSession("secret", userPassphrase);
           ret = true;
         } else {
           toast.warning("No valid account found, check passphrase.");
         }
       })
       .catch((err) => {
-        toast.error(err.message);
+        toast.warning("No valid account found, check passphrase.");
       });
     return ret;
   } else {
@@ -57,6 +57,7 @@ class Login extends React.Component {
     if (this.state.redirect) {
       return <Redirect to={this.state.redirect} />;
     }
+    const query = new URLSearchParams(this.props.location.search);
     const tab = [
       <div>
         <p>Passphrase</p>
@@ -66,6 +67,17 @@ class Login extends React.Component {
           name="passphrase"
           placeholder="Input Your Passphrase Here"
           style={{ width: "100%", height: "40px", marginBottom: "30px" }}
+          onKeyDown={async (e) => {
+            if (e.key === "Enter") {
+              if (await login(this.state.signInPassphrase)) {
+                if (query.get("target") !== undefined) {
+                  this.setState({ redirect: query.get("target") });
+                } else {
+                  this.setState({ redirect: "/app" });
+                }
+              }
+            }
+          }}
           onChange={(event) => {
             const text = event.target.value;
             this.setState((state) => ({
@@ -81,7 +93,11 @@ class Login extends React.Component {
             style={{ width: "150px", backgroundColor: "#ef233c" }}
             onClick={async () => {
               if (await login(this.state.signInPassphrase)) {
-                this.setState({ redirect: "/app" });
+                if (query.get("target") !== undefined) {
+                  this.setState({ redirect: query.get("target") });
+                } else {
+                  this.setState({ redirect: "/app" });
+                }
               }
             }}
           >
@@ -179,7 +195,7 @@ class Login extends React.Component {
         </div>
       </div>,
     ];
-    return sessionStorage.getItem("secret") ? (
+    return getSession("secret") ? (
       <Redirect to={{ pathname: "/app" }} />
     ) : (
       <div
@@ -296,4 +312,4 @@ class Login extends React.Component {
   }
 }
 
-export default Login;
+export default withRouter(Login);

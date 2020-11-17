@@ -320,7 +320,8 @@ class Home extends React.Component {
                     }}
                   >
                     Collabolancer aim to give incentive to every
-                    collaboration-related action. Because Collaboration Matters!
+                    collaboration-related action, and apply milestone principle.
+                    Because Collaboration Matters!
                   </p>
                 </div>
               </div>

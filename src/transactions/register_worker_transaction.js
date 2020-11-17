@@ -121,7 +121,9 @@ class RegisterWorkerTransaction extends BaseTransaction {
           leaderOf: [],
           contributorOf: [],
           joined: [],
+          file: [],
           earning: "0",
+          log: [],
         };
         const stateAsset = {
           type: ACCOUNT.STATE,

@@ -4,6 +4,7 @@ import workerLogo from "../../asset/undraw_Work_time_re_hdyv.svg";
 import solverLogo from "../../asset/undraw_conference_speaker_6nt7.svg";
 import { toast } from "react-toastify";
 import { Redirect } from "react-router-dom";
+import { setSession } from "../../utils/tools";
 
 const {
   createAccount,
@@ -111,10 +112,7 @@ class Register extends React.Component {
                   );
                   if (res.meta.status) {
                     toast.success("Login Successful! Happy Collaborating!");
-                    sessionStorage.setItem(
-                      "secret",
-                      this.state.account.passphrase
-                    );
+                    setSession("secret", this.state.account.passphrase);
                     this.setState({ redirect: "/app" });
                   }
                 } catch (err) {

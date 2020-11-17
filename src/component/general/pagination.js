@@ -2,11 +2,12 @@ import React from "react";
 
 class Pagination extends React.Component {
   renderPagination() {
+    let index = 0;
     const renderedPagination = [];
 
     if (this.props.currentPage !== 1) {
       renderedPagination.push(
-        <li className="page-item">
+        <li key={++index} className="page-item">
           <button
             className="page-link"
             onClick={() => this.props.callback(this.props.currentPage - 1)}
@@ -18,7 +19,7 @@ class Pagination extends React.Component {
       );
     } else {
       renderedPagination.push(
-        <li className="page-item disabled">
+        <li key={++index} className="page-item disabled">
           <button className="page-link" tabIndex={-1}>
             Previous
           </button>
@@ -30,6 +31,7 @@ class Pagination extends React.Component {
       for (let i = 1; i <= this.props.totalCount; i++) {
         renderedPagination.push(
           <li
+            key={++index}
             className={`page-item  ${
               this.props.currentPage === i ? "active" : ""
             }`}
@@ -46,6 +48,7 @@ class Pagination extends React.Component {
     } else {
       renderedPagination.push(
         <li
+          key={++index}
           className={`page-item  ${
             this.props.currentPage === 1 ? "active" : ""
           }`}
@@ -57,14 +60,14 @@ class Pagination extends React.Component {
       );
       if (this.props.currentPage > 3) {
         renderedPagination.push(
-          <li className="page-item disabled">
+          <li key={++index} className="page-item disabled">
             <button className="page-link">...</button>
           </li>
         );
       }
       if (this.props.currentPage === this.props.totalCount) {
         renderedPagination.push(
-          <li className="page-item">
+          <li key={++index} className="page-item">
             <button
               className="page-link"
               onClick={() => this.props.callback(this.props.currentPage - 2)}
@@ -76,7 +79,7 @@ class Pagination extends React.Component {
       }
       if (this.props.currentPage > 2) {
         renderedPagination.push(
-          <li className="page-item">
+          <li key={++index} className="page-item">
             <button
               className="page-link"
               onClick={() => this.props.callback(this.props.currentPage - 1)}
@@ -91,7 +94,7 @@ class Pagination extends React.Component {
         this.props.currentPage !== this.props.totalCount
       ) {
         renderedPagination.push(
-          <li className="page-item active">
+          <li key={++index} className="page-item active">
             <button
               className="page-link"
               onClick={() => this.props.callback(this.props.currentPage)}
@@ -103,7 +106,7 @@ class Pagination extends React.Component {
       }
       if (this.props.currentPage < this.props.totalCount - 1) {
         renderedPagination.push(
-          <li className="page-item">
+          <li key={++index} className="page-item">
             <button
               className="page-link"
               onClick={() => this.props.callback(this.props.currentPage + 1)}
@@ -115,7 +118,7 @@ class Pagination extends React.Component {
       }
       if (this.props.currentPage === 1) {
         renderedPagination.push(
-          <li className="page-item">
+          <li key={++index} className="page-item">
             <button
               className="page-link"
               onClick={() => this.props.callback(this.props.currentPage + 2)}
@@ -127,13 +130,14 @@ class Pagination extends React.Component {
       }
       if (this.props.currentPage < this.props.totalCount - 2) {
         renderedPagination.push(
-          <li className="page-item disabled">
+          <li key={++index} className="page-item disabled">
             <button className="page-link">...</button>
           </li>
         );
       }
       renderedPagination.push(
         <li
+          key={++index}
           className={`page-item  ${
             this.props.currentPage === this.props.totalCount ? "active" : ""
           }`}
@@ -150,13 +154,13 @@ class Pagination extends React.Component {
 
     if (this.props.currentPage === this.props.totalCount) {
       renderedPagination.push(
-        <li className="page-item disabled">
+        <li key={++index} className="page-item disabled">
           <button className="page-link">Next</button>
         </li>
       );
     } else {
       renderedPagination.push(
-        <li className="page-item">
+        <li key={++index} className="page-item">
           <button
             className="page-link"
             onClick={() => this.props.callback(this.props.currentPage + 1)}

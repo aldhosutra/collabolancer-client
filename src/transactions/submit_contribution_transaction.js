@@ -14,6 +14,9 @@ const { getAddressFromPublicKey } = require("@liskhq/lisk-cryptography");
  * Required:
  * this.asset.contributionPublicKey [@fresh]
  * this.asset.teamPublicKey
+ * this.asset.fileextension
+ * this.asset.filemime
+ * this.asset.filename
  * this.asset.filedata
  */
 class SubmitContributionTransaction extends BaseTransaction {
@@ -91,6 +94,31 @@ class SubmitContributionTransaction extends BaseTransaction {
           ".asset.contributionPublicKey",
           this.asset.contributionPublicKey,
           "contributionPublicKey is required, and must be string"
+        )
+      );
+    }
+    if (
+      !this.asset.fileextension ||
+      typeof this.asset.fileextension !== "string"
+    ) {
+      errors.push(
+        new TransactionError(
+          'Invalid "asset.fileextension" defined on transaction',
+          this.id,
+          ".asset.filemime",
+          this.asset.fileextension,
+          "fileextension is required, and must be string"
+        )
+      );
+    }
+    if (!this.asset.filemime || typeof this.asset.filemime !== "string") {
+      errors.push(
+        new TransactionError(
+          'Invalid "asset.filemime" defined on transaction',
+          this.id,
+          ".asset.filemime",
+          this.asset.filemime,
+          "filemime is required, and must be string"
         )
       );
     }
@@ -256,6 +284,8 @@ class SubmitContributionTransaction extends BaseTransaction {
           proposal: teamAccount.asset.proposal,
           team: teamAccount.publicKey,
           time: this.timestamp,
+          extension: this.asset.fileextension,
+          mime: this.asset.filemime,
           filename: this.asset.filename,
           dataTransaction: this.id,
         };
@@ -283,12 +313,17 @@ class SubmitContributionTransaction extends BaseTransaction {
           .add(proposalAsset.term.commitmentFee)
           .toString();
         const projectAsset = projectAccount.asset;
-        projectAsset.activity.unshift(this.id);
+        projectAsset.activity.unshift({
+          timestamp: this.timestamp,
+          id: this.id,
+          type: this.type,
+        });
         projectAsset.freezedFund = utils
           .BigNum(projectAsset.freezedFund)
           .sub(teamAsset.potentialEarning)
           .toString();
         teamAsset.contribution.unshift(contributionAccount.publicKey);
+        senderAsset.file.unshift(contributionAccount.publicKey);
         store.account.set(proposalAccount.address, {
           ...proposalAccount,
           asset: proposalAsset,
@@ -360,6 +395,12 @@ class SubmitContributionTransaction extends BaseTransaction {
     );
     if (fileTeamIndex > -1) {
       teamAsset.contribution.splice(fileTeamIndex, 1);
+    }
+    const workerTeamIndex = senderAsset.file.indexOf(
+      contributionAccount.publicKey
+    );
+    if (workerTeamIndex > -1) {
+      senderAsset.file.splice(workerTeamIndex, 1);
     }
     const projectAsset = projectAccount.asset;
     projectAsset.activity.shift();

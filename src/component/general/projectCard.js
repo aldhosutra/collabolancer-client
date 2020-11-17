@@ -1,5 +1,6 @@
 import React from "react";
 import { Link } from "react-router-dom";
+import { renderAvatar } from "../avatar";
 const { utils } = require("@liskhq/lisk-transactions");
 
 class ProjectCard extends React.PureComponent {
@@ -17,6 +18,12 @@ class ProjectCard extends React.PureComponent {
 
   render() {
     const bgColor = this.state.isHover ? "#EDF2F4" : "white";
+    const avatar = `url('data:image/svg+xml,${renderAvatar(
+      this.props.project.asset.employer
+        ? this.props.project.asset.employer
+        : "",
+      250
+    )}')`;
     return (
       <Link
         style={{ textDecoration: "none" }}
@@ -61,10 +68,7 @@ class ProjectCard extends React.PureComponent {
               </h6>
               <h6
                 style={{
-                  backgroundImage:
-                    'url("https://avatar.lisk.ws/' +
-                    this.props.project.asset.employer +
-                    '")',
+                  backgroundImage: avatar,
                   backgroundPosition: "left",
                   backgroundRepeat: "no-repeat",
                   backgroundSize: "contain",
