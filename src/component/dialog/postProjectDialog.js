@@ -85,7 +85,11 @@ class PostProjectDialog extends React.Component {
               type="button"
               data-toggle="modal"
               data-target="#postProject"
-              style={{ backgroundColor: "#d90429", width: "250px" }}
+              style={{
+                backgroundColor: "#d90429",
+                width: "250px",
+                fontFamily: "Poppins, sans-serif",
+              }}
             >
               Post New Project
             </button>

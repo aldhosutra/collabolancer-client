@@ -4,16 +4,48 @@ import NoData from "../general/nodata";
 import Proposal from "./proposal";
 
 import PostProposalDialog from "../dialog/postProposalDialog";
+import Pagination from "../general/pagination";
 
 class ProposalList extends React.Component {
   constructor() {
     super();
     this.state = {
       collapsed: true,
+      page: 1,
+      prevPage: 1,
+      itemPerPage: 5,
     };
   }
 
+  componentDidUpdate() {
+    if (this.state.prevPage !== this.state.page) {
+      this.setState((state) => {
+        return { ...state, prevPage: state.page };
+      });
+    }
+  }
+
   render() {
+    const limit = this.state.itemPerPage;
+    const pageCount = Math.ceil(
+      this.props.project.asset.proposal.length / limit
+    );
+    const proposalList = [];
+    for (
+      let i = (this.state.page - 1) * limit;
+      i < (this.state.page - 1) * limit + limit;
+      i++
+    ) {
+      if (i >= this.props.project.asset.proposal.length) break;
+      proposalList.push(
+        <Proposal
+          id={i}
+          key={i}
+          account={this.props.account}
+          proposal={this.props.project.asset.proposal[i]}
+        />
+      );
+    }
     let actionButton = null;
     if (
       this.props.account &&
@@ -32,7 +64,6 @@ class ProposalList extends React.Component {
               backgroundColor: "#EF233C",
               marginRight: "10px",
               fontFamily: "Poppins, sans-serif",
-              marginBottom: "10px",
             }}
           >
             <strong>Choose Winner!</strong>
@@ -100,12 +131,30 @@ class ProposalList extends React.Component {
           >
             <div
               className="d-flex justify-content-end"
-              style={{ marginTop: "16px" }}
+              style={{ marginBottom: "8px" }}
             >
               {actionButton}
             </div>
             {this.props.project.asset.proposal.length > 0 ? (
-              <Proposal />
+              <div>
+                {proposalList}
+                {this.props.project.asset.proposal.length >
+                this.state.itemPerPage ? (
+                  <div style={{ marginTop: "16px" }}>
+                    <Pagination
+                      currentPage={this.state.page}
+                      totalCount={pageCount}
+                      callback={(selected) => {
+                        this.setState((state) => {
+                          return { ...state, page: selected };
+                        });
+                      }}
+                    />
+                  </div>
+                ) : (
+                  <div></div>
+                )}
+              </div>
             ) : (
               <NoData message="No Proposal Has Applied!" />
             )}

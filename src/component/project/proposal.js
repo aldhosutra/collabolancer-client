@@ -1,29 +1,73 @@
 import React from "react";
 import { renderAvatar } from "../avatar";
+import Pagination from "../general/pagination";
+import SoloProposal from "./soloProposal";
 import Team from "./team";
+const { utils } = require("@liskhq/lisk-transactions");
 const parse = require("html-react-parser");
-
-// ID
 
 class Proposal extends React.Component {
   constructor() {
     super();
     this.state = {
       collapsed: false,
+      page: 1,
+      prevPage: 1,
+      itemPerPage: 5,
     };
   }
 
+  componentDidUpdate() {
+    if (this.state.prevPage !== this.state.page) {
+      this.setState((state) => {
+        return { ...state, prevPage: state.page };
+      });
+    }
+  }
+
   render() {
+    const limit = this.state.itemPerPage;
+    const pageCount = Math.ceil(
+      this.props.proposal.asset.term.roleList.length / limit
+    );
+    const teamList = [];
+    let openPosition = 0;
+    for (
+      let i = (this.state.page - 1) * limit;
+      i < (this.state.page - 1) * limit + limit;
+      i++
+    ) {
+      if (i >= this.props.proposal.asset.term.roleList.length) break;
+      teamList.push(
+        <Team
+          key={i}
+          id={i}
+          account={this.props.account}
+          proposal={this.props.proposal}
+          team={this.props.proposal.asset.team[i]}
+          role={this.props.proposal.asset.term.roleList[i]}
+        />
+      );
+    }
+    openPosition = this.props.proposal.asset.team.filter((item) => item === 0)
+      .length;
     return (
-      <div style={{ paddingTop: "8px", paddingBottom: "8px" }}>
-        <div className="row" style={{ marginBottom: "16px" }}>
+      <div
+        style={{
+          paddingTop: "8px",
+          paddingBottom: "8px",
+          borderBottom: "1px solid #dee2e6",
+          borderTop: "1px solid #dee2e6",
+        }}
+      >
+        <div className="row">
           <div
             className="col details"
             data-toggle="collapse"
             aria-expanded="false"
-            aria-controls="collapse-1"
+            aria-controls={"proposal-" + this.props.proposal.publicKey}
+            href={"#proposal-" + this.props.proposal.publicKey}
             role="button"
-            href="#collapse-1"
             onClick={() => {
               return this.setState({ collapsed: !this.state.collapsed });
             }}
@@ -32,7 +76,7 @@ class Proposal extends React.Component {
               style={{
                 fontFamily: "Poppins, sans-serif",
                 backgroundImage: `url('data:image/svg+xml,${renderAvatar(
-                  "9935147644029224811L",
+                  this.props.proposal.asset.leader,
                   250
                 )}')`,
                 backgroundRepeat: "no-repeat",
@@ -43,10 +87,14 @@ class Proposal extends React.Component {
               }}
             >
               <strong style={{ lineHeight: "25px" }}>
-                9935147644029224811L
+                {this.props.proposal.asset.leader}
               </strong>
               <p style={{ lineHeight: "15px", fontSize: "14px" }}>
-                Open Position: Full
+                {teamList.length > 0
+                  ? openPosition > 0
+                    ? `Open Position: ${openPosition} Position`
+                    : "No Open Position"
+                  : "Solo Proposal"}
               </p>
             </p>
           </div>
@@ -55,7 +103,7 @@ class Proposal extends React.Component {
               className="btn btn-primary border rounded-0 top-button"
               type="button"
               data-toggle="modal"
-              data-target="#modal-1"
+              data-target={"#modal-" + this.props.proposal.publicKey}
               style={{
                 marginRight: "8px",
                 backgroundColor: "#2B2D42",
@@ -69,9 +117,9 @@ class Proposal extends React.Component {
               className="btn btn-primary border rounded-0 top-button"
               data-toggle="collapse"
               aria-expanded="false"
-              aria-controls="collapse-1"
+              aria-controls={"proposal-" + this.props.proposal.publicKey}
               role="button"
-              href="#collapse-1"
+              href={"#proposal-" + this.props.proposal.publicKey}
               style={{
                 backgroundColor: "rgb(239, 35, 60)",
                 margin: "auto",
@@ -93,7 +141,7 @@ class Proposal extends React.Component {
         </div>
         <div
           className="border rounded-0 collapse"
-          id="collapse-1"
+          id={"proposal-" + this.props.proposal.publicKey}
           style={{
             marginTop: "16px",
             paddingLeft: "20px",
@@ -130,7 +178,16 @@ class Proposal extends React.Component {
                   color: "#EF233C",
                 }}
               >
-                <strong>Applied</strong>
+                <strong>
+                  {this.props.proposal.asset.status
+                    .replaceAll("-", " ")
+                    .replace(/\w\S*/g, (txt) => {
+                      return (
+                        txt.charAt(0).toUpperCase() +
+                        txt.substr(1).toLowerCase()
+                      );
+                    })}
+                </strong>
               </p>
             </div>
           </div>
@@ -153,7 +210,12 @@ class Proposal extends React.Component {
                   color: "#EF233C",
                 }}
               >
-                <strong>70 CLNC</strong>
+                <strong>
+                  {utils.convertBeddowsToLSK(
+                    this.props.proposal.asset.freezedFund
+                  )}{" "}
+                  CLNC
+                </strong>
               </p>
             </div>
           </div>
@@ -176,7 +238,12 @@ class Proposal extends React.Component {
                   color: "#EF233C",
                 }}
               >
-                <strong>70 CLNC</strong>
+                <strong>
+                  {utils.convertBeddowsToLSK(
+                    this.props.proposal.asset.freezedFee
+                  )}{" "}
+                  CLNC
+                </strong>
               </p>
             </div>
           </div>
@@ -199,7 +266,12 @@ class Proposal extends React.Component {
                   color: "#EF233C",
                 }}
               >
-                <strong>70 CLNC</strong>
+                <strong>
+                  {utils.convertBeddowsToLSK(
+                    this.props.proposal.asset.cashback
+                  )}{" "}
+                  CLNC
+                </strong>
               </p>
             </div>
           </div>
@@ -207,105 +279,153 @@ class Proposal extends React.Component {
             className="border rounded-0"
             style={{ marginTop: "10px", marginBottom: "20px" }}
           />
-          <h4
-            style={{
-              marginBottom: "20px",
-              fontFamily: "Poppins, sans-serif",
-            }}
-          >
-            <strong>Collaboration Term</strong>
-          </h4>
-          <div className="row">
-            <div className="col-lg-3 details">
-              <h6
+          {this.props.proposal.asset.term.roleList.length > 0 ? (
+            <div>
+              <h4
                 style={{
+                  marginBottom: "20px",
                   fontFamily: "Poppins, sans-serif",
                 }}
               >
-                <strong>Potential Earning</strong>
-              </h6>
-            </div>
-            <div className="col details">
-              <p
+                <strong>Collaboration Provisions</strong>
+              </h4>
+              <div className="row">
+                <div className="col-lg-3 details">
+                  <h6
+                    style={{
+                      fontFamily: "Poppins, sans-serif",
+                    }}
+                  >
+                    <strong>Leader Brief</strong>
+                  </h6>
+                </div>
+                <div className="col details">
+                  <p
+                    style={{
+                      fontFamily: "Poppins, sans-serif",
+                      fontSize: "14px",
+                      overflowWrap: "break-word",
+                    }}
+                  >
+                    {parse(this.props.proposal.asset.term.brief)}
+                  </p>
+                </div>
+              </div>
+              <div className="row">
+                <div className="col-lg-3 details">
+                  <h6
+                    style={{
+                      fontFamily: "Poppins, sans-serif",
+                    }}
+                  >
+                    <strong>Potential Earning</strong>
+                  </h6>
+                </div>
+                <div className="col details">
+                  <p
+                    style={{
+                      fontFamily: "Poppins, sans-serif",
+                      fontSize: "14px",
+                    }}
+                  >
+                    {utils.convertBeddowsToLSK(
+                      this.props.proposal.asset.potentialEarning
+                    )}{" "}
+                    CLNC
+                  </p>
+                </div>
+              </div>
+              <div className="row">
+                <div className="col-lg-3 details">
+                  <h6 style={{ fontFamily: "Poppins, sans-serif" }}>
+                    <strong>Required Locked Fee</strong>
+                  </h6>
+                </div>
+                <div className="col details">
+                  <p
+                    style={{
+                      fontFamily: "Poppins, sans-serif",
+                      fontSize: "14px",
+                    }}
+                  >
+                    {utils.convertBeddowsToLSK(
+                      this.props.proposal.asset.term.commitmentFee
+                    )}{" "}
+                    CLNC
+                  </p>
+                </div>
+              </div>
+              <div className="row">
+                <div className="col-lg-3 details">
+                  <h6 style={{ fontFamily: "Poppins, sans-serif" }}>
+                    <strong>Working TIme Limit</strong>
+                  </h6>
+                </div>
+                <div className="col details">
+                  <p
+                    style={{
+                      fontFamily: "Poppins, sans-serif",
+                      fontSize: "14px",
+                    }}
+                  >
+                    {this.props.proposal.asset.term.maxTime} Days
+                  </p>
+                </div>
+              </div>
+              <div className="row">
+                <div className="col-lg-3 details">
+                  <h6 style={{ fontFamily: "Poppins, sans-serif" }}>
+                    <strong>Maximum Revision</strong>
+                  </h6>
+                </div>
+                <div className="col details">
+                  <p
+                    style={{
+                      fontFamily: "Poppins, sans-serif",
+                      fontSize: "14px",
+                    }}
+                  >
+                    {this.props.proposal.asset.term.maxRevision} Times
+                  </p>
+                </div>
+              </div>
+              <div
+                className="border rounded-0"
+                style={{ marginTop: "10px", marginBottom: "20px" }}
+              />
+              <h4
                 style={{
                   fontFamily: "Poppins, sans-serif",
-                  fontSize: "14px",
+                  marginBottom: "20px",
                 }}
               >
-                70 CLNC
-              </p>
+                <strong>Team Composition:</strong>
+              </h4>
+              {teamList}
+              {this.props.proposal.asset.term.roleList.length >
+              this.state.itemPerPage ? (
+                <div style={{ marginTop: "16px" }}>
+                  <Pagination
+                    currentPage={this.state.page}
+                    totalCount={pageCount}
+                    callback={(selected) => {
+                      this.setState((state) => {
+                        return { ...state, page: selected };
+                      });
+                    }}
+                  />
+                </div>
+              ) : (
+                <div></div>
+              )}
             </div>
-          </div>
-          <div className="row">
-            <div className="col-lg-3 details">
-              <h6 style={{ fontFamily: "Poppins, sans-serif" }}>
-                <strong>Required Locked Fee</strong>
-              </h6>
-            </div>
-            <div className="col details">
-              <p
-                style={{
-                  fontFamily: "Poppins, sans-serif",
-                  fontSize: "14px",
-                }}
-              >
-                5 CLNC
-              </p>
-            </div>
-          </div>
-          <div className="row">
-            <div className="col-lg-3 details">
-              <h6 style={{ fontFamily: "Poppins, sans-serif" }}>
-                <strong>Working TIme Limit</strong>
-              </h6>
-            </div>
-            <div className="col details">
-              <p
-                style={{
-                  fontFamily: "Poppins, sans-serif",
-                  fontSize: "14px",
-                }}
-              >
-                9 Days
-              </p>
-            </div>
-          </div>
-          <div className="row">
-            <div className="col-lg-3 details">
-              <h6 style={{ fontFamily: "Poppins, sans-serif" }}>
-                <strong>Maximum Revision</strong>
-              </h6>
-            </div>
-            <div className="col details">
-              <p
-                style={{
-                  fontFamily: "Poppins, sans-serif",
-                  fontSize: "14px",
-                }}
-              >
-                0 Times
-              </p>
-            </div>
-          </div>
-          <div
-            className="border rounded-0"
-            style={{ marginTop: "10px", marginBottom: "20px" }}
-          />
-          <h4
-            style={{
-              fontFamily: "Poppins, sans-serif",
-              marginBottom: "20px",
-            }}
-          >
-            <strong>Team Composition:</strong>
-          </h4>
-          <Team />
-          <Team />
-          <Team />
+          ) : (
+            <SoloProposal />
+          )}
         </div>
         <div
           className="modal fade"
-          id="modal-1"
+          id={"modal-" + this.props.proposal.publicKey}
           tabIndex={-1}
           role="dialog"
           aria-hidden="true"
@@ -319,7 +439,7 @@ class Proposal extends React.Component {
               >
                 <h3
                   className="modal-title w-100 dark-grey-text font-weight-bold my-1"
-                  id="myModalLabel"
+                  id={"modal-label-" + this.props.proposal.publicKey}
                 >
                   <strong>Why Should I Be Hired?</strong>
                   <p
@@ -343,7 +463,7 @@ class Proposal extends React.Component {
                   style={{
                     fontFamily: "Poppins, sans-serif",
                     backgroundImage: `url('data:image/svg+xml,${renderAvatar(
-                      "9935147644029224811L",
+                      this.props.proposal.asset.leader,
                       250
                     )}')`,
                     backgroundRepeat: "no-repeat",
@@ -352,13 +472,10 @@ class Proposal extends React.Component {
                     paddingLeft: "30px",
                   }}
                 >
-                  <strong>9935147644029224811L</strong>
+                  <strong>{this.props.proposal.asset.leader}</strong>
                 </p>
                 <p className="text-justify">
-                  {parse(
-                    "<b>Hello</b>, i am a senior web developer and web designer in Indonesia, i have completed some project, and have professional certification from Adobe. You can trust me! Thanks!",
-                    "text/html"
-                  )}
+                  {parse(this.props.proposal.asset.pitching)}
                 </p>
               </div>
               <div className="modal-footer" style={{ borderTop: "0 none" }}>

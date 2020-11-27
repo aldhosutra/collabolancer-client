@@ -194,7 +194,30 @@ const postProposal = async (
   return ret;
 };
 
-const joinTeam = () => {};
+const joinTeam = async (senderPassphrase, proposalPublicKey, roleIndex) => {
+  let ret;
+  const teamAccount = createAccount();
+  const tx = new JoinTeamTransaction({
+    asset: {
+      teamPublicKey: teamAccount.publicKey,
+      proposalPublicKey: proposalPublicKey,
+      role: roleIndex,
+    },
+    networkIdentifier: networkIdentifier,
+    timestamp: utils.getTimeFromBlockchainEpoch(),
+  });
+  tx.sign(senderPassphrase);
+  await api.transactions
+    .broadcast(tx.toJSON())
+    .then((res) => {
+      ret = res;
+    })
+    .catch((err) => {
+      console.log(err);
+      ret = err;
+    });
+  return ret;
+};
 
 const startWork = () => {};
 

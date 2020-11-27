@@ -174,6 +174,19 @@ class PostProposalDialog extends React.Component {
         </div>
       );
     }
+    const yourShare =
+      this.state["form-term-distribution-mode"] ===
+      MISCELLANEOUS.DISTRIBUTION.LEADER_FIRST
+        ? parseFloat(this.state["form-term-distribution-value"]).toFixed(2)
+        : (100 / (this.state["form-term-rolelist"].length + 1)).toFixed(2);
+    const teamShare =
+      this.state["form-term-distribution-mode"] ===
+      MISCELLANEOUS.DISTRIBUTION.LEADER_FIRST
+        ? (
+            (100.0 - parseFloat(this.state["form-term-distribution-value"])) /
+            this.state["form-term-rolelist"].length
+          ).toFixed(2)
+        : (100 / (this.state["form-term-rolelist"].length + 1)).toFixed(2);
     return (
       <div>
         <button
@@ -354,6 +367,10 @@ class PostProposalDialog extends React.Component {
                             type="radio"
                             id="form-term-distribution-mode"
                             name="form-term-distribution-mode"
+                            checked={
+                              this.state["form-term-distribution-mode"] ===
+                              MISCELLANEOUS.DISTRIBUTION.ALL_EQUAL
+                            }
                             value={MISCELLANEOUS.DISTRIBUTION.ALL_EQUAL}
                             required
                           />
@@ -369,6 +386,10 @@ class PostProposalDialog extends React.Component {
                             type="radio"
                             id="form-term-distribution-mode"
                             name="form-term-distribution-mode"
+                            checked={
+                              this.state["form-term-distribution-mode"] ===
+                              MISCELLANEOUS.DISTRIBUTION.LEADER_FIRST
+                            }
                             value={MISCELLANEOUS.DISTRIBUTION.LEADER_FIRST}
                             required
                           />
@@ -395,6 +416,43 @@ class PostProposalDialog extends React.Component {
                         ) : (
                           <div></div>
                         )}
+                      </div>
+                      <div className="md-form mb-4">
+                        <p
+                          style={{
+                            fontWeight: "bold",
+                            color: "#EF233C",
+                            fontFamily: "Poppins, sans-serif",
+                          }}
+                        >
+                          {(this.state["form-term-distribution-mode"] ===
+                            MISCELLANEOUS.DISTRIBUTION.LEADER_FIRST &&
+                            isNaN(
+                              parseFloat(
+                                this.state["form-term-distribution-value"]
+                              )
+                            )) ||
+                          (parseFloat(
+                            this.state["form-term-distribution-value"]
+                          ) < 0 &&
+                            parseFloat(
+                              this.state["form-term-distribution-value"]
+                            ) > 100)
+                            ? "Percentage Should Be Between 0 and 100!"
+                            : `Your Share: ${yourShare}% (${utils.convertBeddowsToLSK(
+                                utils
+                                  .BigNum(yourShare)
+                                  .div(100)
+                                  .mul(this.props.project.asset.prize)
+                                  .toString()
+                              )} CLNC); Each Team Share: ${teamShare}% (${utils.convertBeddowsToLSK(
+                                utils
+                                  .BigNum(teamShare)
+                                  .div(100)
+                                  .mul(this.props.project.asset.prize)
+                                  .toString()
+                              )} CLNC)`}
+                        </p>
                       </div>
                     </div>
                   ) : (
@@ -465,6 +523,7 @@ class PostProposalDialog extends React.Component {
                           <p>
                             Get{" "}
                             {MISCELLANEOUS.LEADER_CASHBACK_PERCENTAGE *
+                              100 *
                               deflationaryRate}
                             % bonus and more benefit, by enabling collaboration
                             for your proposal contract!
