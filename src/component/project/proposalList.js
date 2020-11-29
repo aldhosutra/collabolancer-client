@@ -42,6 +42,7 @@ class ProposalList extends React.Component {
           id={i}
           key={i}
           account={this.props.account}
+          project={this.props.project}
           proposal={this.props.project.asset.proposal[i]}
         />
       );

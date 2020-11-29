@@ -10,6 +10,7 @@ import Loading from "../general/loading";
 import * as constants from "@liskhq/lisk-constants";
 import ProjectDetails from "./projectDetails";
 import ProposalList from "./proposalList";
+import DisputeList from "./disputeList";
 const dateFormat = require("dateformat");
 const parse = require("html-react-parser");
 const {
@@ -166,98 +167,10 @@ class Project extends React.Component {
                   project={this.state.project}
                   account={this.state.account}
                 />
-                <div
-                  style={{
-                    marginTop: "28px",
-                    backgroundColor: "#EF233C",
-                    paddingTop: "8px",
-                    paddingRight: "16px",
-                    paddingBottom: "8px",
-                    paddingLeft: "16px",
-                  }}
-                >
-                  <h5
-                    style={{
-                      fontFamily: "Poppins, sans-serif",
-                      color: "rgb(255,255,255)",
-                    }}
-                  >
-                    <strong>Dispute</strong>
-                  </h5>
-                </div>
-                <div
-                  className="border rounded-0"
-                  style={{
-                    marginTop: 0,
-                    paddingTop: "8px",
-                    paddingRight: "16px",
-                    paddingBottom: "8px",
-                    paddingLeft: "16px",
-                    marginBottom: "64px",
-                  }}
-                >
-                  <div style={{ paddingTop: "8px", paddingBottom: "8px" }}>
-                    <div className="row">
-                      <div className="col details">
-                        <p
-                          style={{
-                            fontFamily: "Poppins, sans-serif",
-                            backgroundImage: 'url("assets/img/close.svg")',
-                            backgroundRepeat: "no-repeat",
-                            backgroundSize: "contain",
-                            backgroundPosition: "left",
-                            paddingLeft: "30px",
-                          }}
-                        >
-                          <strong>9935147644029224811L</strong>
-                        </p>
-                      </div>
-                      <div className="col-auto d-flex justify-content-center details">
-                        <button
-                          className="btn btn-primary border rounded-0 top-button"
-                          type="button"
-                          style={{
-                            backgroundColor: "rgb(255,0,21)",
-                            marginRight: "8px",
-                          }}
-                        >
-                          Details
-                        </button>
-                      </div>
-                    </div>
-                  </div>
-                  <div className="border rounded-0" />
-                  <div style={{ paddingTop: "8px", paddingBottom: "8px" }}>
-                    <div className="row">
-                      <div className="col details">
-                        <p
-                          style={{
-                            fontFamily: "Poppins, sans-serif",
-                            backgroundImage: 'url("assets/img/close.svg")',
-                            backgroundRepeat: "no-repeat",
-                            backgroundSize: "contain",
-                            backgroundPosition: "left",
-                            paddingLeft: "30px",
-                          }}
-                        >
-                          <strong>9935147644029224811L</strong>
-                        </p>
-                      </div>
-                      <div className="col-auto d-flex justify-content-center details">
-                        <button
-                          className="btn btn-primary border rounded-0 top-button"
-                          type="button"
-                          style={{
-                            backgroundColor: "rgb(255,0,21)",
-                            marginRight: "8px",
-                          }}
-                        >
-                          Details
-                        </button>
-                      </div>
-                    </div>
-                  </div>
-                </div>
+                <DisputeList
+                  project={this.state.project}
+                  account={this.state.account}
+                />
               </div>
             </div>
           ) : (

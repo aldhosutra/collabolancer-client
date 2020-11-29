@@ -1,7 +1,9 @@
 import React from "react";
-import WorkItem from "./workItem";
 import { renderAvatar } from "../avatar";
 import JoinAsTeamDialog from "../dialog/joinAsTeam";
+import { STATUS } from "../../transactions/constants";
+import ContributionList from "./contributionList";
+const { utils } = require("@liskhq/lisk-transactions");
 
 class Team extends React.Component {
   constructor() {
@@ -142,32 +144,50 @@ class Team extends React.Component {
                 className="d-flex justify-content-end"
                 style={{ marginTop: "16px" }}
               >
-                <button
-                  className="btn btn-primary border rounded-0 top-button"
-                  type="button"
-                  style={{
-                    paddingRight: "24px",
-                    paddingLeft: "24px",
-                    backgroundColor: "#EF233C",
-                    fontFamily: "Poppins, sans-serif",
-                    marginBottom: "10px",
-                  }}
-                >
-                  <strong>Submit Contribution</strong>
-                </button>
-                <button
-                  className="btn btn-primary border rounded-0 top-button"
-                  type="button"
-                  style={{
-                    paddingRight: "24px",
-                    paddingLeft: "24px",
-                    backgroundColor: "#EF233C",
-                    fontFamily: "Poppins, sans-serif",
-                    marginBottom: "10px",
-                  }}
-                >
-                  <strong>Dispute</strong>
-                </button>
+                {[STATUS.TEAM.SELECTED, STATUS.TEAM.REQUEST_REVISION].includes(
+                  this.props.team.asset.status
+                ) ? (
+                  <button
+                    className="btn btn-primary border rounded-0 top-button"
+                    type="button"
+                    style={{
+                      paddingRight: "24px",
+                      paddingLeft: "24px",
+                      backgroundColor: "#EF233C",
+                      fontFamily: "Poppins, sans-serif",
+                      marginBottom: "10px",
+                    }}
+                  >
+                    <strong>Submit Contribution</strong>
+                  </button>
+                ) : (
+                  <div></div>
+                )}
+                {[
+                  STATUS.PROJECT.FINISHED,
+                  STATUS.PROJECT.TERMINATED,
+                  STATUS.PROJECT.DISPUTED,
+                  STATUS.PROJECT.DISPUTE_CLOSED,
+                ].includes(this.props.project.asset.status) &&
+                [STATUS.TEAM.REJECTED].includes(
+                  this.props.team.asset.status
+                ) ? (
+                  <button
+                    className="btn btn-primary border rounded-0 top-button"
+                    type="button"
+                    style={{
+                      paddingRight: "24px",
+                      paddingLeft: "24px",
+                      backgroundColor: "#EF233C",
+                      fontFamily: "Poppins, sans-serif",
+                      marginBottom: "10px",
+                    }}
+                  >
+                    <strong>Open Dispute</strong>
+                  </button>
+                ) : (
+                  <div></div>
+                )}
               </div>
               <p style={{ fontFamily: "Poppins, sans-serif" }}>
                 Team Contract:
@@ -191,7 +211,16 @@ class Team extends React.Component {
                       color: "#EF233C",
                     }}
                   >
-                    <strong>Applied</strong>
+                    <strong>
+                      {this.props.team.asset.status
+                        .replaceAll("-", " ")
+                        .replace(/\w\S*/g, (txt) => {
+                          return (
+                            txt.charAt(0).toUpperCase() +
+                            txt.substr(1).toLowerCase()
+                          );
+                        })}
+                    </strong>
                   </p>
                 </div>
               </div>
@@ -214,7 +243,12 @@ class Team extends React.Component {
                       color: "#EF233C",
                     }}
                   >
-                    <strong>70 CLNC</strong>
+                    <strong>
+                      {utils.convertBeddowsToLSK(
+                        this.props.team.asset.freezedFund
+                      )}{" "}
+                      CLNC
+                    </strong>
                   </p>
                 </div>
               </div>
@@ -237,7 +271,12 @@ class Team extends React.Component {
                       color: "#EF233C",
                     }}
                   >
-                    <strong>70 CLNC</strong>
+                    <strong>
+                      {utils.convertBeddowsToLSK(
+                        this.props.team.asset.freezedFee
+                      )}{" "}
+                      CLNC
+                    </strong>
                   </p>
                 </div>
               </div>
@@ -260,7 +299,12 @@ class Team extends React.Component {
                       color: "#EF233C",
                     }}
                   >
-                    <strong>70 CLNC</strong>
+                    <strong>
+                      {utils.convertBeddowsToLSK(
+                        this.props.team.asset.cashback
+                      )}{" "}
+                      CLNC
+                    </strong>
                   </p>
                 </div>
               </div>
@@ -268,10 +312,7 @@ class Team extends React.Component {
                 className="border rounded-0"
                 style={{ marginTop: "10px", marginBottom: "20px" }}
               />
-              <p style={{ fontFamily: "Poppins, sans-serif" }}>
-                Contribution List:
-              </p>
-              <WorkItem />
+              <ContributionList team={this.props.team} />
               <div style={{ marginTop: "10px", marginBottom: "20px" }} />
             </div>
           )}

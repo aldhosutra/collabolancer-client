@@ -9,6 +9,7 @@ class PostProjectDialog extends React.Component {
   constructor() {
     super();
     this.state = {
+      clicked: false,
       "form-title": "",
       "form-description": "",
       "form-category": "none",
@@ -31,6 +32,16 @@ class PostProjectDialog extends React.Component {
   }
 
   onPostProjectFormSubmit(e) {
+    if (!this.state.clicked) {
+      this.setState((state) => {
+        return {
+          ...state,
+          clicked: true,
+        };
+      });
+    } else {
+      return;
+    }
     e.preventDefault();
     try {
       postProject(
@@ -73,6 +84,12 @@ class PostProjectDialog extends React.Component {
     } catch (err) {
       toast.error(`Error: ${err.message}`);
     }
+    this.setState((state) => {
+      return {
+        ...state,
+        clicked: false,
+      };
+    });
   }
 
   render() {

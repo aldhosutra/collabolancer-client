@@ -44,6 +44,7 @@ class Proposal extends React.Component {
           id={i}
           account={this.props.account}
           proposal={this.props.proposal}
+          project={this.props.project}
           team={this.props.proposal.asset.team[i]}
           role={this.props.proposal.asset.term.roleList[i]}
         />
