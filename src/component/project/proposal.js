@@ -3,6 +3,7 @@ import { renderAvatar } from "../avatar";
 import Pagination from "../general/pagination";
 import SoloProposal from "./soloProposal";
 import Team from "./team";
+import PitchingDialog from "../dialog/pitchingDialog";
 const { utils } = require("@liskhq/lisk-transactions");
 const parse = require("html-react-parser");
 
@@ -26,6 +27,9 @@ class Proposal extends React.Component {
   }
 
   render() {
+    if (!this.props.proposal) {
+      return null;
+    }
     const limit = this.state.itemPerPage;
     const pageCount = Math.ceil(
       this.props.proposal.asset.term.roleList.length / limit
@@ -100,20 +104,11 @@ class Proposal extends React.Component {
             </p>
           </div>
           <div className="col-auto d-flex justify-content-center justify-content-lg-center details">
-            <button
-              className="btn btn-primary border rounded-0 top-button"
-              type="button"
-              data-toggle="modal"
-              data-target={"#modal-" + this.props.proposal.publicKey}
-              style={{
-                marginRight: "8px",
-                backgroundColor: "#2B2D42",
-                margin: "auto",
-                fontFamily: "Poppins, sans-serif",
-              }}
-            >
-              <strong>Pitching</strong>
-            </button>
+            <PitchingDialog
+              project={this.props.project}
+              proposal={this.props.proposal}
+              account={this.props.account}
+            />
             <a
               className="btn btn-primary border rounded-0 top-button"
               data-toggle="collapse"
@@ -423,78 +418,6 @@ class Proposal extends React.Component {
           ) : (
             <SoloProposal />
           )}
-        </div>
-        <div
-          className="modal fade"
-          id={"modal-" + this.props.proposal.publicKey}
-          tabIndex={-1}
-          role="dialog"
-          aria-hidden="true"
-          style={{ fontFamily: "Poppins, sans-serif" }}
-        >
-          <div className="modal-dialog modal-lg" role="document">
-            <div className="modal-content form-elegant">
-              <div
-                className="modal-header text-center"
-                style={{ borderBottom: "0 none" }}
-              >
-                <h3
-                  className="modal-title w-100 dark-grey-text font-weight-bold my-1"
-                  id={"modal-label-" + this.props.proposal.publicKey}
-                >
-                  <strong>Why Should I Be Hired?</strong>
-                  <p
-                    className=""
-                    style={{ fontSize: "14px", fontWeight: "normal" }}
-                  >
-                    (This Message Is Addressed To Employer)
-                  </p>
-                </h3>
-                <button
-                  type="button"
-                  className="close"
-                  data-dismiss="modal"
-                  aria-label="Close"
-                >
-                  <span aria-hidden="true">×</span>
-                </button>
-              </div>
-              <div className="modal-body">
-                <p
-                  style={{
-                    fontFamily: "Poppins, sans-serif",
-                    backgroundImage: `url('data:image/svg+xml,${renderAvatar(
-                      this.props.proposal.asset.leader,
-                      250
-                    )}')`,
-                    backgroundRepeat: "no-repeat",
-                    backgroundSize: "contain",
-                    backgroundPosition: "left",
-                    paddingLeft: "30px",
-                  }}
-                >
-                  <strong>{this.props.proposal.asset.leader}</strong>
-                </p>
-                <p className="text-justify">
-                  {parse(this.props.proposal.asset.pitching)}
-                </p>
-              </div>
-              <div className="modal-footer" style={{ borderTop: "0 none" }}>
-                <button
-                  className="btn btn-light"
-                  type="button"
-                  data-dismiss="modal"
-                  style={{
-                    width: "150px",
-                    backgroundColor: "#2B2D42",
-                    color: "rgb(255,255,255)",
-                  }}
-                >
-                  OK
-                </button>
-              </div>
-            </div>
-          </div>
         </div>
       </div>
     );

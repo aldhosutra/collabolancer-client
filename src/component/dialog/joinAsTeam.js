@@ -3,6 +3,7 @@ import { MISCELLANEOUS, STATUS } from "../../transactions/constants";
 import { toast } from "react-toastify";
 import { deflationaryMultiplier, getSession } from "../../utils/tools";
 import { joinTeam } from "../../utils/transaction";
+import JoinAsTeamLogo from "../../asset/undraw_team_spirit_hrr4.svg";
 const { utils } = require("@liskhq/lisk-transactions");
 const parse = require("html-react-parser");
 
@@ -110,9 +111,6 @@ class JoinAsTeamDialog extends React.Component {
                 className="modal-header text-center"
                 style={{ borderBottom: "0 none" }}
               >
-                <h3 className="modal-title w-100 dark-grey-text font-weight-bold my-1">
-                  <strong>Join as Team Member</strong>
-                </h3>
                 <button
                   type="button"
                   className="close"
@@ -127,6 +125,44 @@ class JoinAsTeamDialog extends React.Component {
                 onSubmit={this.onJoinAsTeamFormSubmit}
               >
                 <div className="modal-body mx-4">
+                  <img
+                    role="status"
+                    style={{
+                      width: "180px",
+                      marginLeft: "auto",
+                      marginRight: "auto",
+                      marginBottom: "16px",
+                      display: "block",
+                    }}
+                    alt="Solo Proposal"
+                    src={JoinAsTeamLogo}
+                  />
+                  <h3
+                    className="modal-title w-100 dark-grey-text font-weight-bold my-1 text-center"
+                    id={"modal-label-" + this.props.proposal.publicKey}
+                  >
+                    <strong>Join As Team Member</strong>
+                  </h3>
+                  <p
+                    style={{
+                      fontFamily: "Poppins, sans-serif",
+                      textAlign: "center",
+                    }}
+                  >
+                    {
+                      "Start Collaborating With Other Amazing Workers, Just Like You!"
+                    }
+                  </p>
+                  <div
+                    className="border rounded-0 text-center"
+                    style={{
+                      marginTop: "10px",
+                      marginBottom: "20px",
+                      marginRight: "auto",
+                      marginLeft: "auto",
+                      width: "100px",
+                    }}
+                  />
                   <h6
                     style={{
                       fontFamily: "Poppins, sans-serif",

@@ -3,6 +3,7 @@ import { MISCELLANEOUS } from "../../transactions/constants";
 import { toast } from "react-toastify";
 import { deflationaryMultiplier, getSession } from "../../utils/tools";
 import { postProposal } from "../../utils/transaction";
+import PostProposalLogo from "../../asset/undraw_resume_1hqp.svg";
 const { utils } = require("@liskhq/lisk-transactions");
 
 class PostProposalDialog extends React.Component {
@@ -219,9 +220,6 @@ class PostProposalDialog extends React.Component {
                 className="modal-header text-center"
                 style={{ borderBottom: "0 none" }}
               >
-                <h3 className="modal-title w-100 dark-grey-text font-weight-bold my-1">
-                  <strong>Post New Proposal</strong>
-                </h3>
                 <button
                   type="button"
                   className="close"
@@ -236,6 +234,41 @@ class PostProposalDialog extends React.Component {
                 onSubmit={this.onPostProposalFormSubmit}
               >
                 <div className="modal-body mx-4">
+                  <img
+                    role="status"
+                    style={{
+                      width: "180px",
+                      marginLeft: "auto",
+                      marginRight: "auto",
+                      marginBottom: "16px",
+                      display: "block",
+                    }}
+                    alt="Solo Proposal"
+                    src={PostProposalLogo}
+                  />
+                  <h3 className="modal-title w-100 dark-grey-text font-weight-bold my-1 text-center">
+                    <strong>Post New Proposal</strong>
+                  </h3>
+                  <p
+                    style={{
+                      fontFamily: "Poppins, sans-serif",
+                      textAlign: "center",
+                    }}
+                  >
+                    Ready to Work? Let's Pitch your Best-Self!
+                    <br />
+                    Enable Collaboration, and earn many bonuses!
+                  </p>
+                  <div
+                    className="border rounded-0 text-center"
+                    style={{
+                      marginTop: "10px",
+                      marginBottom: "20px",
+                      marginRight: "auto",
+                      marginLeft: "auto",
+                      width: "100px",
+                    }}
+                  />
                   <div className="md-form mb-4">
                     <label
                       data-error="wrong"

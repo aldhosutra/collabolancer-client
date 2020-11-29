@@ -1,10 +1,11 @@
 import React from "react";
-import { ACCOUNT } from "../../transactions/constants";
+import { ACCOUNT, STATUS } from "../../transactions/constants";
 import NoData from "../general/nodata";
 import Proposal from "./proposal";
 
 import PostProposalDialog from "../dialog/postProposalDialog";
 import Pagination from "../general/pagination";
+import ChooseWinnerGuideDialog from "../dialog/ChooseWinnerGuideDialog";
 
 class ProposalList extends React.Component {
   constructor() {
@@ -15,6 +16,17 @@ class ProposalList extends React.Component {
       prevPage: 1,
       itemPerPage: 5,
     };
+  }
+
+  componentDidMount() {
+    if (this.props.project.asset.status !== STATUS.PROJECT.OPEN) {
+      this.setState((state) => {
+        return {
+          ...state,
+          collapsed: false,
+        };
+      });
+    }
   }
 
   componentDidUpdate() {
@@ -52,25 +64,10 @@ class ProposalList extends React.Component {
       this.props.account &&
       this.props.project &&
       this.props.account.address === this.props.project.asset.employer &&
-      this.props.project.asset.proposal.length > 0
+      this.props.project.asset.proposal.length > 0 &&
+      this.props.project.asset.status === STATUS.PROJECT.OPEN
     ) {
-      actionButton = (
-        <div>
-          <button
-            className="btn btn-primary border rounded-0 top-button"
-            type="button"
-            style={{
-              paddingRight: "24px",
-              paddingLeft: "24px",
-              backgroundColor: "#EF233C",
-              marginRight: "10px",
-              fontFamily: "Poppins, sans-serif",
-            }}
-          >
-            <strong>Choose Winner!</strong>
-          </button>
-        </div>
-      );
+      actionButton = <ChooseWinnerGuideDialog project={this.props.project} />;
     } else if (
       this.props.account &&
       this.props.project &&
@@ -83,10 +80,29 @@ class ProposalList extends React.Component {
     }
     return (
       <div>
+        {this.props.project.asset.status !== STATUS.PROJECT.OPEN ? (
+          <div>
+            <div
+              className="border rounded-0 text-center"
+              style={{
+                marginTop: "20px",
+                marginBottom: "20px",
+                marginRight: "auto",
+                marginLeft: "auto",
+                width: "100px",
+              }}
+            />
+          </div>
+        ) : (
+          <div></div>
+        )}
         <div
           style={{
             marginTop: "28px",
-            backgroundColor: "#EF233C",
+            backgroundColor:
+              this.props.project.asset.status === STATUS.PROJECT.OPEN
+                ? "#EF233C"
+                : "#2B2D42",
             paddingTop: "8px",
             paddingRight: "16px",
             paddingBottom: "8px",
@@ -115,11 +131,21 @@ class ProposalList extends React.Component {
                     .textContent
                 : new DOMParser().parseFromString("&#11208;", "text/html").body
                     .textContent}{" "}
-              Proposal ({this.props.project.asset.proposal.length})
+              {this.props.project.asset.status === STATUS.PROJECT.OPEN
+                ? "Proposal " + this.props.project.asset.proposal.length
+                : "Previously Applied Proposals"}
             </strong>
           </h5>
         </div>
-        <div id="proposal-list" className="collapse show">
+        <div
+          id="proposal-list"
+          className={
+            "collapse" +
+            (this.props.project.asset.status === STATUS.PROJECT.OPEN
+              ? " show"
+              : "")
+          }
+        >
           <div
             className="border rounded-0"
             style={{

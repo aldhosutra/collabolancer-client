@@ -217,7 +217,7 @@ class ProjectDetails extends React.Component {
               </div>
             </div>
             <SubmittedWork />
-            <Winner project={this.state.project} />
+            <Winner project={this.props.project} />
           </div>
         )}
       </div>

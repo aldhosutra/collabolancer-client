@@ -59,7 +59,17 @@ class Winner extends React.Component {
             }}
           >
             {this.props.project.asset.winner !== null ? (
-              <Proposal />
+              <Proposal
+                id={99}
+                key={99}
+                account={this.props.account}
+                project={this.props.project}
+                proposal={
+                  this.props.project.asset.proposal.filter(
+                    (item) => item.publicKey === this.props.project.asset.winner
+                  )[0]
+                }
+              />
             ) : (
               <NoData message="The employer hasn't chosen a winner yet" />
             )}

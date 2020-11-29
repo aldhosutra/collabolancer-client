@@ -3,6 +3,7 @@ import { MISCELLANEOUS } from "../../transactions/constants";
 import { postProject } from "../../utils/transaction";
 import { toast } from "react-toastify";
 import { getSession } from "../../utils/tools";
+import PostProjectDialogLogo from "../../asset/undraw_hiring_cyhs.svg";
 const { utils } = require("@liskhq/lisk-transactions");
 
 class PostProjectDialog extends React.Component {
@@ -56,7 +57,7 @@ class PostProjectDialog extends React.Component {
         .then((data) => {
           if (!data.errors) {
             toast.success(
-              "Post project duccessfull, changes can be seen after up to 15 seconds!"
+              "Post project successfull, changes can be seen after up to 15 seconds!"
             );
             this.setState((state) => {
               return {
@@ -126,12 +127,6 @@ class PostProjectDialog extends React.Component {
                   className="modal-header text-center"
                   style={{ borderBottom: "0 none" }}
                 >
-                  <h3
-                    className="modal-title w-100 dark-grey-text font-weight-bold my-1"
-                    id="myModalLabel"
-                  >
-                    <strong>Post New Project</strong>
-                  </h3>
                   <button
                     type="button"
                     className="close"
@@ -146,6 +141,44 @@ class PostProjectDialog extends React.Component {
                   onSubmit={this.onPostProjectFormSubmit}
                 >
                   <div className="modal-body mx-4">
+                    <img
+                      role="status"
+                      style={{
+                        width: "180px",
+                        marginLeft: "auto",
+                        marginRight: "auto",
+                        marginBottom: "16px",
+                        display: "block",
+                      }}
+                      alt="Solo Proposal"
+                      src={PostProjectDialogLogo}
+                    />
+                    <h3
+                      className="modal-title w-100 dark-grey-text font-weight-bold my-1 text-center"
+                      id="myModalLabel"
+                    >
+                      <strong>Post New Project</strong>
+                    </h3>
+                    <p
+                      style={{
+                        fontFamily: "Poppins, sans-serif",
+                        textAlign: "center",
+                      }}
+                    >
+                      Setup Project that Act as a Contract,
+                      <br />
+                      Describe your Provision and Requirement Below!
+                    </p>
+                    <div
+                      className="border rounded-0 text-center"
+                      style={{
+                        marginTop: "10px",
+                        marginBottom: "20px",
+                        marginRight: "auto",
+                        marginLeft: "auto",
+                        width: "100px",
+                      }}
+                    />
                     <div className="md-form mb-4">
                       <label
                         data-error="wrong"

@@ -219,7 +219,32 @@ const joinTeam = async (senderPassphrase, proposalPublicKey, roleIndex) => {
   return ret;
 };
 
-const startWork = () => {};
+const startWork = async (
+  senderPassphrase,
+  projectPublicKey,
+  selectedProposalPublicKey
+) => {
+  let ret;
+  const tx = new StartWorkTransaction({
+    asset: {
+      projectPublicKey: projectPublicKey,
+      selectedProposalPublicKey: selectedProposalPublicKey,
+    },
+    networkIdentifier: networkIdentifier,
+    timestamp: utils.getTimeFromBlockchainEpoch(),
+  });
+  tx.sign(senderPassphrase);
+  await api.transactions
+    .broadcast(tx.toJSON())
+    .then((res) => {
+      ret = res;
+    })
+    .catch((err) => {
+      console.log(err);
+      ret = err;
+    });
+  return ret;
+};
 
 const submitContribution = () => {};
 
