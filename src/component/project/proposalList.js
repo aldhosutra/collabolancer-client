@@ -72,6 +72,7 @@ class ProposalList extends React.Component {
       this.props.account &&
       this.props.project &&
       this.props.account.asset.type === ACCOUNT.WORKER &&
+      this.props.project.asset.status === STATUS.PROJECT.OPEN &&
       !this.props.project.asset.proposal
         .map((item) => item.asset.leader)
         .includes(this.props.account.address)

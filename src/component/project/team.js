@@ -3,6 +3,7 @@ import { renderAvatar } from "../avatar";
 import JoinAsTeamDialog from "../dialog/joinAsTeam";
 import { STATUS } from "../../transactions/constants";
 import ContributionList from "./contributionList";
+import SubmitContributionDialog from "../dialog/submitContribution";
 const { utils } = require("@liskhq/lisk-transactions");
 
 class Team extends React.Component {
@@ -144,25 +145,12 @@ class Team extends React.Component {
                 className="d-flex justify-content-end"
                 style={{ marginTop: "16px" }}
               >
-                {[STATUS.TEAM.SELECTED, STATUS.TEAM.REQUEST_REVISION].includes(
-                  this.props.team.asset.status
-                ) ? (
-                  <button
-                    className="btn btn-primary border rounded-0 top-button"
-                    type="button"
-                    style={{
-                      paddingRight: "24px",
-                      paddingLeft: "24px",
-                      backgroundColor: "#EF233C",
-                      fontFamily: "Poppins, sans-serif",
-                      marginBottom: "10px",
-                    }}
-                  >
-                    <strong>Submit Contribution</strong>
-                  </button>
-                ) : (
-                  <div></div>
-                )}
+                <SubmitContributionDialog
+                  id={this.props.id}
+                  proposal={this.props.proposal}
+                  team={this.props.team}
+                  account={this.props.account}
+                />
                 {[
                   STATUS.PROJECT.FINISHED,
                   STATUS.PROJECT.TERMINATED,

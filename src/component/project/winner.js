@@ -60,8 +60,8 @@ class Winner extends React.Component {
           >
             {this.props.project.asset.winner !== null ? (
               <Proposal
-                id={99}
-                key={99}
+                id={"winner"}
+                key={"winner"}
                 account={this.props.account}
                 project={this.props.project}
                 proposal={

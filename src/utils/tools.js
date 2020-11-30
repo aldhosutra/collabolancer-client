@@ -2,8 +2,21 @@ import { APIClient } from "@liskhq/lisk-api-client";
 import { toast } from "react-toastify";
 import config from "../config/config.json";
 import { MISCELLANEOUS } from "../transactions/constants";
+const base91 = require("node-base91");
 
 const client = new APIClient(config.nodes);
+
+export const saveFile = (data, type) => {
+  const arrayBuffer = base91.decode(data);
+  const blob = new Blob([arrayBuffer], { type: type });
+
+  const url = window.URL.createObjectURL(blob);
+  const tempLink = document.createElement("a");
+
+  tempLink.href = url;
+  tempLink.setAttribute("download", data.title);
+  tempLink.click();
+};
 
 export const deflationaryMultiplier = async () => {
   let height = 0;

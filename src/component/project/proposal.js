@@ -44,8 +44,8 @@ class Proposal extends React.Component {
       if (i >= this.props.proposal.asset.term.roleList.length) break;
       teamList.push(
         <Team
-          key={i}
-          id={i}
+          key={`${this.props.id}-${i}`}
+          id={`${this.props.id}-${i}`}
           account={this.props.account}
           proposal={this.props.proposal}
           project={this.props.project}
@@ -70,8 +70,12 @@ class Proposal extends React.Component {
             className="col details"
             data-toggle="collapse"
             aria-expanded="false"
-            aria-controls={"proposal-" + this.props.proposal.publicKey}
-            href={"#proposal-" + this.props.proposal.publicKey}
+            aria-controls={
+              "proposal-" + this.props.proposal.publicKey + "-" + this.props.id
+            }
+            href={
+              "#proposal-" + this.props.proposal.publicKey + "-" + this.props.id
+            }
             role="button"
             onClick={() => {
               return this.setState({ collapsed: !this.state.collapsed });
@@ -113,9 +117,19 @@ class Proposal extends React.Component {
               className="btn btn-primary border rounded-0 top-button"
               data-toggle="collapse"
               aria-expanded="false"
-              aria-controls={"proposal-" + this.props.proposal.publicKey}
+              aria-controls={
+                "proposal-" +
+                this.props.proposal.publicKey +
+                "-" +
+                this.props.id
+              }
               role="button"
-              href={"#proposal-" + this.props.proposal.publicKey}
+              href={
+                "#proposal-" +
+                this.props.proposal.publicKey +
+                "-" +
+                this.props.id
+              }
               style={{
                 backgroundColor: "rgb(239, 35, 60)",
                 margin: "auto",
@@ -137,7 +151,7 @@ class Proposal extends React.Component {
         </div>
         <div
           className="border rounded-0 collapse"
-          id={"proposal-" + this.props.proposal.publicKey}
+          id={"proposal-" + this.props.proposal.publicKey + "-" + this.props.id}
           style={{
             marginTop: "16px",
             paddingLeft: "20px",

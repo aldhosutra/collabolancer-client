@@ -246,7 +246,40 @@ const startWork = async (
   return ret;
 };
 
-const submitContribution = () => {};
+const submitContribution = async (
+  senderPassphrase,
+  teamPublicKey,
+  fileextension,
+  filemime,
+  filename,
+  filedata
+) => {
+  let ret;
+  const contributionAccount = createAccount();
+  const tx = new SubmitContributionTransaction({
+    asset: {
+      contributionPublicKey: contributionAccount.publicKey,
+      teamPublicKey: teamPublicKey,
+      fileextension: fileextension,
+      filemime: filemime,
+      filename: filename,
+      filedata: filedata,
+    },
+    networkIdentifier: networkIdentifier,
+    timestamp: utils.getTimeFromBlockchainEpoch(),
+  });
+  tx.sign(senderPassphrase);
+  await api.transactions
+    .broadcast(tx.toJSON())
+    .then((res) => {
+      ret = res;
+    })
+    .catch((err) => {
+      console.log(err);
+      ret = err;
+    });
+  return ret;
+};
 
 const leaderRequestRevision = () => {};
 

@@ -325,6 +325,7 @@ class JoinAsTeamDialog extends React.Component {
                                 .BigNum(MISCELLANEOUS.TEAM_CASHBACK_PERCENTAGE)
                                 .mul(deflationaryRate)
                                 .mul(this.props.proposal.asset.potentialEarning)
+                                .round()
                                 .toString()
                             )}{" "}
                             CLNC
