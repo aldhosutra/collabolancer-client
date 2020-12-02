@@ -38,6 +38,10 @@ class Proposal extends React.Component {
     );
     const teamList = [];
     let openPosition = 0;
+    const openPositionString =
+      this.props.proposal.asset.status === STATUS.PROPOSAL.APPLIED
+        ? "Open Position"
+        : "Unfilled Position";
     for (
       let i = (this.state.page - 1) * limit;
       i < (this.state.page - 1) * limit + limit;
@@ -84,7 +88,7 @@ class Proposal extends React.Component {
               return this.setState({ collapsed: !this.state.collapsed });
             }}
           >
-            <p
+            <div
               style={{
                 fontFamily: "Poppins, sans-serif",
                 backgroundImage: `url('data:image/svg+xml,${renderAvatar(
@@ -94,6 +98,7 @@ class Proposal extends React.Component {
                 backgroundRepeat: "no-repeat",
                 backgroundSize: "contain",
                 backgroundPosition: "left",
+                marginBottom: "1rem",
                 paddingLeft: "50px",
                 height: "40px",
               }}
@@ -104,11 +109,11 @@ class Proposal extends React.Component {
               <p style={{ lineHeight: "15px", fontSize: "14px" }}>
                 {teamList.length > 0
                   ? openPosition > 0
-                    ? `Open Position: ${openPosition} Position`
-                    : "No Open Position"
+                    ? `${openPositionString}: ${openPosition} Position`
+                    : `No ${openPositionString}`
                   : "Solo Proposal"}
               </p>
-            </p>
+            </div>
           </div>
           <div className="col-auto d-flex justify-content-center justify-content-lg-center details">
             <PitchingDialog

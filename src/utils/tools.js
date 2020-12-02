@@ -3,18 +3,33 @@ import { toast } from "react-toastify";
 import config from "../config/config.json";
 import { MISCELLANEOUS } from "../transactions/constants";
 const base91 = require("node-base91");
+const { getAddressFromPublicKey } = require("@liskhq/lisk-cryptography");
 
 const client = new APIClient(config.nodes);
 
-export const saveFile = (data, type) => {
-  const arrayBuffer = base91.decode(data);
+export const saveFile = async (filePublicKey) => {
+  let fileData = null;
+  let title = "";
+  let type = "";
+  await client.accounts
+    .get({ address: getAddressFromPublicKey(filePublicKey) })
+    .then(async (data) => {
+      title = data.data[0].asset.filename;
+      type = data.data[0].asset.mime;
+      await client.transactions
+        .get({ id: data.data[0].asset.dataTransaction })
+        .then((file) => {
+          fileData = file.data[0].asset.filedata;
+        });
+    });
+  const arrayBuffer = base91.decode(fileData);
   const blob = new Blob([arrayBuffer], { type: type });
 
   const url = window.URL.createObjectURL(blob);
   const tempLink = document.createElement("a");
 
   tempLink.href = url;
-  tempLink.setAttribute("download", data.title);
+  tempLink.setAttribute("download", title);
   tempLink.click();
 };
 

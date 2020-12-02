@@ -31,6 +31,10 @@ class ContractCard extends React.PureComponent {
         <div
           className="card-body"
           style={{ marginTop: "auto", marginBottom: "auto" }}
+          data-toggle="tooltip"
+          data-placement="top"
+          title={this.props.tooltip}
+          onClick={this.props.onClick}
         >
           <img
             role="status"

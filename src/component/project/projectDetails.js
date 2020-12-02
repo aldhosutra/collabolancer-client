@@ -20,7 +20,7 @@ class ProjectDetails extends React.Component {
         </h5>
         <ProjectContractDetail contract={this.props.project} />
         <div className="row">
-          <div className="col-lg-3 details">
+          <div className="col-lg-4 details">
             <h5 style={{ fontFamily: "Poppins, sans-serif" }}>
               <strong>Project ID</strong>
             </h5>
@@ -37,7 +37,7 @@ class ProjectDetails extends React.Component {
           </div>
         </div>
         <div className="row">
-          <div className="col-lg-3 details">
+          <div className="col-lg-4 details">
             <h5 style={{ fontFamily: "Poppins, sans-serif" }}>
               <strong>Prize</strong>
             </h5>
@@ -49,7 +49,7 @@ class ProjectDetails extends React.Component {
           </div>
         </div>
         <div className="row">
-          <div className="col-lg-3 details">
+          <div className="col-lg-4 details">
             <h5 style={{ fontFamily: "Poppins, sans-serif" }}>
               <strong>Required Commitment Fee</strong>
             </h5>
@@ -64,7 +64,7 @@ class ProjectDetails extends React.Component {
           </div>
         </div>
         <div className="row">
-          <div className="col-lg-3 details">
+          <div className="col-lg-4 details">
             <h5 style={{ fontFamily: "Poppins, sans-serif" }}>
               <strong>Category</strong>
             </h5>
@@ -82,7 +82,7 @@ class ProjectDetails extends React.Component {
           </div>
         </div>
         <div className="row">
-          <div className="col-lg-3 details">
+          <div className="col-lg-4 details">
             <h5 style={{ fontFamily: "Poppins, sans-serif" }}>
               <strong>Working Time Limit</strong>
             </h5>
@@ -94,7 +94,7 @@ class ProjectDetails extends React.Component {
           </div>
         </div>
         <div className="row">
-          <div className="col-lg-3 details">
+          <div className="col-lg-4 details">
             <h5 style={{ fontFamily: "Poppins, sans-serif" }}>
               <strong>Maximum Revision</strong>
             </h5>
@@ -110,7 +110,7 @@ class ProjectDetails extends React.Component {
         ) : (
           <div>
             <div className="row">
-              <div className="col-lg-3 details">
+              <div className="col-lg-4 details">
                 <h5 style={{ fontFamily: "Poppins, sans-serif" }}>
                   <strong>Work Started</strong>
                 </h5>
@@ -129,7 +129,7 @@ class ProjectDetails extends React.Component {
               </div>
             </div>
             <div className="row">
-              <div className="col-lg-3 details">
+              <div className="col-lg-4 details">
                 <h5 style={{ fontFamily: "Poppins, sans-serif" }}>
                   <strong>Work Finished</strong>
                 </h5>
@@ -148,7 +148,7 @@ class ProjectDetails extends React.Component {
               </div>
             </div>
             <div className="row">
-              <div className="col-lg-3 details">
+              <div className="col-lg-4 details">
                 <h5 style={{ fontFamily: "Poppins, sans-serif" }}>
                   <strong>Action</strong>
                 </h5>

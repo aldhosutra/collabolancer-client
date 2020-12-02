@@ -174,31 +174,33 @@ class Team extends React.Component {
                   team={this.props.team}
                   account={this.props.account}
                 />
-                {[
+                {
+                  /* [
                   STATUS.PROJECT.FINISHED,
                   STATUS.PROJECT.TERMINATED,
                   STATUS.PROJECT.DISPUTED,
                   STATUS.PROJECT.DISPUTE_CLOSED,
-                ].includes(this.props.project.asset.status) &&
-                [STATUS.TEAM.REJECTED].includes(
-                  this.props.team.asset.status
-                ) ? (
-                  <button
-                    className="btn btn-primary border rounded-0 top-button"
-                    type="button"
-                    style={{
-                      paddingRight: "24px",
-                      paddingLeft: "24px",
-                      backgroundColor: "#EF233C",
-                      fontFamily: "Poppins, sans-serif",
-                      marginBottom: "10px",
-                    }}
-                  >
-                    <strong>Open Dispute</strong>
-                  </button>
-                ) : (
-                  <div></div>
-                )}
+                ].includes(this.props.project.asset.status) && */
+                  [STATUS.TEAM.REJECTED].includes(
+                    this.props.team.asset.status
+                  ) ? (
+                    <button
+                      className="btn btn-primary border rounded-0 top-button"
+                      type="button"
+                      style={{
+                        paddingRight: "24px",
+                        paddingLeft: "24px",
+                        backgroundColor: "#EF233C",
+                        fontFamily: "Poppins, sans-serif",
+                        marginBottom: "10px",
+                      }}
+                    >
+                      <strong>Open Dispute</strong>
+                    </button>
+                  ) : (
+                    <div></div>
+                  )
+                }
               </div>
               <p style={{ fontFamily: "Poppins, sans-serif" }}>
                 <strong>Team Contract:</strong>
@@ -208,7 +210,11 @@ class Team extends React.Component {
                 className="border rounded-0"
                 style={{ marginTop: "10px", marginBottom: "20px" }}
               />
-              <ContributionList team={this.props.team} />
+              <ContributionList
+                team={this.props.team}
+                proposal={this.props.proposal}
+                account={this.props.account}
+              />
               <div style={{ marginTop: "10px", marginBottom: "20px" }} />
             </div>
           )}

@@ -5,6 +5,16 @@ import {
   faGift,
   faCommentDollar,
   faGavel,
+  faDownload,
+  faComments,
 } from "@fortawesome/free-solid-svg-icons";
 
-library.add(faFunnelDollar, faHandHoldingUsd, faGift, faCommentDollar, faGavel);
+library.add(
+  faFunnelDollar,
+  faHandHoldingUsd,
+  faGift,
+  faCommentDollar,
+  faGavel,
+  faDownload,
+  faComments
+);

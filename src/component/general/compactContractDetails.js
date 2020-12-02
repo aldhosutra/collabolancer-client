@@ -28,7 +28,7 @@ class CompactContractDetail extends React.PureComponent {
             icon={"gavel"}
             type={this.props.contract.asset.type}
             name={"Guilty Status"}
-            value={this.props.contract.asset.guilty.toString()}
+            value={this.props.contract.asset.guilty ? "Guilty!" : "Innocent"}
           />
         </div>
         <div className="col-lg-4">

@@ -142,6 +142,10 @@ class StatusCard extends React.PureComponent {
         <div
           className="card-body"
           style={{ marginTop: "auto", marginBottom: "auto" }}
+          data-toggle="tooltip"
+          data-placement="top"
+          title={this.props.tooltip}
+          onClick={this.props.onClick}
         >
           <img
             role="status"
@@ -198,6 +202,10 @@ class StatusCard extends React.PureComponent {
         <div
           className="card-body"
           style={{ marginTop: "auto", marginBottom: "auto" }}
+          data-toggle="tooltip"
+          data-placement="top"
+          title={this.props.tooltip}
+          onClick={this.props.onClick}
         >
           <div className="row">
             <div className="col-3" style={{ margin: "auto" }}>
@@ -229,7 +237,7 @@ class StatusCard extends React.PureComponent {
               <div
                 style={{
                   fontFamily: "Poppins, sans-serif",
-                  fontSize: "24px",
+                  fontSize: "22px",
                 }}
               >
                 {this.props.contract.asset.status

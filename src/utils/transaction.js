@@ -281,7 +281,32 @@ const submitContribution = async (
   return ret;
 };
 
-const leaderRequestRevision = () => {};
+const leaderRequestRevision = async (
+  senderPassphrase,
+  contributionPublicKey,
+  reason
+) => {
+  let ret;
+  const tx = new LeaderRequestRevisionTransaction({
+    asset: {
+      contributionPublicKey: contributionPublicKey,
+      reason: reason,
+    },
+    networkIdentifier: networkIdentifier,
+    timestamp: utils.getTimeFromBlockchainEpoch(),
+  });
+  tx.sign(senderPassphrase);
+  await api.transactions
+    .broadcast(tx.toJSON())
+    .then((res) => {
+      ret = res;
+    })
+    .catch((err) => {
+      console.log(err);
+      ret = err;
+    });
+  return ret;
+};
 
 const submitWork = () => {};
 
