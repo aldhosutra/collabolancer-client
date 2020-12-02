@@ -3,6 +3,7 @@ import SubmittedWork from "./submittedWork";
 import * as constants from "@liskhq/lisk-constants";
 import { STATUS } from "../../transactions/constants";
 import Winner from "./winner";
+import ProjectContractDetail from "../general/projectContractDetails";
 const dateFormat = require("dateformat");
 const { utils } = require("@liskhq/lisk-transactions");
 
@@ -14,57 +15,10 @@ class ProjectDetails extends React.Component {
           className="border rounded-0"
           style={{ marginTop: "10px", marginBottom: "20px" }}
         />
-        <div className="row" style={{ color: "#ef233c" }}>
-          <div className="col-lg-3 details">
-            <h5 style={{ fontFamily: "Poppins, sans-serif" }}>
-              <strong>Project Fund Pool</strong>
-            </h5>
-          </div>
-          <div className="col details">
-            <p style={{ fontFamily: "Poppins, sans-serif" }}>
-              <strong>
-                {utils.convertBeddowsToLSK(
-                  this.props.project.asset.freezedFund
-                )}{" "}
-                CLNC
-              </strong>
-            </p>
-          </div>
-        </div>
-        <div className="row" style={{ color: "#ef233c" }}>
-          <div className="col-lg-3 details">
-            <h5 style={{ fontFamily: "Poppins, sans-serif" }}>
-              <strong>Project Fee Pool</strong>
-            </h5>
-          </div>
-          <div className="col details">
-            <p style={{ fontFamily: "Poppins, sans-serif" }}>
-              <strong>
-                {utils.convertBeddowsToLSK(this.props.project.asset.freezedFee)}{" "}
-                CLNC
-              </strong>
-            </p>
-          </div>
-        </div>
-        <div className="row" style={{ color: "#ef233c" }}>
-          <div className="col-lg-3 details">
-            <h5 style={{ fontFamily: "Poppins, sans-serif" }}>
-              <strong>Project Bonus Pool</strong>
-            </h5>
-          </div>
-          <div className="col details">
-            <p style={{ fontFamily: "Poppins, sans-serif" }}>
-              <strong>
-                {utils.convertBeddowsToLSK(this.props.project.asset.cashback)}{" "}
-                CLNC
-              </strong>
-            </p>
-          </div>
-        </div>
-        <div
-          className="border rounded-0"
-          style={{ marginTop: "10px", marginBottom: "20px" }}
-        />
+        <h5 style={{ fontFamily: "Poppins, sans-serif", marginBottom: "16px" }}>
+          <strong>Project Contract:</strong>
+        </h5>
+        <ProjectContractDetail contract={this.props.project} />
         <div className="row">
           <div className="col-lg-3 details">
             <h5 style={{ fontFamily: "Poppins, sans-serif" }}>

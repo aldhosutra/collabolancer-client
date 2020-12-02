@@ -42,7 +42,7 @@ class SubmittedWork extends React.Component {
                     .textContent
                 : new DOMParser().parseFromString("&#11208;", "text/html").body
                     .textContent}{" "}
-              Submitted Work
+              Leader's Submitted Work
             </strong>
           </h5>
         </div>

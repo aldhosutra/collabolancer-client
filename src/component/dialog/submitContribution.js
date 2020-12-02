@@ -40,6 +40,8 @@ class SubmitContributionDialog extends React.Component {
                 "#submit-contribution-" +
                   this.props.team.publicKey +
                   "-" +
+                  this.props.prefix +
+                  "-" +
                   this.props.id
               )
               .modal("hide");
@@ -80,6 +82,8 @@ class SubmitContributionDialog extends React.Component {
             "#submit-contribution-" +
             this.props.team.publicKey +
             "-" +
+            this.props.prefix +
+            "-" +
             this.props.id
           }
           style={{
@@ -97,6 +101,8 @@ class SubmitContributionDialog extends React.Component {
           id={
             "submit-contribution-" +
             this.props.team.publicKey +
+            "-" +
+            this.props.prefix +
             "-" +
             this.props.id
           }
@@ -135,7 +141,12 @@ class SubmitContributionDialog extends React.Component {
                 />
                 <h3
                   className="modal-title w-100 dark-grey-text font-weight-bold my-1 text-center"
-                  id={"modal-label-" + this.props.team.publicKey}
+                  id={
+                    "modal-label-" +
+                    this.props.team.publicKey +
+                    "-" +
+                    this.props.prefix
+                  }
                 >
                   <strong>Submit Contribution</strong>
                 </h3>

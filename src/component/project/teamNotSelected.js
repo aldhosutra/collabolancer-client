@@ -1,5 +1,5 @@
 import React from "react";
-import TeamNotSelectedLogo from "../../asset/undraw_cancel_u1it.svg";
+import TeamNotSelectedLogo from "../../asset/undraw_heartbroken_cble.svg";
 
 class TeamNotSelected extends React.PureComponent {
   render() {

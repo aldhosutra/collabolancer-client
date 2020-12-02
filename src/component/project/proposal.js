@@ -4,6 +4,8 @@ import Pagination from "../general/pagination";
 import SoloProposal from "./soloProposal";
 import Team from "./team";
 import PitchingDialog from "../dialog/pitchingDialog";
+import CompactContractCard from "../general/compactContractDetails";
+import { MISCELLANEOUS, STATUS } from "../../transactions/constants";
 const { utils } = require("@liskhq/lisk-transactions");
 const parse = require("html-react-parser");
 
@@ -44,8 +46,9 @@ class Proposal extends React.Component {
       if (i >= this.props.proposal.asset.term.roleList.length) break;
       teamList.push(
         <Team
-          key={`${this.props.id}-${i}`}
-          id={`${this.props.id}-${i}`}
+          key={i}
+          id={i}
+          prefix={this.props.id}
           account={this.props.account}
           proposal={this.props.proposal}
           project={this.props.project}
@@ -169,122 +172,7 @@ class Proposal extends React.Component {
           >
             <strong>Proposal Contract</strong>
           </h4>
-          <div className="row">
-            <div className="col-lg-3 details">
-              <h6
-                style={{
-                  fontFamily: "Poppins, sans-serif",
-                  color: "#EF233C",
-                }}
-              >
-                <strong>Status</strong>
-              </h6>
-            </div>
-            <div className="col details">
-              <p
-                style={{
-                  fontFamily: "Poppins, sans-serif",
-                  fontSize: "14px",
-                  color: "#EF233C",
-                }}
-              >
-                <strong>
-                  {this.props.proposal.asset.status
-                    .replaceAll("-", " ")
-                    .replace(/\w\S*/g, (txt) => {
-                      return (
-                        txt.charAt(0).toUpperCase() +
-                        txt.substr(1).toLowerCase()
-                      );
-                    })}
-                </strong>
-              </p>
-            </div>
-          </div>
-          <div className="row">
-            <div className="col-lg-3 details">
-              <h6
-                style={{
-                  fontFamily: "Poppins, sans-serif",
-                  color: "#EF233C",
-                }}
-              >
-                <strong>Proposal Fund Pool</strong>
-              </h6>
-            </div>
-            <div className="col details">
-              <p
-                style={{
-                  fontFamily: "Poppins, sans-serif",
-                  fontSize: "14px",
-                  color: "#EF233C",
-                }}
-              >
-                <strong>
-                  {utils.convertBeddowsToLSK(
-                    this.props.proposal.asset.freezedFund
-                  )}{" "}
-                  CLNC
-                </strong>
-              </p>
-            </div>
-          </div>
-          <div className="row">
-            <div className="col-lg-3 details">
-              <h6
-                style={{
-                  fontFamily: "Poppins, sans-serif",
-                  color: "#EF233C",
-                }}
-              >
-                <strong>Proposal Fee Pool</strong>
-              </h6>
-            </div>
-            <div className="col details">
-              <p
-                style={{
-                  fontFamily: "Poppins, sans-serif",
-                  fontSize: "14px",
-                  color: "#EF233C",
-                }}
-              >
-                <strong>
-                  {utils.convertBeddowsToLSK(
-                    this.props.proposal.asset.freezedFee
-                  )}{" "}
-                  CLNC
-                </strong>
-              </p>
-            </div>
-          </div>
-          <div className="row">
-            <div className="col-lg-3 details">
-              <h6
-                style={{
-                  fontFamily: "Poppins, sans-serif",
-                  color: "#EF233C",
-                }}
-              >
-                <strong>Proposal Bonus Pool</strong>
-              </h6>
-            </div>
-            <div className="col details">
-              <p
-                style={{
-                  fontFamily: "Poppins, sans-serif",
-                  fontSize: "14px",
-                  color: "#EF233C",
-                }}
-              >
-                <strong>
-                  {utils.convertBeddowsToLSK(
-                    this.props.proposal.asset.cashback
-                  )}{" "}
-                  CLNC
-                </strong>
-              </p>
-            </div>
-          </div>
+          <CompactContractCard contract={this.props.proposal} />
           <div
             className="border rounded-0"
             style={{ marginTop: "10px", marginBottom: "20px" }}
@@ -321,30 +209,40 @@ class Proposal extends React.Component {
                   </p>
                 </div>
               </div>
-              <div className="row">
-                <div className="col-lg-3 details">
-                  <h6
-                    style={{
-                      fontFamily: "Poppins, sans-serif",
-                    }}
-                  >
-                    <strong>Potential Earning</strong>
-                  </h6>
+              {[STATUS.PROPOSAL.APPLIED, STATUS.PROPOSAL.NOT_SELECTED].includes(
+                this.props.proposal.asset.status
+              ) ? (
+                <div className="row">
+                  <div className="col-lg-3 details">
+                    <h6
+                      style={{
+                        fontFamily: "Poppins, sans-serif",
+                      }}
+                    >
+                      <strong>Team Potential Earning</strong>
+                    </h6>
+                  </div>
+                  <div className="col details">
+                    <p
+                      style={{
+                        fontFamily: "Poppins, sans-serif",
+                        fontSize: "14px",
+                      }}
+                    >
+                      {utils.convertBeddowsToLSK(
+                        utils
+                          .BigNum(this.props.proposal.asset.term.commitmentFee)
+                          .div(MISCELLANEOUS.TEAM_COMMITMENT_PERCENTAGE)
+                          .round()
+                          .toString()
+                      )}{" "}
+                      CLNC
+                    </p>
+                  </div>
                 </div>
-                <div className="col details">
-                  <p
-                    style={{
-                      fontFamily: "Poppins, sans-serif",
-                      fontSize: "14px",
-                    }}
-                  >
-                    {utils.convertBeddowsToLSK(
-                      this.props.proposal.asset.potentialEarning
-                    )}{" "}
-                    CLNC
-                  </p>
-                </div>
-              </div>
+              ) : (
+                <div></div>
+              )}
               <div className="row">
                 <div className="col-lg-3 details">
                   <h6 style={{ fontFamily: "Poppins, sans-serif" }}>

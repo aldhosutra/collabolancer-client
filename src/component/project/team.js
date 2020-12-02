@@ -4,7 +4,7 @@ import JoinAsTeamDialog from "../dialog/joinAsTeam";
 import { STATUS } from "../../transactions/constants";
 import ContributionList from "./contributionList";
 import SubmitContributionDialog from "../dialog/submitContribution";
-const { utils } = require("@liskhq/lisk-transactions");
+import CompactContractCard from "../general/compactContractDetails";
 
 class Team extends React.Component {
   constructor() {
@@ -39,10 +39,20 @@ class Team extends React.Component {
             data-toggle={this.props.team === 0 ? "modal" : "collapse"}
             aria-expanded="true"
             aria-controls={
-              "team-" + this.props.proposal.publicKey + "-" + this.props.id
+              "team-" +
+              this.props.proposal.publicKey +
+              "-" +
+              this.props.prefix +
+              "-" +
+              this.props.id
             }
             href={
-              "#team-" + this.props.proposal.publicKey + "-" + this.props.id
+              "#team-" +
+              this.props.proposal.publicKey +
+              "-" +
+              this.props.prefix +
+              "-" +
+              this.props.id
             }
             role="button"
             onClick={() => {
@@ -90,6 +100,7 @@ class Team extends React.Component {
               {this.props.team === 0 ? (
                 <JoinAsTeamDialog
                   id={this.props.id}
+                  prefix={this.props.prefix}
                   account={this.props.account}
                   proposal={this.props.proposal}
                   team={this.props.team}
@@ -110,11 +121,15 @@ class Team extends React.Component {
                     "team-" +
                     this.props.proposal.publicKey +
                     "-" +
+                    this.props.prefix +
+                    "-" +
                     this.props.id
                   }
                   href={
                     "#team-" +
                     this.props.proposal.publicKey +
+                    "-" +
+                    this.props.prefix +
                     "-" +
                     this.props.id
                   }
@@ -133,7 +148,14 @@ class Team extends React.Component {
             <div></div>
           ) : (
             <div
-              id={"team-" + this.props.proposal.publicKey + "-" + this.props.id}
+              id={
+                "team-" +
+                this.props.proposal.publicKey +
+                "-" +
+                this.props.prefix +
+                "-" +
+                this.props.id
+              }
               className="collapse"
               style={{
                 paddingLeft: "8px",
@@ -147,6 +169,7 @@ class Team extends React.Component {
               >
                 <SubmitContributionDialog
                   id={this.props.id}
+                  prefix={this.props.prefix}
                   proposal={this.props.proposal}
                   team={this.props.team}
                   account={this.props.account}
@@ -178,124 +201,9 @@ class Team extends React.Component {
                 )}
               </div>
               <p style={{ fontFamily: "Poppins, sans-serif" }}>
-                Team Contract:
+                <strong>Team Contract:</strong>
               </p>
-              <div className="row">
-                <div className="col-lg-3 details">
-                  <h6
-                    style={{
-                      fontFamily: "Poppins, sans-serif",
-                      color: "#EF233C",
-                    }}
-                  >
-                    <strong>Status</strong>
-                  </h6>
-                </div>
-                <div className="col details">
-                  <p
-                    style={{
-                      fontFamily: "Poppins, sans-serif",
-                      fontSize: "14px",
-                      color: "#EF233C",
-                    }}
-                  >
-                    <strong>
-                      {this.props.team.asset.status
-                        .replaceAll("-", " ")
-                        .replace(/\w\S*/g, (txt) => {
-                          return (
-                            txt.charAt(0).toUpperCase() +
-                            txt.substr(1).toLowerCase()
-                          );
-                        })}
-                    </strong>
-                  </p>
-                </div>
-              </div>
-              <div className="row">
-                <div className="col-lg-3 details">
-                  <h6
-                    style={{
-                      fontFamily: "Poppins, sans-serif",
-                      color: "#EF233C",
-                    }}
-                  >
-                    <strong>Team Fund Pool</strong>
-                  </h6>
-                </div>
-                <div className="col details">
-                  <p
-                    style={{
-                      fontFamily: "Poppins, sans-serif",
-                      fontSize: "14px",
-                      color: "#EF233C",
-                    }}
-                  >
-                    <strong>
-                      {utils.convertBeddowsToLSK(
-                        this.props.team.asset.freezedFund
-                      )}{" "}
-                      CLNC
-                    </strong>
-                  </p>
-                </div>
-              </div>
-              <div className="row">
-                <div className="col-lg-3 details">
-                  <h6
-                    style={{
-                      fontFamily: "Poppins, sans-serif",
-                      color: "#EF233C",
-                    }}
-                  >
-                    <strong>Team Fee Pool</strong>
-                  </h6>
-                </div>
-                <div className="col details">
-                  <p
-                    style={{
-                      fontFamily: "Poppins, sans-serif",
-                      fontSize: "14px",
-                      color: "#EF233C",
-                    }}
-                  >
-                    <strong>
-                      {utils.convertBeddowsToLSK(
-                        this.props.team.asset.freezedFee
-                      )}{" "}
-                      CLNC
-                    </strong>
-                  </p>
-                </div>
-              </div>
-              <div className="row">
-                <div className="col-lg-3 details">
-                  <h6
-                    style={{
-                      fontFamily: "Poppins, sans-serif",
-                      color: "#EF233C",
-                    }}
-                  >
-                    <strong>Team Bonus Pool</strong>
-                  </h6>
-                </div>
-                <div className="col details">
-                  <p
-                    style={{
-                      fontFamily: "Poppins, sans-serif",
-                      fontSize: "14px",
-                      color: "#EF233C",
-                    }}
-                  >
-                    <strong>
-                      {utils.convertBeddowsToLSK(
-                        this.props.team.asset.cashback
-                      )}{" "}
-                      CLNC
-                    </strong>
-                  </p>
-                </div>
-              </div>
+              <CompactContractCard contract={this.props.team} />
               <div
                 className="border rounded-0"
                 style={{ marginTop: "10px", marginBottom: "20px" }}

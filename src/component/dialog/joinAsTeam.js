@@ -40,6 +40,8 @@ class JoinAsTeamDialog extends React.Component {
                 "#team-apply-" +
                   this.props.proposal.publicKey +
                   "-" +
+                  this.props.prefix +
+                  "-" +
                   this.props.id
               )
               .modal("hide");
@@ -83,7 +85,12 @@ class JoinAsTeamDialog extends React.Component {
           type="button"
           data-toggle="modal"
           data-target={
-            "#team-apply-" + this.props.proposal.publicKey + "-" + this.props.id
+            "#team-apply-" +
+            this.props.proposal.publicKey +
+            "-" +
+            this.props.prefix +
+            "-" +
+            this.props.id
           }
           style={{
             backgroundColor: "rgb(239, 35, 60)",
@@ -98,7 +105,12 @@ class JoinAsTeamDialog extends React.Component {
         <div
           className="modal fade"
           id={
-            "team-apply-" + this.props.proposal.publicKey + "-" + this.props.id
+            "team-apply-" +
+            this.props.proposal.publicKey +
+            "-" +
+            this.props.prefix +
+            "-" +
+            this.props.id
           }
           tabIndex={-1}
           role="dialog"
@@ -139,7 +151,12 @@ class JoinAsTeamDialog extends React.Component {
                   />
                   <h3
                     className="modal-title w-100 dark-grey-text font-weight-bold my-1 text-center"
-                    id={"modal-label-" + this.props.proposal.publicKey}
+                    id={
+                      "modal-label-" +
+                      this.props.proposal.publicKey +
+                      "-" +
+                      this.props.prefix
+                    }
                   >
                     <strong>Join As Team Member</strong>
                   </h3>

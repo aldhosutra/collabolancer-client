@@ -80,35 +80,15 @@ class Project extends React.Component {
                 marginTop: "30px",
                 marginBottom: "30px",
                 color: "EF233C",
+                fontFamily: "Poppins, sans-serif",
               }}
             >
               <div>
                 <div style={{ marginBottom: "8px" }}>
-                  <div className="row">
-                    <div
-                      className="col details"
-                      style={{ paddingRight: "16px" }}
-                    >
-                      <h4>
-                        <strong>{this.state.project.asset.title}</strong>
-                        <br />
-                      </h4>
-                    </div>
-                    <div className="col-auto details">
-                      <h4 className="text-right d-lg-flex justify-content-xl-end">
-                        <strong>
-                          {this.state.project.asset.status
-                            .replaceAll("-", " ")
-                            .replace(/\w\S*/g, (txt) => {
-                              return (
-                                txt.charAt(0).toUpperCase() +
-                                txt.substr(1).toLowerCase()
-                              );
-                            })}
-                        </strong>
-                      </h4>
-                    </div>
-                  </div>
+                  <h4>
+                    <strong>{this.state.project.asset.title}</strong>
+                    <br />
+                  </h4>
                 </div>
                 <div className="d-flex flex-wrap">
                   <h6 className="text-muted">Posted By:</h6>
