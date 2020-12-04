@@ -2,13 +2,13 @@ import React, { useMemo } from "react";
 import { MISCELLANEOUS, STATUS } from "../../transactions/constants";
 import { toast } from "react-toastify";
 import { getSession } from "../../utils/tools";
-import { submitContribution } from "../../utils/transaction";
-import SubmitContributionLogo from "../../asset/undraw_upload_87y9.svg";
+import { submitWork } from "../../utils/transaction";
+import SubmitSubmissionLogo from "../../asset/undraw_upload_87y9.svg";
 import Dropzone from "react-dropzone";
 const base91 = require("node-base91");
 const mime = require("mime-types");
 
-class SubmitContributionDialog extends React.Component {
+class SubmitSubmissionDialog extends React.Component {
   constructor() {
     super();
     this.state = {
@@ -17,14 +17,14 @@ class SubmitContributionDialog extends React.Component {
       fileextension: "",
       filedata: "",
     };
-    this.onSubmitContribution = this.onSubmitContribution.bind(this);
+    this.onSubmitSubmission = this.onSubmitSubmission.bind(this);
   }
 
-  onSubmitContribution() {
+  onSubmitSubmission() {
     try {
-      submitContribution(
+      submitWork(
         getSession("secret"),
-        this.props.team.publicKey,
+        this.props.proposal.publicKey,
         this.state.fileextension,
         this.state.filemime,
         this.state.filename,
@@ -33,7 +33,7 @@ class SubmitContributionDialog extends React.Component {
         .then((data) => {
           if (!data.errors) {
             toast.success(
-              "Submit contribution successfull, changes can be seen after up to 15 seconds!"
+              "Submit Submission successfull, changes can be seen after up to 15 seconds!"
             );
             this.setState({
               filename: "",
@@ -43,8 +43,8 @@ class SubmitContributionDialog extends React.Component {
             });
             window
               .$(
-                "#submit-contribution-" +
-                  this.props.team.publicKey +
+                "#submit-submission-" +
+                  this.props.proposal.publicKey +
                   "-" +
                   this.props.prefix +
                   "-" +
@@ -69,11 +69,11 @@ class SubmitContributionDialog extends React.Component {
 
   render() {
     if (
-      !this.props.team ||
+      !this.props.proposal ||
       !this.props.account ||
-      this.props.account.address !== this.props.team.asset.worker ||
-      ![STATUS.TEAM.SELECTED, STATUS.TEAM.REQUEST_REVISION].includes(
-        this.props.team.asset.status
+      this.props.account.address !== this.props.proposal.asset.leader ||
+      ![STATUS.PROPOSAL.SELECTED, STATUS.PROPOSAL.REQUEST_REVISION].includes(
+        this.props.proposal.asset.status
       )
     ) {
       return null;
@@ -85,8 +85,8 @@ class SubmitContributionDialog extends React.Component {
           type="button"
           data-toggle="modal"
           data-target={
-            "#submit-contribution-" +
-            this.props.team.publicKey +
+            "#submit-submission-" +
+            this.props.proposal.publicKey +
             "-" +
             this.props.prefix +
             "-" +
@@ -100,13 +100,13 @@ class SubmitContributionDialog extends React.Component {
             fontFamily: "Poppins, sans-serif",
           }}
         >
-          <strong>Submit Contribution</strong>
+          <strong>Submit Submission</strong>
         </button>
         <div
           className="modal fade"
           id={
-            "submit-contribution-" +
-            this.props.team.publicKey +
+            "submit-submission-" +
+            this.props.proposal.publicKey +
             "-" +
             this.props.prefix +
             "-" +
@@ -143,18 +143,18 @@ class SubmitContributionDialog extends React.Component {
                     display: "block",
                   }}
                   alt="Solo Proposal"
-                  src={SubmitContributionLogo}
+                  src={SubmitSubmissionLogo}
                 />
                 <h3
                   className="modal-title w-100 dark-grey-text font-weight-bold my-1 text-center"
                   id={
                     "modal-label-" +
-                    this.props.team.publicKey +
+                    this.props.proposal.publicKey +
                     "-" +
                     this.props.prefix
                   }
                 >
-                  <strong>Submit Contribution</strong>
+                  <strong>Submit Submission</strong>
                 </h3>
                 <p
                   style={{
@@ -162,9 +162,10 @@ class SubmitContributionDialog extends React.Component {
                     textAlign: "center",
                   }}
                 >
-                  From Contribution to Collaboration
+                  Pheww... Almost There!
                   <br />
-                  Submit Your Amazing Work!
+                  Submit your Finished Work, and let Collabolancer take care of
+                  your contract!
                 </p>
                 <div
                   className="border rounded-0 text-center"
@@ -366,14 +367,14 @@ class SubmitContributionDialog extends React.Component {
                     marginBottom: "0px",
                   }}
                 >
-                  {this.props.proposal.asset.term.maxRevision -
-                    this.props.team.asset.contribution.length >
+                  {this.props.project.asset.maxRevision -
+                    this.props.project.asset.submission.length >
                   1
                     ? `You Have: ${
-                        this.props.proposal.asset.term.maxRevision -
-                        this.props.team.asset.contribution.length
-                      } Remaining Attempt to Submit Contribution`
-                    : "This is you Final Attempt to Submit Contribution!"}
+                        this.props.project.asset.maxRevision -
+                        this.props.project.asset.submission.length
+                      } Remaining Attempt to Submit Submission`
+                    : "This is you Final Attempt to Submit Submission!"}
                 </p>
               </div>
               <div
@@ -392,7 +393,7 @@ class SubmitContributionDialog extends React.Component {
                         width: "150px",
                       }}
                       onClick={() => {
-                        this.onSubmitContribution();
+                        this.onSubmitSubmission();
                       }}
                     >
                       <strong>Submit</strong>
@@ -408,4 +409,4 @@ class SubmitContributionDialog extends React.Component {
   }
 }
 
-export default SubmitContributionDialog;
+export default SubmitSubmissionDialog;

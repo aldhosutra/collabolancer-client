@@ -1,10 +1,11 @@
 import React from "react";
 import { renderAvatar } from "../avatar";
 import JoinAsTeamDialog from "../dialog/joinAsTeam";
-import { STATUS } from "../../transactions/constants";
 import ContributionList from "./contributionList";
 import SubmitContributionDialog from "../dialog/submitContribution";
-import CompactContractCard from "../general/compactContractDetails";
+import CompactContractDetail from "../general/compactContractDetails";
+import TeamDisputeDialog from "../dialog/teamDispute";
+import StatusNoteDialog from "../dialog/statusNoteDialog";
 
 class Team extends React.Component {
   constructor() {
@@ -175,43 +176,57 @@ class Team extends React.Component {
                   account={this.props.account}
                 />
                 {
-                  /* [
-                  STATUS.PROJECT.FINISHED,
-                  STATUS.PROJECT.TERMINATED,
-                  STATUS.PROJECT.DISPUTED,
-                  STATUS.PROJECT.DISPUTE_CLOSED,
-                ].includes(this.props.project.asset.status) && */
-                  [STATUS.TEAM.REJECTED].includes(
-                    this.props.team.asset.status
-                  ) ? (
-                    <button
-                      className="btn btn-primary border rounded-0 top-button"
-                      type="button"
-                      style={{
-                        paddingRight: "24px",
-                        paddingLeft: "24px",
-                        backgroundColor: "#EF233C",
-                        fontFamily: "Poppins, sans-serif",
-                        marginBottom: "10px",
-                      }}
-                    >
-                      <strong>Open Dispute</strong>
-                    </button>
-                  ) : (
-                    <div></div>
-                  )
+                  <TeamDisputeDialog
+                    team={this.props.team}
+                    account={this.props.account}
+                  />
                 }
               </div>
               <p style={{ fontFamily: "Poppins, sans-serif" }}>
                 <strong>Team Contract:</strong>
               </p>
-              <CompactContractCard contract={this.props.team} />
+              {this.props.team.asset.forceReject ? (
+                <div style={{ marginBottom: "16px" }}>
+                  <button
+                    className="btn btn-primary border rounded-0 top-button"
+                    type="button"
+                    data-toggle="modal"
+                    data-target={
+                      "#team-force-reject" + this.props.team.publicKey
+                    }
+                    style={{
+                      backgroundColor: "#ef233c",
+                      color: "rgb(255,255,255)",
+                      fontWeight: "bold",
+                      fontSize: "14px",
+                      padding: "10px",
+                    }}
+                  >
+                    FORCE REJECTED: Since The Leader Has Been Rejected, So This
+                    Team Contract Status Has Also Been Force Rejected, Click
+                    Here For Details!
+                  </button>
+                  <StatusNoteDialog
+                    id={"team-force-reject" + this.props.team.publicKey}
+                    note={
+                      this.props.team.asset.statusNote.filter(
+                        (item) => item.contribution === "forceReject"
+                      )[0]
+                    }
+                  />
+                </div>
+              ) : (
+                <div></div>
+              )}
+              <CompactContractDetail contract={this.props.team} />
               <div
                 className="border rounded-0"
                 style={{ marginTop: "10px", marginBottom: "20px" }}
               />
               <ContributionList
                 team={this.props.team}
+                maxTime={this.props.project.asset.maxTime}
+                workStarted={this.props.project.asset.workStarted}
                 proposal={this.props.proposal}
                 account={this.props.account}
               />

@@ -55,7 +55,7 @@ class ContractCard extends React.PureComponent {
                   txt.charAt(0).toUpperCase() + txt.substr(1).toLowerCase()
                 );
               })}{" "}
-              {this.props.name} Valut
+              {this.props.name} Vault
             </strong>
           </h6>
           <p

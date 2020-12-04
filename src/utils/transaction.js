@@ -308,9 +308,67 @@ const leaderRequestRevision = async (
   return ret;
 };
 
-const submitWork = () => {};
+const submitWork = async (
+  senderPassphrase,
+  proposalPublicKey,
+  fileextension,
+  filemime,
+  filename,
+  filedata
+) => {
+  let ret;
+  const submissionAccount = createAccount();
+  const tx = new SubmitWorkTransaction({
+    asset: {
+      submissionPublicKey: submissionAccount.publicKey,
+      proposalPublicKey: proposalPublicKey,
+      fileextension: fileextension,
+      filemime: filemime,
+      filename: filename,
+      filedata: filedata,
+    },
+    networkIdentifier: networkIdentifier,
+    timestamp: utils.getTimeFromBlockchainEpoch(),
+  });
+  tx.sign(senderPassphrase);
+  await api.transactions
+    .broadcast(tx.toJSON())
+    .then((res) => {
+      ret = res;
+    })
+    .catch((err) => {
+      console.log(err);
+      ret = err;
+    });
+  return ret;
+};
 
-const employerRequestRevision = () => {};
+const employerRequestRevision = async (
+  senderPassphrase,
+  submissionPublicKey,
+  reason
+) => {
+  let ret;
+  const tx = new EmployerRequestRevisionTransaction({
+    asset: {
+      submissionPublicKey: submissionPublicKey,
+      reason: reason,
+    },
+    networkIdentifier: networkIdentifier,
+    timestamp: utils.getTimeFromBlockchainEpoch(),
+  });
+  tx.sign(senderPassphrase);
+  await api.transactions
+    .broadcast(tx.toJSON())
+    .then((res) => {
+      ret = res;
+    })
+    .catch((err) => {
+      console.log(err);
+      ret = err;
+    });
+  return ret;
+};
 
 const finishWork = () => {};
 

@@ -5,6 +5,10 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import LeaderRequestRevisionDialog from "../dialog/leaderRequestRevisionDialog";
 import StatusNoteDialog from "../dialog/statusNoteDialog";
 import LeaderRejectDialog from "../dialog/leaderRejectDialog";
+import EmployerRequestRevisionDialog from "../dialog/employerRequestRevision";
+import EmployerRejectDialog from "../dialog/employerRejectDialog";
+import { STATUS } from "../../transactions/constants";
+import config from "../../config/config.json";
 const dateFormat = require("dateformat");
 
 class WorkItem extends React.Component {
@@ -14,6 +18,7 @@ class WorkItem extends React.Component {
       isHover: false,
       isDownloadHover: false,
       isCommentsHover: false,
+      isOpenHover: false,
     };
     this.hoverTrue = this.hoverTrue.bind(this);
     this.hoverFalse = this.hoverFalse.bind(this);
@@ -21,7 +26,10 @@ class WorkItem extends React.Component {
     this.downloadHoverFalse = this.downloadHoverFalse.bind(this);
     this.commentHoverTrue = this.commentHoverTrue.bind(this);
     this.commentHoverFalse = this.commentHoverFalse.bind(this);
+    this.openHoverTrue = this.openHoverTrue.bind(this);
+    this.openHoverFalse = this.openHoverFalse.bind(this);
     this.handleDownload = this.handleDownload.bind(this);
+    this.handleOpen = this.handleOpen.bind(this);
   }
 
   hoverTrue() {
@@ -60,51 +68,93 @@ class WorkItem extends React.Component {
     });
   }
 
+  openHoverTrue() {
+    this.setState((state) => {
+      return { ...state, isOpenHover: true };
+    });
+  }
+
+  openHoverFalse() {
+    this.setState((state) => {
+      return { ...state, isOpenHover: false };
+    });
+  }
+
   handleDownload() {
     saveFile(this.props.file.publicKey);
   }
+
+  handleOpen() {}
 
   render() {
     if (!this.props.file) {
       return null;
     }
     const bg =
-      this.state.isDownloadHover || this.state.isCommentsHover
+      this.state.isDownloadHover ||
+      this.state.isCommentsHover ||
+      this.state.isOpenHover
         ? "#EF233C"
         : "white";
     const cardBg = this.state.isHover ? "#EDF2F4" : "white";
     let actionButton = null;
     if (this.props.type === "contribution") {
-      if (
-        this.props.target.asset.term.maxRevision >
-        this.props.source.asset.contribution.length
-      ) {
-        actionButton = (
-          <LeaderRequestRevisionDialog
-            id={this.props.id}
-            proposal={this.props.target}
-            team={this.props.source}
-            contribution={this.props.file.publicKey}
-          />
-        );
-      } else {
-        actionButton = (
-          <LeaderRejectDialog
-            id={this.props.id}
-            proposal={this.props.target}
-            team={this.props.source}
-            contribution={this.props.file.publicKey}
-          />
-        );
+      if (![STATUS.TEAM.REJECTED].includes(this.props.source.asset.status)) {
+        if (
+          this.props.target.asset.term.maxRevision >
+            this.props.source.asset.contribution.length &&
+          Date.now() <
+            this.props.maxTime * 86400 * 1000 +
+              (constants.EPOCH_TIME_SECONDS + this.props.workStarted) * 1000
+        ) {
+          actionButton = (
+            <LeaderRequestRevisionDialog
+              id={this.props.id}
+              proposal={this.props.target}
+              team={this.props.source}
+              contribution={this.props.file.publicKey}
+            />
+          );
+        } else {
+          actionButton = (
+            <LeaderRejectDialog
+              id={this.props.id}
+              proposal={this.props.target}
+              team={this.props.source}
+              contribution={this.props.file.publicKey}
+            />
+          );
+        }
       }
     } else if (this.props.type === "submission") {
       if (
-        this.props.target.asset.maxRevision >
-        this.props.source.asset.submission.length
+        ![STATUS.PROPOSAL.REJECTED].includes(this.props.source.asset.status)
       ) {
-        // actionButton = <EmployerRequestRevisionDialog />;
-      } else {
-        // actionButton = <EmployerRejectDialog />;
+        if (
+          this.props.target.asset.maxRevision >
+            this.props.target.asset.submission.length &&
+          Date.now() <
+            this.props.maxTime * 86400 * 1000 +
+              (constants.EPOCH_TIME_SECONDS + this.props.workStarted) * 1000
+        ) {
+          actionButton = (
+            <EmployerRequestRevisionDialog
+              id={this.props.id}
+              project={this.props.target}
+              proposal={this.props.source}
+              submission={this.props.file.publicKey}
+            />
+          );
+        } else {
+          actionButton = (
+            <EmployerRejectDialog
+              id={this.props.id}
+              project={this.props.target}
+              proposal={this.props.source}
+              submission={this.props.file.publicKey}
+            />
+          );
+        }
       }
     }
     let iconBanner = null;
@@ -122,6 +172,17 @@ class WorkItem extends React.Component {
           <p style={{ margin: "0px", color: "white" }}>Open Note!</p>
         </div>
       );
+    } else if (this.state.isOpenHover) {
+      iconBanner = (
+        <div className="text-center" style={{ margin: "auto" }}>
+          <FontAwesomeIcon
+            icon={["fas", "external-link-alt"]}
+            size="2x"
+            color="white"
+          />
+          <p style={{ margin: "0px", color: "white" }}>Open In New Tab!</p>
+        </div>
+      );
     } else {
       iconBanner = (
         <div style={{ margin: "auto", color: "#EF233C" }}>
@@ -132,7 +193,9 @@ class WorkItem extends React.Component {
             }}
           >
             <strong style={{ fontSize: "30px" }}>
-              .{this.props.file.asset.extension}
+              {this.props.file.asset.extension !== ""
+                ? "." + this.props.file.asset.extension
+                : "???"}
             </strong>
             <br />
             {this.props.file.asset.mime}
@@ -187,7 +250,7 @@ class WorkItem extends React.Component {
               </button>
             </div>
             <div className="col-lg-5 details" style={{ margin: "auto" }}>
-              <button
+              <a
                 style={{
                   marginBottom: "0px",
                   overflowWrap: "break-word",
@@ -197,12 +260,18 @@ class WorkItem extends React.Component {
                   background: "none",
                   border: "none",
                   outline: "none",
+                  color: "black",
+                  textDecoration: "none",
                 }}
-                onClick={this.handleDownload}
-                onMouseEnter={this.downloadHoverTrue}
-                onMouseLeave={this.downloadHoverFalse}
-                onTouchStart={this.downloadHoverTrue}
-                onTouchEnd={this.downloadHoverFalse}
+                href={
+                  config.extendedAPI + `/api/file/${this.props.file.publicKey}`
+                }
+                target="_blank"
+                rel="noreferrer"
+                onMouseEnter={this.openHoverTrue}
+                onMouseLeave={this.openHoverFalse}
+                onTouchStart={this.openHoverTrue}
+                onTouchEnd={this.openHoverFalse}
               >
                 <div style={{ overflowWrap: "break-word" }}>
                   <p style={{ marginBottom: "0px" }}>
@@ -226,7 +295,7 @@ class WorkItem extends React.Component {
                   </p>
                   {this.props.file.publicKey}
                 </div>
-              </button>
+              </a>
             </div>
             <div className="col-lg-5 details" style={{ margin: "auto" }}>
               {this.props.note ? (
@@ -245,7 +314,9 @@ class WorkItem extends React.Component {
                     type="button"
                     data-toggle="modal"
                     data-target={
-                      "#contribution-" +
+                      "#" +
+                      this.props.type +
+                      "-" +
                       this.props.source.publicKey +
                       "-" +
                       this.props.id
@@ -300,7 +371,8 @@ class WorkItem extends React.Component {
                   </button>
                   <StatusNoteDialog
                     id={
-                      "contribution-" +
+                      this.props.type +
+                      "-" +
                       this.props.source.publicKey +
                       "-" +
                       this.props.id
@@ -310,7 +382,8 @@ class WorkItem extends React.Component {
                 </div>
               ) : (
                 <div>
-                  {this.props.account.address === this.props.supervisor ? (
+                  {this.props.account.address === this.props.supervisor &&
+                  actionButton !== null ? (
                     <div className="text-center">{actionButton}</div>
                   ) : (
                     <div className="text-center">

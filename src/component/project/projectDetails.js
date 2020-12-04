@@ -136,14 +136,21 @@ class ProjectDetails extends React.Component {
               </div>
               <div className="col details">
                 <p style={{ fontFamily: "Poppins, sans-serif" }}>
-                  {dateFormat(
-                    new Date(
-                      (constants.EPOCH_TIME_SECONDS +
-                        this.props.project.asset.workFinished) *
-                        1000
-                    ),
-                    "mmmm dS, yyyy - h:MM:ss TT"
-                  )}
+                  {![
+                    STATUS.PROJECT.WORKING,
+                    STATUS.PROJECT.SUBMITTED,
+                    STATUS.PROJECT.REQUEST_REVISION,
+                    STATUS.PROJECT.REJECTED,
+                  ].includes(this.props.project.asset.status)
+                    ? dateFormat(
+                        new Date(
+                          (constants.EPOCH_TIME_SECONDS +
+                            this.props.project.asset.workFinished) *
+                            1000
+                        ),
+                        "mmmm dS, yyyy - h:MM:ss TT"
+                      )
+                    : "No Data!"}
                 </p>
               </div>
             </div>
@@ -170,7 +177,15 @@ class ProjectDetails extends React.Component {
                 </button>
               </div>
             </div>
-            <SubmittedWork />
+            <SubmittedWork
+              project={this.props.project}
+              proposal={
+                this.props.project.asset.proposal.filter(
+                  (item) => item.publicKey === this.props.project.asset.winner
+                )[0]
+              }
+              account={this.props.account}
+            />
             <Winner project={this.props.project} account={this.props.account} />
           </div>
         )}

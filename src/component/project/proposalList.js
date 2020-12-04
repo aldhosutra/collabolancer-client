@@ -133,7 +133,7 @@ class ProposalList extends React.Component {
                 : new DOMParser().parseFromString("&#11208;", "text/html").body
                     .textContent}{" "}
               {this.props.project.asset.status === STATUS.PROJECT.OPEN
-                ? "Proposal " + this.props.project.asset.proposal.length
+                ? "Proposal [" + this.props.project.asset.proposal.length + "]"
                 : "Previously Applied Proposals"}
             </strong>
           </h5>

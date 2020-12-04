@@ -7,6 +7,7 @@ import {
   faGavel,
   faDownload,
   faComments,
+  faExternalLinkAlt,
 } from "@fortawesome/free-solid-svg-icons";
 
 library.add(
@@ -16,5 +17,6 @@ library.add(
   faCommentDollar,
   faGavel,
   faDownload,
-  faComments
+  faComments,
+  faExternalLinkAlt
 );

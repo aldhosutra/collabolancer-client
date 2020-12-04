@@ -15,6 +15,7 @@ class CompactContractDetail extends React.PureComponent {
           <CompactContractCard
             icon={"comment-dollar"}
             type={this.props.contract.asset.type}
+            status={this.props.contract.asset.status}
             name={"Earning Potential"}
             value={
               utils.convertBeddowsToLSK(
@@ -27,6 +28,7 @@ class CompactContractDetail extends React.PureComponent {
           <CompactContractCard
             icon={"gavel"}
             type={this.props.contract.asset.type}
+            status={this.props.contract.asset.status}
             name={"Guilty Status"}
             value={this.props.contract.asset.guilty ? "Guilty!" : "Innocent"}
           />
@@ -35,6 +37,7 @@ class CompactContractDetail extends React.PureComponent {
           <CompactContractCard
             icon={"hand-holding-usd"}
             type={this.props.contract.asset.type}
+            status={this.props.contract.asset.status}
             name={"Fund Vault"}
             value={
               utils.convertBeddowsToLSK(this.props.contract.asset.freezedFund) +
@@ -46,6 +49,7 @@ class CompactContractDetail extends React.PureComponent {
           <CompactContractCard
             icon={"funnel-dollar"}
             type={this.props.contract.asset.type}
+            status={this.props.contract.asset.status}
             name={"Fee Vault"}
             value={
               utils.convertBeddowsToLSK(this.props.contract.asset.freezedFee) +
@@ -57,6 +61,7 @@ class CompactContractDetail extends React.PureComponent {
           <CompactContractCard
             icon={"gift"}
             type={this.props.contract.asset.type}
+            status={this.props.contract.asset.status}
             name={"Bonus Vault"}
             value={
               utils.convertBeddowsToLSK(this.props.contract.asset.cashback) +

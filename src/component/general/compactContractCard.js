@@ -47,7 +47,7 @@ class CompactContractCard extends React.PureComponent {
               <div
                 style={{
                   fontFamily: "Poppins, sans-serif",
-                  fontSize: "22px",
+                  fontSize: "20px",
                 }}
               >
                 {this.props.value}

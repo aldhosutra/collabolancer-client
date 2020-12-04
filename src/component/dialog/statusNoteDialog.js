@@ -41,7 +41,7 @@ class StatusNoteDialog extends React.Component {
                   src={StatusNoteLogo}
                 />
                 <h3 className="modal-title w-100 dark-grey-text font-weight-bold my-1 text-center">
-                  <strong>This is What The Leader Thinks!</strong>
+                  <strong>This is What The Reviewer Thinks!</strong>
                 </h3>
                 <p
                   style={{

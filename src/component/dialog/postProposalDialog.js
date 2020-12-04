@@ -358,11 +358,11 @@ class PostProposalDialog extends React.Component {
                           htmlFor="form-term-maxtime"
                           style={{ fontWeight: "bold" }}
                         >
-                          How Long Your Team Should Finishing Project??
+                          How Long Your Team Should Finishing Project?
                         </label>
                         <input
                           type="number"
-                          placeholder="Set this less than project working time limit, so as a leader, you have time to wrap up your project"
+                          placeholder="After this time limit, employer will be able to cancel the project!"
                           id="form-term-maxtime"
                           name="form-term-maxtime"
                           value={this.state["form-term-maxtime"]}
@@ -378,7 +378,8 @@ class PostProposalDialog extends React.Component {
                           htmlFor="form-term-maxrevision"
                           style={{ fontWeight: "bold" }}
                         >
-                          How Much Chance For Your Team to Submit Revision?
+                          How Much Initial Chance For Your Team to Submit
+                          Revision?
                         </label>
                         <input
                           type="number"

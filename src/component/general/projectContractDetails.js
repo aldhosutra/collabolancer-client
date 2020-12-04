@@ -18,6 +18,7 @@ class ProjectContractDetail extends React.PureComponent {
             type={this.props.contract.asset.type}
             name={"Fund"}
             value={this.props.contract.asset.freezedFund}
+            status={this.props.contract.asset.status}
           />
         </div>
         <div className="col">
@@ -26,6 +27,7 @@ class ProjectContractDetail extends React.PureComponent {
             type={this.props.contract.asset.type}
             name={"Fee"}
             value={this.props.contract.asset.freezedFee}
+            status={this.props.contract.asset.status}
           />
         </div>
         <div className="col">
@@ -34,6 +36,7 @@ class ProjectContractDetail extends React.PureComponent {
             type={this.props.contract.asset.type}
             name={"Bonus"}
             value={this.props.contract.asset.cashback}
+            status={this.props.contract.asset.status}
           />
         </div>
       </div>

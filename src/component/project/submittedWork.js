@@ -1,5 +1,7 @@
 import React from "react";
-import WorkItem from "./workItem";
+import LeaderDisputeDialog from "../dialog/leaderDispute";
+import SubmitSubmissionDialog from "../dialog/submitSubmission";
+import SubmissionList from "./submissionList";
 
 class SubmittedWork extends React.Component {
   constructor() {
@@ -61,39 +63,23 @@ class SubmittedWork extends React.Component {
             className="d-flex justify-content-end"
             style={{ marginTop: "16px" }}
           >
-            <button
-              className="btn btn-primary border rounded-0 top-button"
-              type="button"
-              style={{
-                paddingRight: "24px",
-                paddingLeft: "24px",
-                backgroundColor: "#EF233C",
-                marginRight: "10px",
-                fontFamily: "Poppins, sans-serif",
-                marginBottom: "10px",
-              }}
-            >
-              <strong>Send Finished Work</strong>
-            </button>
-            <button
-              className="btn btn-primary border rounded-0 top-button"
-              type="button"
-              style={{
-                paddingRight: "24px",
-                paddingLeft: "24px",
-                backgroundColor: "#EF233C",
-                marginRight: "10px",
-                fontFamily: "Poppins, sans-serif",
-                marginBottom: "10px",
-              }}
-            >
-              <strong>Dispute</strong>
-            </button>
+            <SubmitSubmissionDialog
+              id={this.props.id}
+              prefix={this.props.prefix}
+              project={this.props.project}
+              proposal={this.props.proposal}
+              account={this.props.account}
+            />
+            <LeaderDisputeDialog
+              proposal={this.props.proposal}
+              account={this.props.account}
+            />
           </div>
-          <p style={{ fontFamily: "Poppins, sans-serif" }}>
-            Submitted Work List:
-          </p>
-          <WorkItem />
+          <SubmissionList
+            project={this.props.project}
+            proposal={this.props.proposal}
+            account={this.props.account}
+          />
         </div>
       </div>
     );
