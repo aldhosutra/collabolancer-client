@@ -6,7 +6,7 @@ import * as serviceWorker from "./serviceWorker";
 import "bootstrap/dist/css/bootstrap.min.css";
 
 window.jQuery = window.$ = require("jquery");
-require("popper.js");
+require("popper.js/dist/popper");
 require("bootstrap/dist/js/bootstrap.bundle.min");
 
 ReactDOM.render(

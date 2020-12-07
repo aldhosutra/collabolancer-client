@@ -139,53 +139,66 @@ class StatusCard extends React.PureComponent {
         onMouseEnter={this.toggleHover}
         onMouseLeave={this.toggleHover}
       >
-        <div
-          className="card-body"
-          style={{ marginTop: "auto", marginBottom: "auto" }}
-          data-toggle="tooltip"
-          data-placement="top"
-          title={this.props.tooltip}
+        <button
+          style={{
+            marginBottom: "0px",
+            overflowWrap: "break-word",
+            width: "100%",
+            textAlign: "left",
+            padding: "0px",
+            background: "none",
+            border: "none",
+            outline: "none",
+          }}
           onClick={this.props.onClick}
         >
-          <img
-            role="status"
-            style={{
-              height: "100px",
-              marginLeft: "auto",
-              marginRight: "auto",
-              marginBottom: "16px",
-              display: "block",
-            }}
-            alt="Solo Proposal"
-            src={imgLogo}
-          />
-          <h6 className="w-100 dark-grey-text font-weight-bold my-1 text-center">
-            <strong>
-              {this.props.contract.asset.type
+          <div
+            className="card-body"
+            style={{ marginTop: "auto", marginBottom: "auto" }}
+            data-toggle="tooltip"
+            data-placement="top"
+            title={this.props.tooltip}
+          >
+            <img
+              role="status"
+              style={{
+                height: "100px",
+                marginLeft: "auto",
+                marginRight: "auto",
+                marginBottom: "16px",
+                display: "block",
+              }}
+              alt="Solo Proposal"
+              src={imgLogo}
+            />
+            <h6 className="w-100 dark-grey-text font-weight-bold my-1 text-center">
+              <strong>
+                {this.props.contract.asset.type
+                  .replaceAll("-", " ")
+                  .replace(/\w\S*/g, (txt) => {
+                    return (
+                      txt.charAt(0).toUpperCase() + txt.substr(1).toLowerCase()
+                    );
+                  })}{" "}
+                Status
+              </strong>
+            </h6>
+            <p
+              style={{
+                fontFamily: "Poppins, sans-serif",
+                textAlign: "center",
+              }}
+            >
+              {this.props.contract.asset.status
                 .replaceAll("-", " ")
                 .replace(/\w\S*/g, (txt) => {
                   return (
                     txt.charAt(0).toUpperCase() + txt.substr(1).toLowerCase()
                   );
-                })}{" "}
-              Status
-            </strong>
-          </h6>
-          <p
-            style={{
-              fontFamily: "Poppins, sans-serif",
-              textAlign: "center",
-            }}
-          >
-            {this.props.contract.asset.status
-              .replaceAll("-", " ")
-              .replace(/\w\S*/g, (txt) => {
-                return (
-                  txt.charAt(0).toUpperCase() + txt.substr(1).toLowerCase()
-                );
-              })}
-          </p>
-        </div>
+                })}
+            </p>
+          </div>
+        </button>
       </div>
     ) : (
       <div
@@ -199,58 +212,72 @@ class StatusCard extends React.PureComponent {
         onMouseEnter={this.toggleHover}
         onMouseLeave={this.toggleHover}
       >
-        <div
-          className="card-body"
-          style={{ marginTop: "auto", marginBottom: "auto" }}
-          data-toggle="tooltip"
-          data-placement="top"
-          title={this.props.tooltip}
+        <button
+          style={{
+            marginBottom: "0px",
+            overflowWrap: "break-word",
+            width: "100%",
+            textAlign: "left",
+            padding: "0px",
+            background: "none",
+            border: "none",
+            outline: "none",
+          }}
           onClick={this.props.onClick}
         >
-          <div className="row">
-            <div className="col-3" style={{ margin: "auto" }}>
-              <div style={{ marginTop: "auto", marginBottom: "auto" }}>
-                <img
-                  role="status"
-                  style={{
-                    height: "40px",
-                  }}
-                  alt="status"
-                  src={imgLogo}
-                />
+          <div
+            className="card-body"
+            style={{ marginTop: "auto", marginBottom: "auto" }}
+            data-toggle="tooltip"
+            data-placement="top"
+            title={this.props.tooltip}
+          >
+            <div className="row">
+              <div className="col-3" style={{ margin: "auto" }}>
+                <div style={{ marginTop: "auto", marginBottom: "auto" }}>
+                  <img
+                    role="status"
+                    style={{
+                      height: "40px",
+                    }}
+                    alt="status"
+                    src={imgLogo}
+                  />
+                </div>
               </div>
-            </div>
-            <div className="col">
-              <h6 className="w-100 dark-grey-text font-weight-bold my-1">
-                <strong>
-                  {this.props.contract.asset.type
+              <div className="col">
+                <h6 className="w-100 dark-grey-text font-weight-bold my-1">
+                  <strong>
+                    {this.props.contract.asset.type
+                      .replaceAll("-", " ")
+                      .replace(/\w\S*/g, (txt) => {
+                        return (
+                          txt.charAt(0).toUpperCase() +
+                          txt.substr(1).toLowerCase()
+                        );
+                      })}{" "}
+                    Status
+                  </strong>
+                </h6>
+                <div
+                  style={{
+                    fontFamily: "Poppins, sans-serif",
+                    fontSize: "22px",
+                  }}
+                >
+                  {this.props.contract.asset.status
                     .replaceAll("-", " ")
                     .replace(/\w\S*/g, (txt) => {
                       return (
                         txt.charAt(0).toUpperCase() +
                         txt.substr(1).toLowerCase()
                       );
-                    })}{" "}
-                  Status
-                </strong>
-              </h6>
-              <div
-                style={{
-                  fontFamily: "Poppins, sans-serif",
-                  fontSize: "22px",
-                }}
-              >
-                {this.props.contract.asset.status
-                  .replaceAll("-", " ")
-                  .replace(/\w\S*/g, (txt) => {
-                    return (
-                      txt.charAt(0).toUpperCase() + txt.substr(1).toLowerCase()
-                    );
-                  })}
+                    })}
+                </div>
               </div>
             </div>
           </div>
-        </div>
+        </button>
       </div>
     );
   }
