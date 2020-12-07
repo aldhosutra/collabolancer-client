@@ -35,7 +35,7 @@ class LeaderRejectDialog extends React.Component {
         .then((data) => {
           if (!data.errors) {
             toast.success(
-              "Reject Worker successfull, changes can be seen after up to 15 seconds!"
+              "Reject Worker successfull, changes can be seen after up to 15 seconds, and need reload!"
             );
             this.setState((state) => {
               return {

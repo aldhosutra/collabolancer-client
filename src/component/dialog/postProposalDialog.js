@@ -60,7 +60,7 @@ class PostProposalDialog extends React.Component {
         .then((data) => {
           if (!data.errors) {
             toast.success(
-              "Post proposal successfull, changes can be seen after up to 15 seconds!"
+              "Post proposal successfull, changes can be seen after up to 15 seconds, and need reload!"
             );
             this.setState((state) => {
               return {

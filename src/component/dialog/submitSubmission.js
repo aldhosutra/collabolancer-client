@@ -33,7 +33,7 @@ class SubmitSubmissionDialog extends React.Component {
         .then((data) => {
           if (!data.errors) {
             toast.success(
-              "Submit Submission successfull, changes can be seen after up to 15 seconds!"
+              "Submit Submission successfull, changes can be seen after up to 15 seconds, and need reload!"
             );
             this.setState({
               filename: "",
@@ -272,6 +272,8 @@ class SubmitSubmissionDialog extends React.Component {
                       if (acceptedFiles.length > 0) {
                         const reader = new FileReader();
                         reader.onload = () => {
+                          console.log(acceptedFiles[0].type);
+                          console.log(mime.extension(acceptedFiles[0].type));
                           const binaryStr = reader.result;
                           this.setState((state) => {
                             return {

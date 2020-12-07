@@ -9,6 +9,7 @@ import EmployerRequestRevisionDialog from "../dialog/employerRequestRevision";
 import EmployerRejectDialog from "../dialog/employerRejectDialog";
 import { STATUS } from "../../transactions/constants";
 import config from "../../config/config.json";
+import EmployerAcceptFinishDialog from "../dialog/employerAcceptFinishDialog";
 const dateFormat = require("dateformat");
 
 class WorkItem extends React.Component {
@@ -138,21 +139,47 @@ class WorkItem extends React.Component {
               (constants.EPOCH_TIME_SECONDS + this.props.workStarted) * 1000
         ) {
           actionButton = (
-            <EmployerRequestRevisionDialog
-              id={this.props.id}
-              project={this.props.target}
-              proposal={this.props.source}
-              submission={this.props.file.publicKey}
-            />
+            <div
+              style={{
+                marginBottom: "auto",
+                marginTop: "auto",
+              }}
+            >
+              <EmployerAcceptFinishDialog
+                id={this.props.id}
+                project={this.props.target}
+                proposal={this.props.source}
+                submission={this.props.file.publicKey}
+              />
+              <EmployerRequestRevisionDialog
+                id={this.props.id}
+                project={this.props.target}
+                proposal={this.props.source}
+                submission={this.props.file.publicKey}
+              />
+            </div>
           );
         } else {
           actionButton = (
-            <EmployerRejectDialog
-              id={this.props.id}
-              project={this.props.target}
-              proposal={this.props.source}
-              submission={this.props.file.publicKey}
-            />
+            <div
+              style={{
+                marginBottom: "auto",
+                marginTop: "auto",
+              }}
+            >
+              <EmployerAcceptFinishDialog
+                id={this.props.id}
+                project={this.props.target}
+                proposal={this.props.source}
+                submission={this.props.file.publicKey}
+              />
+              <EmployerRejectDialog
+                id={this.props.id}
+                project={this.props.target}
+                proposal={this.props.source}
+                submission={this.props.file.publicKey}
+              />
+            </div>
           );
         }
       }

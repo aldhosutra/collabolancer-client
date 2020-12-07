@@ -32,7 +32,7 @@ class StartWorkButton extends React.Component {
         .then((data) => {
           if (!data.errors) {
             toast.success(
-              "Start work successful, changes can be seen after up to 15 seconds!"
+              "Start work successful, changes can be seen after up to 15 seconds, and need reload!"
             );
             window.$("#modal-" + this.props.proposal.publicKey).modal("hide");
           } else {

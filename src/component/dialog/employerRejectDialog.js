@@ -1,7 +1,7 @@
 import React from "react";
 import { toast } from "react-toastify";
 import { getSession } from "../../utils/tools";
-import { employerRequestRevision } from "../../utils/transaction";
+import { employerRequestRevision, finishWork } from "../../utils/transaction";
 import EmployerRejectLogo from "../../asset/undraw_cancel_u1it.svg";
 
 class EmployerRejectDialog extends React.Component {
@@ -36,23 +36,37 @@ class EmployerRejectDialog extends React.Component {
       )
         .then((data) => {
           if (!data.errors) {
-            toast.success(
-              "Reject Worker successfull, changes can be seen after up to 15 seconds!"
-            );
-            this.setState((state) => {
-              return {
-                ...state,
-                "form-reason": "",
-              };
-            });
-            window
-              .$(
-                "#employer-reject-modal-" +
-                  this.props.proposal.publicKey +
-                  "-" +
-                  this.props.id
-              )
-              .modal("hide");
+            finishWork(getSession("secret"), this.props.project.publicKey)
+              .then((finish) => {
+                if (!finish.errors) {
+                  toast.success(
+                    "Reject Worker successfull, changes can be seen after up to 15 seconds, and need reload!"
+                  );
+                  this.setState((state) => {
+                    return {
+                      ...state,
+                      "form-reason": "",
+                    };
+                  });
+                  window
+                    .$(
+                      "#employer-reject-modal-" +
+                        this.props.proposal.publicKey +
+                        "-" +
+                        this.props.id
+                    )
+                    .modal("hide");
+                } else {
+                  toast.error(
+                    data.message +
+                      ": " +
+                      data.errors.map((err) => err.message).toString()
+                  );
+                }
+              })
+              .catch((err) => {
+                toast.error(`Error: ${err.message}`);
+              });
           } else {
             toast.error(
               data.message +
@@ -89,6 +103,7 @@ class EmployerRejectDialog extends React.Component {
             marginRight: "10px",
             fontFamily: "Poppins, sans-serif",
             marginBottom: "10px",
+            minWidth: "200px",
           }}
         >
           <strong>Reject</strong>

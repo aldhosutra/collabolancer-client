@@ -33,7 +33,7 @@ class SubmitContributionDialog extends React.Component {
         .then((data) => {
           if (!data.errors) {
             toast.success(
-              "Submit contribution successfull, changes can be seen after up to 15 seconds!"
+              "Submit contribution successfull, changes can be seen after up to 15 seconds, and need reload!"
             );
             this.setState({
               filename: "",

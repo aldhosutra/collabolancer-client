@@ -37,7 +37,7 @@ class EmployerRequestRevisionDialog extends React.Component {
         .then((data) => {
           if (!data.errors) {
             toast.success(
-              "Request Revision successfull, changes can be seen after up to 15 seconds!"
+              "Request Revision successfull, changes can be seen after up to 15 seconds, and need reload!"
             );
             this.setState((state) => {
               return {
@@ -89,6 +89,7 @@ class EmployerRequestRevisionDialog extends React.Component {
             marginRight: "10px",
             fontFamily: "Poppins, sans-serif",
             marginBottom: "10px",
+            minWidth: "200px",
           }}
         >
           <strong>Request Revision</strong>

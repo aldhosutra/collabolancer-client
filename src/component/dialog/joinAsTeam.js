@@ -27,7 +27,7 @@ class JoinAsTeamDialog extends React.Component {
         .then((data) => {
           if (!data.errors) {
             toast.success(
-              "Join team successfull, changes can be seen after up to 15 seconds!"
+              "Join team successfull, changes can be seen after up to 15 seconds, and need reload!"
             );
             this.setState((state) => {
               return {

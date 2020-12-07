@@ -370,7 +370,27 @@ const employerRequestRevision = async (
   return ret;
 };
 
-const finishWork = () => {};
+const finishWork = async (senderPassphrase, projectPublicKey) => {
+  let ret;
+  const tx = new FinishWorkTransaction({
+    asset: {
+      projectPublicKey: projectPublicKey,
+    },
+    networkIdentifier: networkIdentifier,
+    timestamp: utils.getTimeFromBlockchainEpoch(),
+  });
+  tx.sign(senderPassphrase);
+  await api.transactions
+    .broadcast(tx.toJSON())
+    .then((res) => {
+      ret = res;
+    })
+    .catch((err) => {
+      console.log(err);
+      ret = err;
+    });
+  return ret;
+};
 
 const claimPrize = () => {};
 
