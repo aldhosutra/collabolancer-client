@@ -3,6 +3,7 @@ import { toast } from "react-toastify";
 import { STATUS } from "../../transactions/constants";
 import { getSession } from "../../utils/tools";
 import { startWork } from "../../utils/transaction";
+import config from "../../config/config.json";
 
 class StartWorkButton extends React.Component {
   constructor() {
@@ -32,9 +33,14 @@ class StartWorkButton extends React.Component {
         .then((data) => {
           if (!data.errors) {
             toast.success(
-              "Start work successful, changes can be seen after up to 15 seconds, and need reload!"
+              "Start work successful, page will be reloaded after " +
+                config.block_time / 1000 +
+                " seconds!"
             );
             window.$("#modal-" + this.props.proposal.publicKey).modal("hide");
+            setTimeout(() => {
+              window.location.reload();
+            }, config.block_time);
           } else {
             toast.error(
               data.message +

@@ -3,6 +3,7 @@ import { toast } from "react-toastify";
 import { getSession } from "../../utils/tools";
 import { finishWork } from "../../utils/transaction";
 import EmployerAcceptFinishLogo from "../../asset/undraw_happy_music_g6wc.svg";
+import config from "../../config/config.json";
 
 class EmployerAcceptFinishDialog extends React.Component {
   constructor() {
@@ -21,7 +22,9 @@ class EmployerAcceptFinishDialog extends React.Component {
         .then((data) => {
           if (!data.errors) {
             toast.success(
-              "Finish work successfull, changes can be seen after up to 15 seconds, and need reload!"
+              "Finish work successfull, page will be reloaded after " +
+                config.block_time / 1000 +
+                " seconds!"
             );
             this.setState({
               checked: false,
@@ -34,6 +37,9 @@ class EmployerAcceptFinishDialog extends React.Component {
                   this.props.id
               )
               .modal("hide");
+            setTimeout(() => {
+              window.location.reload();
+            }, config.block_time);
           } else {
             toast.error(
               data.message +

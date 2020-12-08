@@ -4,6 +4,7 @@ import { toast } from "react-toastify";
 import { deflationaryMultiplier, getSession } from "../../utils/tools";
 import { postProposal } from "../../utils/transaction";
 import PostProposalLogo from "../../asset/undraw_resume_1hqp.svg";
+import config from "../../config/config.json";
 const { utils } = require("@liskhq/lisk-transactions");
 
 class PostProposalDialog extends React.Component {
@@ -60,7 +61,9 @@ class PostProposalDialog extends React.Component {
         .then((data) => {
           if (!data.errors) {
             toast.success(
-              "Post proposal successfull, changes can be seen after up to 15 seconds, and need reload!"
+              "Post proposal successfull, page will be reloaded after " +
+                config.block_time / 1000 +
+                " seconds!"
             );
             this.setState((state) => {
               return {
@@ -76,6 +79,9 @@ class PostProposalDialog extends React.Component {
               };
             });
             window.$("#postProposal").modal("hide");
+            setTimeout(() => {
+              window.location.reload();
+            }, config.block_time);
           } else {
             toast.error(
               data.message +

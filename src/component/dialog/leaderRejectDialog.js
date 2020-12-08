@@ -3,6 +3,7 @@ import { toast } from "react-toastify";
 import { getSession } from "../../utils/tools";
 import { leaderRequestRevision } from "../../utils/transaction";
 import LeaderRejectLogo from "../../asset/undraw_cancel_u1it.svg";
+import config from "../../config/config.json";
 
 class LeaderRejectDialog extends React.Component {
   constructor() {
@@ -35,7 +36,9 @@ class LeaderRejectDialog extends React.Component {
         .then((data) => {
           if (!data.errors) {
             toast.success(
-              "Reject Worker successfull, changes can be seen after up to 15 seconds, and need reload!"
+              "Reject Worker successfull, page will be reloaded after " +
+                config.block_time / 1000 +
+                " seconds!"
             );
             this.setState((state) => {
               return {
@@ -51,6 +54,9 @@ class LeaderRejectDialog extends React.Component {
                   this.props.id
               )
               .modal("hide");
+            setTimeout(() => {
+              window.location.reload();
+            }, config.block_time);
           } else {
             toast.error(
               data.message +

@@ -4,6 +4,7 @@ import { toast } from "react-toastify";
 import { deflationaryMultiplier, getSession } from "../../utils/tools";
 import { joinTeam } from "../../utils/transaction";
 import JoinAsTeamLogo from "../../asset/undraw_team_spirit_hrr4.svg";
+import config from "../../config/config.json";
 const { utils } = require("@liskhq/lisk-transactions");
 const parse = require("html-react-parser");
 
@@ -27,7 +28,9 @@ class JoinAsTeamDialog extends React.Component {
         .then((data) => {
           if (!data.errors) {
             toast.success(
-              "Join team successfull, changes can be seen after up to 15 seconds, and need reload!"
+              "Join team successfull, page will be reloaded after " +
+                config.block_time / 1000 +
+                " seconds!"
             );
             this.setState((state) => {
               return {
@@ -45,6 +48,9 @@ class JoinAsTeamDialog extends React.Component {
                   this.props.id
               )
               .modal("hide");
+            setTimeout(() => {
+              window.location.reload();
+            }, config.block_time);
           } else {
             toast.error(
               data.message +

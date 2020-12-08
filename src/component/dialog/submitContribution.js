@@ -5,6 +5,7 @@ import { getSession } from "../../utils/tools";
 import { submitContribution } from "../../utils/transaction";
 import SubmitContributionLogo from "../../asset/undraw_upload_87y9.svg";
 import Dropzone from "react-dropzone";
+import config from "../../config/config.json";
 const base91 = require("node-base91");
 const mime = require("mime-types");
 
@@ -33,7 +34,9 @@ class SubmitContributionDialog extends React.Component {
         .then((data) => {
           if (!data.errors) {
             toast.success(
-              "Submit contribution successfull, changes can be seen after up to 15 seconds, and need reload!"
+              "Submit contribution successfull, page will be reloaded after " +
+                config.block_time / 1000 +
+                " seconds!"
             );
             this.setState({
               filename: "",
@@ -51,6 +54,9 @@ class SubmitContributionDialog extends React.Component {
                   this.props.id
               )
               .modal("hide");
+            setTimeout(() => {
+              window.location.reload();
+            }, config.block_time);
           } else {
             toast.error(
               data.message +

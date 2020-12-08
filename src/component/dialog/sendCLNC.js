@@ -3,6 +3,7 @@ import { toast } from "react-toastify";
 import { getSession } from "../../utils/tools";
 import { transfer } from "../../utils/transaction";
 import SendLogo from "../../asset/undraw_transfer_money_rywa.svg";
+import config from "../../config/config.json";
 const { utils } = require("@liskhq/lisk-transactions");
 
 class SendCLNCDialog extends React.PureComponent {
@@ -39,7 +40,9 @@ class SendCLNCDialog extends React.PureComponent {
           .then((data) => {
             if (!data.errors) {
               toast.success(
-                "Send CLNC Successful, transfer will be complete after up to 15 seconds!"
+                "Send CLNC Successful, transfer will be complete after up to " +
+                  config.block_time / 1000 +
+                  " seconds!"
               );
               this.setState((state) => {
                 return {

@@ -4,6 +4,7 @@ import { postProject } from "../../utils/transaction";
 import { toast } from "react-toastify";
 import { getSession } from "../../utils/tools";
 import PostProjectDialogLogo from "../../asset/undraw_hiring_cyhs.svg";
+import config from "../../config/config.json";
 const { utils } = require("@liskhq/lisk-transactions");
 
 class PostProjectDialog extends React.Component {
@@ -57,7 +58,9 @@ class PostProjectDialog extends React.Component {
         .then((data) => {
           if (!data.errors) {
             toast.success(
-              "Post project successfull, changes can be seen after up to 15 seconds, and need reload!"
+              "Post project successfull, page will be reloaded after " +
+                config.block_time / 1000 +
+                " seconds!"
             );
             this.setState((state) => {
               return {
@@ -71,6 +74,9 @@ class PostProjectDialog extends React.Component {
               };
             });
             window.$("#postProject").modal("hide");
+            setTimeout(() => {
+              window.location.reload();
+            }, config.block_time);
           } else {
             toast.error(
               data.message +

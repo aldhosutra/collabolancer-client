@@ -3,6 +3,7 @@ import { toast } from "react-toastify";
 import { getSession } from "../../utils/tools";
 import { employerRequestRevision, finishWork } from "../../utils/transaction";
 import EmployerRejectLogo from "../../asset/undraw_cancel_u1it.svg";
+import config from "../../config/config.json";
 
 class EmployerRejectDialog extends React.Component {
   constructor() {
@@ -40,7 +41,9 @@ class EmployerRejectDialog extends React.Component {
               .then((finish) => {
                 if (!finish.errors) {
                   toast.success(
-                    "Reject Worker successfull, changes can be seen after up to 15 seconds, and need reload!"
+                    "Reject Worker successfull, page will be reloaded after " +
+                      config.block_time / 1000 +
+                      " seconds!"
                   );
                   this.setState((state) => {
                     return {
@@ -56,6 +59,9 @@ class EmployerRejectDialog extends React.Component {
                         this.props.id
                     )
                     .modal("hide");
+                  setTimeout(() => {
+                    window.location.reload();
+                  }, config.block_time);
                 } else {
                   toast.error(
                     data.message +

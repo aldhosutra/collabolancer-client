@@ -3,6 +3,7 @@ import { toast } from "react-toastify";
 import { getSession } from "../../utils/tools";
 import { employerRequestRevision } from "../../utils/transaction";
 import EmployerRequestRevisionLogo from "../../asset/undraw_feeling_blue_4b7q.svg";
+import config from "../../config/config.json";
 
 class EmployerRequestRevisionDialog extends React.Component {
   constructor() {
@@ -37,7 +38,9 @@ class EmployerRequestRevisionDialog extends React.Component {
         .then((data) => {
           if (!data.errors) {
             toast.success(
-              "Request Revision successfull, changes can be seen after up to 15 seconds, and need reload!"
+              "Request Revision successfull, page will be reloaded after " +
+                config.block_time / 1000 +
+                " seconds!"
             );
             this.setState((state) => {
               return {
@@ -53,6 +56,9 @@ class EmployerRequestRevisionDialog extends React.Component {
                   this.props.id
               )
               .modal("hide");
+            setTimeout(() => {
+              window.location.reload();
+            }, config.block_time);
           } else {
             toast.error(
               data.message +
