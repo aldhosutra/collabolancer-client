@@ -269,24 +269,31 @@ class SubmitContributionDialog extends React.Component {
                   <Dropzone
                     onDrop={(acceptedFiles) => {
                       if (acceptedFiles.length > 0) {
-                        const reader = new FileReader();
-                        reader.onload = () => {
-                          const binaryStr = reader.result;
-                          this.setState((state) => {
-                            return {
-                              ...state,
-                              filename: acceptedFiles[0].name,
-                              filemime: mime
-                                .contentType(acceptedFiles[0].type)
-                                .split(";")[0],
-                              fileextension: mime.extension(
-                                acceptedFiles[0].type
-                              ),
-                              filedata: base91.encode(binaryStr),
-                            };
-                          });
-                        };
-                        reader.readAsArrayBuffer(acceptedFiles[0]);
+                        var re = /(?:\.([^.]+))?$/;
+                        if (re.exec(acceptedFiles[0].name)[1]) {
+                          const reader = new FileReader();
+                          reader.onload = () => {
+                            const binaryStr = reader.result;
+                            this.setState((state) => {
+                              return {
+                                ...state,
+                                filename: acceptedFiles[0].name,
+                                filemime: mime.lookup(
+                                  re.exec(acceptedFiles[0].name)[1]
+                                ),
+                                fileextension: re.exec(
+                                  acceptedFiles[0].name
+                                )[1],
+                                filedata: base91.encode(binaryStr),
+                              };
+                            });
+                          };
+                          reader.readAsArrayBuffer(acceptedFiles[0]);
+                        } else {
+                          toast.error(
+                            `Error: Please provide file with extension!`
+                          );
+                        }
                       } else {
                         toast.error(
                           `Error: Please Make Sure File Not Exceed Size Limit!`
@@ -350,7 +357,8 @@ class SubmitContributionDialog extends React.Component {
                             >
                               Drag 'n' drop some files here, or click to select
                               files, Max filesize is{" "}
-                              {MISCELLANEOUS.FILE_MAXSIZE / 1000000} MB
+                              {MISCELLANEOUS.FILE_MAXSIZE / 1000000} MB, and
+                              Files need to be named with extension
                             </p>
                           </div>
                         </section>

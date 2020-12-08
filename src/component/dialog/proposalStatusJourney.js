@@ -122,6 +122,7 @@ class ProposalStatusJourneyDialog extends React.PureComponent {
                   {proposalStatusData.map((item) => {
                     return (
                       <div
+                        key={item.status}
                         className="row"
                         style={{
                           width: "100%",

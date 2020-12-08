@@ -120,6 +120,7 @@ class TeamStatusJourneyDialog extends React.PureComponent {
                   {teamStatusData.map((item) => {
                     return (
                       <div
+                        key={item.status}
                         className="row"
                         style={{
                           width: "100%",
