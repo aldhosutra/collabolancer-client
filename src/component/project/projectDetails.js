@@ -8,16 +8,36 @@ import EmployerCancelDialog from "../dialog/employerCancelDialog";
 import Countdown from "react-countdown";
 import { toast } from "react-toastify";
 import LeaderTerminateDialog from "../dialog/leaderTerminateDialog";
+import ClaimDialog from "../dialog/claimDialog";
 const dateFormat = require("dateformat");
 const { utils } = require("@liskhq/lisk-transactions");
 
 class ProjectDetails extends React.Component {
   render() {
     let actionButton = "No Action!";
-    if (this.props.account) {
+    const proposal = this.props.project.asset.proposal.filter(
+      (item) => item.publicKey === this.props.project.asset.winner
+    )[0];
+    const claimReady = [
+      STATUS.PROJECT.FINISHED,
+      STATUS.PROJECT.REFUSED,
+      STATUS.PROJECT.TERMINATED,
+      STATUS.PROJECT.CANCELLED,
+      STATUS.PROJECT.DISPUTE_CLOSED,
+    ].includes(this.props.project.asset.status);
+    const claimButton = (
+      <ClaimDialog
+        id={this.props.id}
+        account={this.props.account}
+        project={this.props.project}
+      />
+    );
+    if (this.props.account && proposal) {
       switch (this.props.account.address) {
         case this.props.project.asset.employer:
-          actionButton = (
+          actionButton = claimReady ? (
+            claimButton
+          ) : (
             <EmployerCancelDialog
               id={this.props.id}
               account={this.props.account}
@@ -25,10 +45,10 @@ class ProjectDetails extends React.Component {
             />
           );
           break;
-        case this.props.project.asset.proposal.filter(
-          (item) => item.publicKey === this.props.project.asset.winner
-        )[0].asset.leader:
-          actionButton = (
+        case proposal.asset.leader:
+          actionButton = claimReady ? (
+            claimButton
+          ) : (
             <LeaderTerminateDialog
               id={this.props.id}
               account={this.props.account}
@@ -37,6 +57,14 @@ class ProjectDetails extends React.Component {
           );
           break;
         default:
+          if (
+            proposal.asset.team
+              .filter((item) => item !== 0)
+              .map((item) => item.asset.worker)
+              .includes(this.props.account.address)
+          ) {
+            actionButton = claimReady ? claimButton : actionButton;
+          }
           break;
       }
     }
@@ -123,7 +151,11 @@ class ProjectDetails extends React.Component {
               <p style={{ fontFamily: "Poppins, sans-serif" }}>
                 {this.props.project.asset.maxTime} Days
               </p>
-            ) : (
+            ) : [
+                STATUS.PROJECT.WORKING,
+                STATUS.PROJECT.SUBMITTED,
+                STATUS.PROJECT.REQUEST_REVISION,
+              ].includes(this.props.project.asset.status) ? (
               <div>
                 <Countdown
                   date={
@@ -180,6 +212,10 @@ class ProjectDetails extends React.Component {
                   }}
                 />
               </div>
+            ) : (
+              <p style={{ fontFamily: "Poppins, sans-serif" }}>
+                Is no longer the time to work
+              </p>
             )}
           </div>
         </div>
@@ -244,6 +280,86 @@ class ProjectDetails extends React.Component {
                 </p>
               </div>
             </div>
+            {[
+              STATUS.PROJECT.FINISHED,
+              STATUS.PROJECT.REFUSED,
+              STATUS.PROJECT.TERMINATED,
+              STATUS.PROJECT.DISPUTED,
+              STATUS.PROJECT.DISPUTE_CLOSED,
+            ].includes(this.props.project.asset.status) ? (
+              <div className="row">
+                <div className="col-lg-4 details">
+                  <h5 style={{ fontFamily: "Poppins, sans-serif" }}>
+                    <strong>Open Dispute Time Limit</strong>
+                  </h5>
+                </div>
+                <div className="col details">
+                  <div>
+                    <Countdown
+                      date={
+                        (constants.EPOCH_TIME_SECONDS +
+                          this.props.project.asset.canBeClaimedOn) *
+                        1000
+                      }
+                      onComplete={() => {
+                        toast.warn("Open Dispute Time Limit, is Over!");
+                        window.location.reload();
+                      }}
+                      renderer={({
+                        days,
+                        hours,
+                        minutes,
+                        seconds,
+                        completed,
+                      }) => {
+                        if (completed) {
+                          var expiredMiliSeconds =
+                            this.props.project.asset.maxTime * 86400 * 1000 +
+                            (constants.EPOCH_TIME_SECONDS +
+                              this.props.project.asset.workStarted) *
+                              1000;
+                          dateFormat(
+                            new Date(expiredMiliSeconds),
+                            "mmmm dS, yyyy - h:MM:ss TT"
+                          );
+                          return (
+                            <p
+                              style={{
+                                backgroundColor: "rgb(248,0,47)",
+                                display: "inline-block",
+                                minWidth: "80px",
+                                color: "#ffffff",
+                                paddingLeft: "15px",
+                                paddingRight: "15px",
+                                fontWeight: "bold",
+                              }}
+                            >
+                              Expired, at :{" "}
+                              {dateFormat(
+                                new Date(expiredMiliSeconds),
+                                "mmmm dS, yyyy - h:MM:ss TT"
+                              )}
+                            </p>
+                          );
+                        } else {
+                          return (
+                            <p
+                              style={{
+                                fontFamily: "Poppins, sans-serif",
+                              }}
+                            >
+                              {days} d : {hours} h : {minutes} m : {seconds} s
+                            </p>
+                          );
+                        }
+                      }}
+                    />
+                  </div>
+                </div>
+              </div>
+            ) : (
+              <div></div>
+            )}
             <div className="row">
               <div className="col-lg-4 details">
                 <h5 style={{ fontFamily: "Poppins, sans-serif" }}>

@@ -1,13 +1,17 @@
 import React from "react";
 import { renderAvatar } from "../avatar";
+import * as constants from "@liskhq/lisk-constants";
 import Pagination from "../general/pagination";
 import SoloProposal from "./soloProposal";
 import Team from "./team";
 import PitchingDialog from "../dialog/pitchingDialog";
 import CompactContractCard from "../general/compactContractDetails";
 import { MISCELLANEOUS, STATUS } from "../../transactions/constants";
+import Countdown from "react-countdown";
+import { toast } from "react-toastify";
 const { utils } = require("@liskhq/lisk-transactions");
 const parse = require("html-react-parser");
+const dateFormat = require("dateformat");
 
 class Proposal extends React.Component {
   constructor() {
@@ -271,18 +275,107 @@ class Proposal extends React.Component {
               <div className="row">
                 <div className="col-lg-3 details">
                   <h6 style={{ fontFamily: "Poppins, sans-serif" }}>
-                    <strong>Working TIme Limit</strong>
+                    <strong>Working Time Limit</strong>
                   </h6>
                 </div>
                 <div className="col details">
-                  <p
-                    style={{
-                      fontFamily: "Poppins, sans-serif",
-                      fontSize: "14px",
-                    }}
-                  >
-                    {this.props.proposal.asset.term.maxTime} Days
-                  </p>
+                  {this.props.project.asset.status === STATUS.PROJECT.OPEN ? (
+                    <p
+                      style={{
+                        fontFamily: "Poppins, sans-serif",
+                        fontSize: "14px",
+                      }}
+                    >
+                      {this.props.proposal.asset.term.maxTime} Days
+                    </p>
+                  ) : [
+                      STATUS.PROPOSAL.SELECTED,
+                      STATUS.PROPOSAL.SUBMITTED,
+                      STATUS.PROPOSAL.REQUEST_REVISION,
+                    ].includes(this.props.proposal.asset.status) &&
+                    [
+                      STATUS.PROJECT.WORKING,
+                      STATUS.PROJECT.SUBMITTED,
+                      STATUS.PROJECT.REQUEST_REVISION,
+                    ].includes(this.props.project.asset.status) ? (
+                    <div>
+                      <Countdown
+                        date={
+                          this.props.proposal.asset.term.maxTime *
+                            86400 *
+                            1000 +
+                          (constants.EPOCH_TIME_SECONDS +
+                            this.props.project.asset.workStarted) *
+                            1000
+                        }
+                        onComplete={() => {
+                          toast.warn("Proposal Working Time Limit, is Over!");
+                          window.location.reload();
+                        }}
+                        renderer={({
+                          days,
+                          hours,
+                          minutes,
+                          seconds,
+                          completed,
+                        }) => {
+                          if (completed) {
+                            var expiredMiliSeconds =
+                              this.props.proposal.asset.term.maxTime *
+                                86400 *
+                                1000 +
+                              (constants.EPOCH_TIME_SECONDS +
+                                this.props.project.asset.workStarted) *
+                                1000;
+                            dateFormat(
+                              new Date(expiredMiliSeconds),
+                              "mmmm dS, yyyy - h:MM:ss TT"
+                            );
+                            return (
+                              <p
+                                style={{
+                                  fontSize: "14px",
+                                  backgroundColor: "rgb(248,0,47)",
+                                  display: "inline-block",
+                                  minWidth: "80px",
+                                  color: "#ffffff",
+                                  paddingLeft: "15px",
+                                  paddingRight: "15px",
+                                  fontWeight: "bold",
+                                }}
+                              >
+                                Expired, at :{" "}
+                                {dateFormat(
+                                  new Date(expiredMiliSeconds),
+                                  "mmmm dS, yyyy - h:MM:ss TT"
+                                )}
+                              </p>
+                            );
+                          } else {
+                            return (
+                              <p
+                                style={{
+                                  fontFamily: "Poppins, sans-serif",
+                                  fontSize: "14px",
+                                }}
+                              >
+                                {days} d : {hours} h : {minutes} m : {seconds} s
+                              </p>
+                            );
+                          }
+                        }}
+                      />
+                    </div>
+                  ) : (
+                    <p
+                      style={{
+                        fontFamily: "Poppins, sans-serif",
+                        fontSize: "14px",
+                      }}
+                    >
+                      Is no longer the time to work
+                    </p>
+                  )}
                 </div>
               </div>
               <div className="row">

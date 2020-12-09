@@ -20,6 +20,23 @@ class EmployerCancelDialog extends React.Component {
     );
   }
 
+  componentDidMount() {
+    if (
+      [STATUS.PROJECT.REQUEST_REVISION, STATUS.PROJECT.WORKING].includes(
+        this.props.project.asset.status
+      ) &&
+      Date.now() >
+        this.props.project.asset.maxTime * 86400 * 1000 +
+          (constants.EPOCH_TIME_SECONDS +
+            this.props.project.asset.workStarted) *
+            1000
+    ) {
+      this.setState({
+        available: true,
+      });
+    }
+  }
+
   onEmployerCancelFormSubmit(e) {
     try {
       cancelWork(getSession("secret"), this.props.project.publicKey)
@@ -58,26 +75,6 @@ class EmployerCancelDialog extends React.Component {
   }
 
   render() {
-    if (
-      !this.props.account ||
-      this.props.account.address !== this.props.project.asset.employer
-    ) {
-      return null;
-    }
-    if (
-      [STATUS.PROJECT.REQUEST_REVISION, STATUS.PROJECT.WORKING].includes(
-        this.props.project.asset.status &&
-          Date.now() <
-            this.props.project.asset.maxTime * 86400 * 1000 +
-              (constants.EPOCH_TIME_SECONDS +
-                this.props.project.asset.workStarted) *
-                1000
-      )
-    ) {
-      this.setState({
-        available: true,
-      });
-    }
     return (
       <div>
         <button
@@ -339,7 +336,7 @@ class EmployerCancelDialog extends React.Component {
                                 fontWeight: "bold",
                               }}
                             >
-                              Expired!
+                              Working time limit, Over!
                             </span>
                           );
                         } else {

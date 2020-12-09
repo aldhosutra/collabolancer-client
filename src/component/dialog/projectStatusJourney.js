@@ -33,14 +33,14 @@ class ProjectStatusJourneyDialog extends React.PureComponent {
       {
         status: STATUS.PROJECT.REFUSED,
         description:
-          "The project status is rejected, and a dispute can be opened by the party with the objection within the time limit of: " +
+          "The project status is rejected, and a dispute can be opened by the party with the objection within the initial time limit of: " +
           MISCELLANEOUS.FUND_FREEZED_PERIOD / 60 / 60 / 24 +
           " day(s)",
       },
       {
         status: STATUS.PROJECT.FINISHED,
         description:
-          "Employer accept the submitted work. On the other hand, Worker's team have opportunity to open a dispute if they have objection to the leader within the time limit of: " +
+          "Employer accept the submitted work. On the other hand, Worker's team have opportunity to open a dispute if they have objection to the leader within the initial time limit of: " +
           MISCELLANEOUS.FUND_FREEZED_PERIOD / 60 / 60 / 24 +
           " day(s)",
       },

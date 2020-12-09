@@ -38,24 +38,28 @@ class ProposalList extends React.Component {
   }
 
   render() {
+    let proposalData = this.props.project.asset.proposal;
+    if (this.props.project.asset.status !== STATUS.PROJECT.OPEN) {
+      proposalData = proposalData.filter(
+        (item) => item.publicKey !== this.props.project.asset.winner
+      );
+    }
     const limit = this.state.itemPerPage;
-    const pageCount = Math.ceil(
-      this.props.project.asset.proposal.length / limit
-    );
+    const pageCount = Math.ceil(proposalData.length / limit);
     const proposalList = [];
     for (
       let i = (this.state.page - 1) * limit;
       i < (this.state.page - 1) * limit + limit;
       i++
     ) {
-      if (i >= this.props.project.asset.proposal.length) break;
+      if (i >= proposalData.length) break;
       proposalList.push(
         <Proposal
           id={i}
           key={i}
           account={this.props.account}
           project={this.props.project}
-          proposal={this.props.project.asset.proposal[i]}
+          proposal={proposalData[i]}
         />
       );
     }
@@ -64,7 +68,7 @@ class ProposalList extends React.Component {
       this.props.account &&
       this.props.project &&
       this.props.account.address === this.props.project.asset.employer &&
-      this.props.project.asset.proposal.length > 0 &&
+      proposalData.length > 0 &&
       this.props.project.asset.status === STATUS.PROJECT.OPEN
     ) {
       actionButton = <ChooseWinnerGuideDialog project={this.props.project} />;
@@ -73,7 +77,7 @@ class ProposalList extends React.Component {
       this.props.project &&
       this.props.account.asset.type === ACCOUNT.WORKER &&
       this.props.project.asset.status === STATUS.PROJECT.OPEN &&
-      !this.props.project.asset.proposal
+      !proposalData
         .map((item) => item.asset.leader)
         .includes(this.props.account.address)
     ) {
@@ -133,7 +137,7 @@ class ProposalList extends React.Component {
                 : new DOMParser().parseFromString("&#11208;", "text/html").body
                     .textContent}{" "}
               {this.props.project.asset.status === STATUS.PROJECT.OPEN
-                ? "Proposal [" + this.props.project.asset.proposal.length + "]"
+                ? "Proposal [" + proposalData.length + "]"
                 : "Previously Applied Proposals"}
             </strong>
           </h5>
@@ -163,11 +167,10 @@ class ProposalList extends React.Component {
             >
               {actionButton}
             </div>
-            {this.props.project.asset.proposal.length > 0 ? (
+            {proposalData.length > 0 ? (
               <div>
                 {proposalList}
-                {this.props.project.asset.proposal.length >
-                this.state.itemPerPage ? (
+                {proposalData.length > this.state.itemPerPage ? (
                   <div style={{ marginTop: "16px" }}>
                     <Pagination
                       currentPage={this.state.page}
@@ -184,7 +187,14 @@ class ProposalList extends React.Component {
                 )}
               </div>
             ) : (
-              <NoData message="No Proposal Has Applied!" />
+              <NoData
+                message={
+                  this.props.project.asset.status !== STATUS.PROJECT.OPEN
+                    ? "No Other Applied Proposal!"
+                    : "No Proposal Has Applied!"
+                }
+                reload={"false"}
+              />
             )}
           </div>
         </div>
