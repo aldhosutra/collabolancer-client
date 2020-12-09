@@ -178,6 +178,8 @@ class Team extends React.Component {
                 {
                   <TeamDisputeDialog
                     team={this.props.team}
+                    project={this.props.project}
+                    proposal={this.props.proposal}
                     account={this.props.account}
                   />
                 }

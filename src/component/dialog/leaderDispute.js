@@ -492,7 +492,7 @@ class LeaderDisputeDialog extends React.Component {
                     <ul style={{ textAlign: "justify" }}>
                       <li>
                         Project status must be, either: {STATUS.PROJECT.REFUSED}
-                        ,{STATUS.PROJECT.DISPUTED}, or
+                        ,{STATUS.PROJECT.DISPUTED}, or{" "}
                         {STATUS.PROJECT.DISPUTE_CLOSED}
                       </li>
                       <li>Must be still in Open Dispute Time Limit Period</li>

@@ -40,6 +40,7 @@ class ProjectDetails extends React.Component {
             claimButton
           ) : [
               STATUS.PROJECT.REQUEST_REVISION,
+              STATUS.PROJECT.SUBMITTED,
               STATUS.PROJECT.WORKING,
             ].includes(this.props.project.asset.status) ? (
             <EmployerCancelDialog
