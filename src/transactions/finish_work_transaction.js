@@ -51,18 +51,20 @@ class FinishWorkTransaction extends BaseTransaction {
       },
     ]);
 
-    await store.account.cache({
-      address_in: store.account
-        .get(
-          getAddressFromPublicKey(
-            store.account.get(
-              getAddressFromPublicKey(this.asset.projectPublicKey)
-            ).asset.winner
-          )
+    const teamAccounts = store.account
+      .get(
+        getAddressFromPublicKey(
+          store.account.get(
+            getAddressFromPublicKey(this.asset.projectPublicKey)
+          ).asset.winner
         )
-        .asset.team.filter((el) => el != 0)
-        .map((el) => getAddressFromPublicKey(el)),
-    });
+      )
+      .asset.team.filter((el) => el !== 0);
+    if (teamAccounts.length > 0) {
+      await store.account.cache({
+        address_in: teamAccounts.map((el) => getAddressFromPublicKey(el)),
+      });
+    }
   }
 
   /**
@@ -104,11 +106,11 @@ class FinishWorkTransaction extends BaseTransaction {
         store
       );
       const teamAccounts = proposalAccount.asset.team
-        .filter((el) => el != 0)
+        .filter((el) => el !== 0)
         .map((el) => store.account.get(getAddressFromPublicKey(el)));
       if (
         Object.prototype.hasOwnProperty.call(sender.asset, "type") &&
-        sender.asset.type != ACCOUNT.EMPLOYER
+        sender.asset.type !== ACCOUNT.EMPLOYER
       ) {
         errors.push(
           new TransactionError(
@@ -122,7 +124,7 @@ class FinishWorkTransaction extends BaseTransaction {
       }
       if (
         Object.prototype.hasOwnProperty.call(projectAccount.asset, "type") &&
-        projectAccount.asset.type != ACCOUNT.PROJECT
+        projectAccount.asset.type !== ACCOUNT.PROJECT
       ) {
         errors.push(
           new TransactionError(
@@ -155,7 +157,7 @@ class FinishWorkTransaction extends BaseTransaction {
           )
         );
       }
-      if (projectAccount.asset.employer != sender.address) {
+      if (projectAccount.asset.employer !== sender.address) {
         errors.push(
           new TransactionError(
             "sender is not owner of project",
@@ -188,21 +190,21 @@ class FinishWorkTransaction extends BaseTransaction {
           )
         );
       }
-      if (errors.length == 0) {
+      if (errors.length === 0) {
         const projectAsset = {
           ...projectAccount.asset,
           workFinished: this.timestamp,
           oldStatus: projectAccount.asset.status,
         };
-        if (projectAccount.asset.status == STATUS.PROJECT.SUBMITTED) {
+        if (projectAccount.asset.status === STATUS.PROJECT.SUBMITTED) {
           projectAsset.status = STATUS.PROJECT.FINISHED;
           projectAsset.statusNote.unshift({
             time: this.timestamp,
             status: projectAsset.status,
-            submission: projectAsset.submission[0].publicKey,
+            submission: projectAsset.submission[0],
             reason: "accepted",
           });
-        } else if (projectAccount.asset.status == STATUS.PROJECT.REJECTED) {
+        } else if (projectAccount.asset.status === STATUS.PROJECT.REJECTED) {
           projectAsset.status = STATUS.PROJECT.REFUSED;
         }
         projectAsset.activity.unshift({

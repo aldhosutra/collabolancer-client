@@ -4,11 +4,42 @@ import * as constants from "@liskhq/lisk-constants";
 import { STATUS } from "../../transactions/constants";
 import Winner from "./winner";
 import ProjectContractDetail from "../general/projectContractDetails";
+import EmployerCancelDialog from "../dialog/employerCancelDialog";
+import Countdown from "react-countdown";
+import { toast } from "react-toastify";
+import LeaderTerminateDialog from "../dialog/leaderTerminateDialog";
 const dateFormat = require("dateformat");
 const { utils } = require("@liskhq/lisk-transactions");
 
 class ProjectDetails extends React.Component {
   render() {
+    let actionButton = "No Action!";
+    if (this.props.account) {
+      switch (this.props.account.address) {
+        case this.props.project.asset.employer:
+          actionButton = (
+            <EmployerCancelDialog
+              id={this.props.id}
+              account={this.props.account}
+              project={this.props.project}
+            />
+          );
+          break;
+        case this.props.project.asset.proposal.filter(
+          (item) => item.publicKey === this.props.project.asset.winner
+        )[0].asset.leader:
+          actionButton = (
+            <LeaderTerminateDialog
+              id={this.props.id}
+              account={this.props.account}
+              project={this.props.project}
+            />
+          );
+          break;
+        default:
+          break;
+      }
+    }
     return (
       <div>
         <div
@@ -88,9 +119,68 @@ class ProjectDetails extends React.Component {
             </h5>
           </div>
           <div className="col details">
-            <p style={{ fontFamily: "Poppins, sans-serif" }}>
-              {this.props.project.asset.maxTime} Days
-            </p>
+            {this.props.project.asset.status === STATUS.PROJECT.OPEN ? (
+              <p style={{ fontFamily: "Poppins, sans-serif" }}>
+                {this.props.project.asset.maxTime} Days
+              </p>
+            ) : (
+              <div>
+                <Countdown
+                  date={
+                    this.props.project.asset.maxTime * 86400 * 1000 +
+                    (constants.EPOCH_TIME_SECONDS +
+                      this.props.project.asset.workStarted) *
+                      1000
+                  }
+                  onComplete={() => {
+                    toast.warn("Project Working Time Limit, is Over!");
+                    window.location.reload();
+                  }}
+                  renderer={({ days, hours, minutes, seconds, completed }) => {
+                    if (completed) {
+                      var expiredMiliSeconds =
+                        this.props.project.asset.maxTime * 86400 * 1000 +
+                        (constants.EPOCH_TIME_SECONDS +
+                          this.props.project.asset.workStarted) *
+                          1000;
+                      dateFormat(
+                        new Date(expiredMiliSeconds),
+                        "mmmm dS, yyyy - h:MM:ss TT"
+                      );
+                      return (
+                        <p
+                          style={{
+                            backgroundColor: "rgb(248,0,47)",
+                            display: "inline-block",
+                            minWidth: "80px",
+                            color: "#ffffff",
+                            paddingLeft: "15px",
+                            paddingRight: "15px",
+                            fontWeight: "bold",
+                          }}
+                        >
+                          Expired, at :{" "}
+                          {dateFormat(
+                            new Date(expiredMiliSeconds),
+                            "mmmm dS, yyyy - h:MM:ss TT"
+                          )}
+                        </p>
+                      );
+                    } else {
+                      return (
+                        <p
+                          style={{
+                            fontFamily: "Poppins, sans-serif",
+                          }}
+                        >
+                          {days} d : {hours} h : {minutes} m : {seconds} s
+                        </p>
+                      );
+                    }
+                  }}
+                />
+              </div>
+            )}
           </div>
         </div>
         <div className="row">
@@ -160,22 +250,7 @@ class ProjectDetails extends React.Component {
                   <strong>Action</strong>
                 </h5>
               </div>
-              <div className="col details">
-                <button
-                  className="btn btn-primary border rounded-0 top-button"
-                  type="button"
-                  data-toggle="modal"
-                  data-target="#modal-1"
-                  style={{
-                    marginRight: "8px",
-                    backgroundColor: "#2B2D42",
-                    margin: "auto",
-                    fontFamily: "Poppins, sans-serif",
-                  }}
-                >
-                  Action Button
-                </button>
-              </div>
+              <div className="col details">{actionButton}</div>
             </div>
             <SubmittedWork
               project={this.props.project}

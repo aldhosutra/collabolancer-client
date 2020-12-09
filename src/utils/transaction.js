@@ -392,11 +392,71 @@ const finishWork = async (senderPassphrase, projectPublicKey) => {
   return ret;
 };
 
-const claimPrize = () => {};
+const claimPrize = async (senderPassphrase, projectPublicKey) => {
+  let ret;
+  const tx = new ClaimPrizeTransaction({
+    asset: {
+      projectPublicKey: projectPublicKey,
+    },
+    networkIdentifier: networkIdentifier,
+    timestamp: utils.getTimeFromBlockchainEpoch(),
+  });
+  tx.sign(senderPassphrase);
+  await api.transactions
+    .broadcast(tx.toJSON())
+    .then((res) => {
+      ret = res;
+    })
+    .catch((err) => {
+      console.log(err);
+      ret = err;
+    });
+  return ret;
+};
 
-const terminateWork = () => {};
+const terminateWork = async (senderPassphrase, projectPublicKey) => {
+  let ret;
+  const tx = new TerminateWorkTransaction({
+    asset: {
+      projectPublicKey: projectPublicKey,
+    },
+    networkIdentifier: networkIdentifier,
+    timestamp: utils.getTimeFromBlockchainEpoch(),
+  });
+  tx.sign(senderPassphrase);
+  await api.transactions
+    .broadcast(tx.toJSON())
+    .then((res) => {
+      ret = res;
+    })
+    .catch((err) => {
+      console.log(err);
+      ret = err;
+    });
+  return ret;
+};
 
-const cancelWork = () => {};
+const cancelWork = async (senderPassphrase, projectPublicKey) => {
+  let ret;
+  const tx = new CancelWorkTransaction({
+    asset: {
+      projectPublicKey: projectPublicKey,
+    },
+    networkIdentifier: networkIdentifier,
+    timestamp: utils.getTimeFromBlockchainEpoch(),
+  });
+  tx.sign(senderPassphrase);
+  await api.transactions
+    .broadcast(tx.toJSON())
+    .then((res) => {
+      ret = res;
+    })
+    .catch((err) => {
+      console.log(err);
+      ret = err;
+    });
+  return ret;
+};
 
 const openDispute = () => {};
 
