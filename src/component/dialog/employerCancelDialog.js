@@ -90,7 +90,7 @@ class EmployerCancelDialog extends React.Component {
           style={{
             paddingRight: "24px",
             paddingLeft: "24px",
-            backgroundColor: "#EF233C",
+            backgroundColor: this.state.available ? "#EF233C" : "#2B2D42",
             marginRight: "10px",
             fontFamily: "Poppins, sans-serif",
             marginBottom: "10px",
@@ -303,68 +303,85 @@ class EmployerCancelDialog extends React.Component {
                       </li>
                       <li>Workers are past the specified work deadline</li>
                     </ul>
-                    <Countdown
-                      date={
-                        this.props.project.asset.maxTime * 86400 * 1000 +
-                        (constants.EPOCH_TIME_SECONDS +
-                          this.props.project.asset.workStarted) *
-                          1000
-                      }
-                      onComplete={() => {
-                        this.setState({
-                          available: true,
-                        });
-                      }}
-                      renderer={({
-                        days,
-                        hours,
-                        minutes,
-                        seconds,
-                        completed,
-                      }) => {
-                        if (completed) {
-                          return (
-                            <span
-                              style={{
-                                backgroundColor: "rgb(248,0,47)",
-                                display: "inline-block",
-                                minWidth: "80px",
-                                color: "#ffffff",
-                                marginLeft: "10px",
-                                paddingLeft: "15px",
-                                paddingRight: "15px",
-                                fontWeight: "bold",
-                              }}
-                            >
-                              Working time limit, Over!
-                            </span>
-                          );
-                        } else {
-                          return (
-                            <div>
-                              <p
-                                style={{
-                                  fontFamily: "Poppins, sans-serif",
-                                  textAlign: "center",
-                                }}
-                              >
-                                Worker still have time:
-                              </p>
-                              <p
-                                style={{
-                                  fontFamily: "Poppins, sans-serif",
-                                  textAlign: "center",
-                                  fontWeight: "bold",
-                                  fontSize: "24px",
-                                }}
-                              >
-                                {days} d : {hours} h : {minutes} m : {seconds} s
-                              </p>
-                            </div>
-                          );
+                    {[
+                      STATUS.PROJECT.WORKING,
+                      STATUS.PROJECT.REQUEST_REVISION,
+                    ].includes(this.props.project.asset.status) ? (
+                      <Countdown
+                        date={
+                          this.props.project.asset.maxTime * 86400 * 1000 +
+                          (constants.EPOCH_TIME_SECONDS +
+                            this.props.project.asset.workStarted) *
+                            1000
                         }
-                      }}
-                    />
+                        onComplete={() => {
+                          this.setState({
+                            available: true,
+                          });
+                        }}
+                        renderer={({
+                          days,
+                          hours,
+                          minutes,
+                          seconds,
+                          completed,
+                        }) => {
+                          if (completed) {
+                            return (
+                              <span
+                                style={{
+                                  backgroundColor: "rgb(248,0,47)",
+                                  display: "inline-block",
+                                  minWidth: "80px",
+                                  color: "#ffffff",
+                                  marginLeft: "10px",
+                                  paddingLeft: "15px",
+                                  paddingRight: "15px",
+                                  fontWeight: "bold",
+                                }}
+                              >
+                                Working time limit, Over!
+                              </span>
+                            );
+                          } else {
+                            return (
+                              <div>
+                                <p
+                                  style={{
+                                    fontFamily: "Poppins, sans-serif",
+                                    textAlign: "center",
+                                  }}
+                                >
+                                  Worker still have time:
+                                </p>
+                                <p
+                                  style={{
+                                    fontFamily: "Poppins, sans-serif",
+                                    textAlign: "center",
+                                    fontWeight: "bold",
+                                    fontSize: "24px",
+                                  }}
+                                >
+                                  {days} d : {hours} h : {minutes} m : {seconds}{" "}
+                                  s
+                                </p>
+                              </div>
+                            );
+                          }
+                        }}
+                      />
+                    ) : (
+                      <div>
+                        <h6
+                          className="modal-title w-100 dark-grey-text font-weight-bold my-1 text-center"
+                          style={{ color: "#EF233C" }}
+                        >
+                          <strong>
+                            Worker have submit the work, please make decision!
+                          </strong>
+                        </h6>
+                      </div>
+                    )}
                   </div>
                   <div
                     className="modal-footer mx-5 pt-3 mb-1"

@@ -10,7 +10,6 @@ import Loading from "../general/loading";
 import * as constants from "@liskhq/lisk-constants";
 import ProjectDetails from "./projectDetails";
 import ProposalList from "./proposalList";
-import DisputeList from "./disputeList";
 const dateFormat = require("dateformat");
 const parse = require("html-react-parser");
 const {
@@ -147,10 +146,6 @@ class Project extends React.Component {
                   project={this.state.project}
                   account={this.state.account}
                 />
-                <DisputeList
-                  project={this.state.project}
-                  account={this.state.account}
-                />
               </div>
             </div>
           ) : (
@@ -159,6 +154,7 @@ class Project extends React.Component {
         ) : (
           <Loading />
         )}
+        <div style={{ marginBottom: "64px" }}></div>
         <Quote />
         <Footer />
       </div>

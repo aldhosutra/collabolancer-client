@@ -1,15 +1,108 @@
 import React from "react";
-import { STATUS } from "../../transactions/constants";
+import { MISCELLANEOUS, STATUS } from "../../transactions/constants";
+import * as constants from "@liskhq/lisk-constants";
+import disputeLogo from "../../asset/undraw_judge_katerina_limpitsouni_ny1q.svg";
+import holdOnLogo from "../../asset/undraw_loading_frh4.svg";
+import { renderAvatar } from "../avatar";
+import { openDispute } from "../../utils/transaction";
+import { getSession } from "../../utils/tools";
+import config from "../../config/config.json";
+import { toast } from "react-toastify";
+import CompactContractCard from "../general/compactContractCard";
+const { utils } = require("@liskhq/lisk-transactions");
 
 class LeaderDisputeDialog extends React.Component {
+  constructor() {
+    super();
+    this.state = {
+      available: false,
+      "form-suit": "",
+      "form-maxdays": "",
+    };
+    this.handleLeaderDisputeFormChange = this.handleLeaderDisputeFormChange.bind(
+      this
+    );
+    this.onLeaderDisputeFormSubmit = this.onLeaderDisputeFormSubmit.bind(this);
+  }
+
+  handleLeaderDisputeFormChange(event) {
+    const targetID = event.target.id;
+    const targetValue = event.target.value;
+    this.setState((state) => {
+      return { ...state, [targetID]: targetValue };
+    });
+  }
+
+  onLeaderDisputeFormSubmit(e) {
+    e.preventDefault();
+    try {
+      openDispute(
+        getSession("secret"),
+        this.props.proposal.publicKey,
+        this.props.project.publicKey,
+        this.state["form-suit"],
+        parseInt(this.state["form-maxdays"])
+      )
+        .then((data) => {
+          if (!data.errors) {
+            toast.success(
+              "Open Leader vs Employer dispute successfull, page will be reloaded after " +
+                config.block_time / 1000 +
+                " seconds!"
+            );
+            this.setState((state) => {
+              return {
+                ...state,
+                "form-suit": "",
+                "form-maxdays": "",
+              };
+            });
+            window
+              .$(
+                "#leader-vs-employer-open-dispute-" +
+                  this.props.project.publicKey
+              )
+              .modal("hide");
+            setTimeout(() => {
+              window.location.reload();
+            }, config.block_time);
+          } else {
+            toast.error(
+              data.message +
+                ": " +
+                data.errors.map((err) => err.message).toString()
+            );
+          }
+        })
+        .catch((err) => {
+          toast.error(`Error: ${err.message}`);
+        });
+    } catch (err) {
+      toast.error(`Error: ${err.message}`);
+    }
+  }
+
+  componentDidMount() {
+    if (
+      [
+        STATUS.PROJECT.REFUSED,
+        STATUS.PROJECT.DISPUTED,
+        STATUS.PROJECT.DISPUTE_CLOSED,
+      ].includes(this.props.project.asset.status) &&
+      [STATUS.PROPOSAL.REJECTED].includes(this.props.proposal.asset.status) &&
+      Date.now() <
+        (constants.EPOCH_TIME_SECONDS +
+          this.props.project.asset.canBeClaimedOn) *
+          1000
+    ) {
+      this.setState({
+        available: true,
+      });
+    }
+  }
+
   render() {
     if (
-      /* [
-            STATUS.PROJECT.FINISHED,
-            STATUS.PROJECT.TERMINATED,
-            STATUS.PROJECT.DISPUTED,
-            STATUS.PROJECT.DISPUTE_CLOSED,
-        ].includes(this.props.project.asset.status) && */
       !this.props.proposal ||
       !this.props.account ||
       this.props.account.address !== this.props.proposal.asset.leader ||
@@ -22,16 +115,429 @@ class LeaderDisputeDialog extends React.Component {
         <button
           className="btn btn-primary border rounded-0 top-button"
           type="button"
+          data-toggle="modal"
+          data-target={
+            "#leader-vs-employer-open-dispute-" + this.props.project.publicKey
+          }
           style={{
             paddingRight: "24px",
             paddingLeft: "24px",
-            backgroundColor: "#EF233C",
+            backgroundColor: this.state.available ? "#EF233C" : "#2B2D42",
             fontFamily: "Poppins, sans-serif",
             marginBottom: "10px",
           }}
         >
           <strong>Open Dispute</strong>
         </button>
+        {this.state.available ? (
+          <div>
+            <div
+              className="modal fade"
+              id={
+                "leader-vs-employer-open-dispute-" +
+                this.props.project.publicKey
+              }
+              tabIndex={-1}
+              role="dialog"
+              aria-hidden="true"
+              style={{ fontFamily: "Poppins, sans-serif" }}
+            >
+              <div className="modal-dialog modal-lg" role="document">
+                <div className="modal-content form-elegant">
+                  <div
+                    className="modal-header"
+                    style={{ borderBottom: "0 none" }}
+                  >
+                    <button
+                      type="button"
+                      className="close"
+                      data-dismiss="modal"
+                      aria-label="Close"
+                    >
+                      <span aria-hidden="true">×</span>
+                    </button>
+                  </div>
+                  <form
+                    className="form-inside-input"
+                    onSubmit={this.onLeaderDisputeFormSubmit}
+                  >
+                    <div className="modal-body mx-4">
+                      <img
+                        role="status"
+                        style={{
+                          width: "180px",
+                          marginLeft: "auto",
+                          marginRight: "auto",
+                          marginBottom: "16px",
+                          display: "block",
+                        }}
+                        alt="Solo Proposal"
+                        src={disputeLogo}
+                      />
+                      <h3 className="modal-title w-100 dark-grey-text font-weight-bold my-1 text-center">
+                        <strong>
+                          Feel Aggrieved by the Employer Decision?
+                        </strong>
+                      </h3>
+                      <p
+                        style={{
+                          fontFamily: "Poppins, sans-serif",
+                          textAlign: "center",
+                        }}
+                      >
+                        Open 'Leader vs Employer' dispute,
+                        <br />
+                        and seek 'immutable & transparent' justice with power of
+                        blockchain
+                      </p>
+                      <div
+                        className="border rounded-0"
+                        style={{
+                          marginTop: "10px",
+                          marginBottom: "20px",
+                          marginRight: "auto",
+                          marginLeft: "auto",
+                          width: "100px",
+                        }}
+                      />
+                      <h6 style={{ marginBottom: "16px" }}>
+                        <strong>Dispute Details:</strong>
+                      </h6>
+                      <div
+                        style={{
+                          padding: "20px",
+                          borderWidth: 2,
+                          borderRadius: 2,
+                          borderColor: "#eeeeee",
+                          borderStyle: "dashed",
+                          marginBottom: "28px",
+                        }}
+                      >
+                        <div className="row" style={{ marginBottom: "16px" }}>
+                          <div className="col-lg-5">
+                            <div
+                              style={{
+                                fontFamily: "Poppins, sans-serif",
+                                backgroundImage: `url('data:image/svg+xml,${renderAvatar(
+                                  this.props.account.address,
+                                  250
+                                )}')`,
+                                backgroundRepeat: "no-repeat",
+                                backgroundSize: "contain",
+                                backgroundPosition: "left",
+                                marginBottom: "1rem",
+                                paddingLeft: "50px",
+                                height: "40px",
+                              }}
+                            >
+                              <p
+                                style={{
+                                  lineHeight: "15px",
+                                  fontSize: "14px",
+                                  marginBottom: "0px",
+                                }}
+                              >
+                                Litigant [YOU]
+                              </p>
+                              <strong>{this.props.account.address}</strong>
+                            </div>
+                          </div>
+                          <div className="col-lg-2">
+                            <h3 className="w-100 font-weight-bold text-center">
+                              VS
+                            </h3>
+                          </div>
+                          <div className="col-lg-5">
+                            <div
+                              style={{
+                                fontFamily: "Poppins, sans-serif",
+                                backgroundImage: `url('data:image/svg+xml,${renderAvatar(
+                                  this.props.project.asset.employer,
+                                  250
+                                )}')`,
+                                backgroundRepeat: "no-repeat",
+                                backgroundSize: "contain",
+                                backgroundPosition: "left",
+                                marginBottom: "1rem",
+                                paddingLeft: "50px",
+                                height: "40px",
+                              }}
+                            >
+                              <p
+                                style={{
+                                  lineHeight: "15px",
+                                  fontSize: "14px",
+                                  marginBottom: "0px",
+                                }}
+                              >
+                                Defendant [Employer]
+                              </p>
+                              <strong>
+                                {this.props.project.asset.employer}
+                              </strong>
+                            </div>
+                          </div>
+                        </div>
+                        <div className="row">
+                          <div className="col-lg-4 details">
+                            <CompactContractCard
+                              icon={"comment-dollar"}
+                              name={"Defendant Fund Locked"}
+                              value={
+                                utils.convertBeddowsToLSK(
+                                  this.props.project.asset.prize
+                                ) + " CLNC"
+                              }
+                              tooltip={
+                                "Defendant Fund Locked, is amount that will be contested in this dispute. This fund will go to winning party"
+                              }
+                            />
+                          </div>
+                          <div className="col-lg-4 details">
+                            <CompactContractCard
+                              icon={"comment-dollar"}
+                              name={"Litigant Fee Locked"}
+                              value={
+                                utils.convertBeddowsToLSK(
+                                  this.props.project.asset.commitmentFee
+                                ) + " CLNC"
+                              }
+                              tooltip={
+                                "Litigant Fee Locked, is amount of fee that litigant have paid as bail in this project contract to defendant fee vault. This will go to winning party"
+                              }
+                            />
+                          </div>
+                          <div className="col-lg-4 details">
+                            <CompactContractCard
+                              icon={"comment-dollar"}
+                              name={"Defendant Fee Locked"}
+                              value={
+                                utils.convertBeddowsToLSK(
+                                  utils
+                                    .BigNum(this.props.project.asset.prize)
+                                    .mul(
+                                      MISCELLANEOUS.EMPLOYER_COMMITMENT_PERCENTAGE
+                                    )
+                                    .round()
+                                    .toString()
+                                ) + " CLNC"
+                              }
+                              tooltip={
+                                "Defendant Fee Locked, is amount of fee that defendant have paid as bail in this project contract, most likely this fee is located at defendant fee vault. This will go to winning party"
+                              }
+                            />
+                          </div>
+                        </div>
+                      </div>
+                      <div className="md-form mb-4 text-left">
+                        <label
+                          data-error="wrong"
+                          data-success="right"
+                          htmlFor="form-suit"
+                          style={{ fontWeight: "bold" }}
+                        >
+                          Suit:
+                        </label>
+                        <textarea
+                          type="text"
+                          placeholder="Please Describe the Case as Clear and as Honest as possible, make sure Solver will vote the right party!"
+                          id="form-suit"
+                          name="form-suit"
+                          className="form-control validate"
+                          onChange={this.handleLeaderDisputeFormChange}
+                          value={this.state["form-suit"]}
+                          rows="4"
+                          cols="50"
+                          required
+                        />
+                      </div>
+                      <div className="md-form mb-4">
+                        <label
+                          data-error="wrong"
+                          data-success="right"
+                          htmlFor="form-maxdays"
+                          style={{ fontWeight: "bold" }}
+                        >
+                          How Long (in days) this Dispute will Open?
+                        </label>
+                        <input
+                          type="number"
+                          step="any"
+                          placeholder={
+                            "Make sure it is not too short, or not too long, maximum is: " +
+                            Math.max(
+                              MISCELLANEOUS.DISPUTE_MINIMAL_OPEN_PERIOD,
+                              this.props.project.asset.maxTime
+                            ) +
+                            " days!"
+                          }
+                          id="form-maxdays"
+                          name="form-maxdays"
+                          value={this.state["form-maxdays"]}
+                          className="form-control validate"
+                          onChange={this.handleLeaderDisputeFormChange}
+                          required
+                        />
+                      </div>
+                    </div>
+                    <div
+                      className="modal-footer mx-5 pt-3 mb-1 form-footer"
+                      style={{ borderTop: "0 none" }}
+                    >
+                      <div className="row">
+                        <div
+                          className="col-auto form-fee"
+                          style={{
+                            marginRight: "5px",
+                            maxWidth: "400px",
+                            wordWrap: "break-word",
+                          }}
+                        >
+                          <div
+                            style={{
+                              textAlign: "right",
+                              color: "#8D99AE",
+                              fontSize: "12px",
+                              fontWeight: "bold",
+                            }}
+                          >
+                            {"Open Dispute Fee: FREE"}
+                          </div>
+                          <div
+                            style={{
+                              textAlign: "right",
+                              color: "#8D99AE",
+                              fontSize: "12px",
+                            }}
+                          >
+                            All Fund Vault and Fee Vault for Corresponding Case
+                            Account will be locked in Dispute Contract
+                          </div>
+                        </div>
+                        <div className="col">
+                          <input
+                            className="btn btn-primary border rounded-0 form-submit"
+                            type="submit"
+                            style={{
+                              backgroundColor: "#2B2D42",
+                              width: "200px",
+                            }}
+                            value="Open Dispute"
+                          />
+                        </div>
+                      </div>
+                    </div>
+                  </form>
+                </div>
+              </div>
+            </div>
+          </div>
+        ) : (
+          <div>
+            <div
+              className="modal fade"
+              id={
+                "leader-vs-employer-open-dispute-" +
+                this.props.project.publicKey
+              }
+              tabIndex={-1}
+              role="dialog"
+              aria-hidden="true"
+              style={{ fontFamily: "Poppins, sans-serif" }}
+            >
+              <div className="modal-dialog modal-md" role="document">
+                <div className="modal-content form-elegant">
+                  <div
+                    className="modal-header text-center"
+                    style={{ borderBottom: "0 none" }}
+                  >
+                    <button
+                      type="button"
+                      className="close"
+                      data-dismiss="modal"
+                      aria-label="Close"
+                    >
+                      <span aria-hidden="true">×</span>
+                    </button>
+                  </div>
+                  <div
+                    className="modal-body mx-4"
+                    style={{ paddingBottom: "0px" }}
+                  >
+                    <img
+                      role="status"
+                      style={{
+                        width: "180px",
+                        marginLeft: "auto",
+                        marginRight: "auto",
+                        marginBottom: "16px",
+                        display: "block",
+                      }}
+                      alt="Solo Proposal"
+                      src={holdOnLogo}
+                    />
+                    <h3 className="modal-title w-100 dark-grey-text font-weight-bold my-1 text-center">
+                      <strong>Hold On!</strong>
+                    </h3>
+                    <p
+                      style={{
+                        fontFamily: "Poppins, sans-serif",
+                        textAlign: "justify",
+                        marginBottom: "8px",
+                      }}
+                    >
+                      You can't open a dispute yet. To open a dispute, this
+                      condition must be met:
+                    </p>
+                    <ul style={{ textAlign: "justify" }}>
+                      <li>
+                        Project status must be, either: {STATUS.PROJECT.REFUSED}
+                        ,{STATUS.PROJECT.DISPUTED}, or
+                        {STATUS.PROJECT.DISPUTE_CLOSED}
+                      </li>
+                      <li>Must be still in Open Dispute Time Limit Period</li>
+                    </ul>
+                    <h6
+                      className="modal-title w-100 dark-grey-text font-weight-bold my-1 text-center"
+                      style={{ color: "#EF233C" }}
+                    >
+                      <strong>Project Status is not meets!</strong>
+                    </h6>
+                  </div>
+                  <div
+                    className="modal-footer mx-5 pt-3 mb-1"
+                    style={{ borderTop: "0 none", justifyContent: "center" }}
+                  >
+                    <div className="row">
+                      <div className="col">
+                        <button
+                          className="btn btn-primary border rounded-0 top-button"
+                          style={{
+                            backgroundColor: "#EF233C",
+                            marginTop: "auto",
+                            marginBottom: "auto",
+                            fontFamily: "Poppins, sans-serif",
+                            width: "150px",
+                          }}
+                          onClick={() => {
+                            window
+                              .$(
+                                "#leader-vs-employer-open-dispute-" +
+                                  this.props.project.publicKey
+                              )
+                              .modal("hide");
+                          }}
+                        >
+                          <strong>OK</strong>
+                        </button>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        )}
       </div>
     );
   }

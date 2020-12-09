@@ -43,7 +43,6 @@ class DisputeList extends React.Component {
             paddingRight: "16px",
             paddingBottom: "8px",
             paddingLeft: "16px",
-            marginBottom: "64px",
           }}
         >
           <div style={{ paddingTop: "8px", paddingBottom: "8px" }}>

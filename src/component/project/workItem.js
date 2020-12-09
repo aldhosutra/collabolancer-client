@@ -409,7 +409,8 @@ class WorkItem extends React.Component {
                 </div>
               ) : (
                 <div>
-                  {this.props.account.address === this.props.supervisor &&
+                  {this.props.account &&
+                  this.props.account.address === this.props.supervisor &&
                   actionButton !== null ? (
                     <div className="text-center">{actionButton}</div>
                   ) : (

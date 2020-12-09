@@ -88,7 +88,7 @@ class ClaimDialog extends React.Component {
           style={{
             paddingRight: "24px",
             paddingLeft: "24px",
-            backgroundColor: "#EF233C",
+            backgroundColor: this.state.available ? "#EF233C" : "#2B2D42",
             marginRight: "10px",
             fontFamily: "Poppins, sans-serif",
             marginBottom: "10px",

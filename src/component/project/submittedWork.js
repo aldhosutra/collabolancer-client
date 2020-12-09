@@ -71,6 +71,7 @@ class SubmittedWork extends React.Component {
               account={this.props.account}
             />
             <LeaderDisputeDialog
+              project={this.props.project}
               proposal={this.props.proposal}
               account={this.props.account}
             />

@@ -458,7 +458,38 @@ const cancelWork = async (senderPassphrase, projectPublicKey) => {
   return ret;
 };
 
-const openDispute = () => {};
+const openDispute = async (
+  senderPassphrase,
+  casePublicKey,
+  projectPublicKey,
+  suit,
+  maxDays
+) => {
+  let ret;
+  const disputeAccount = createAccount();
+  const tx = new OpenDisputeTransaction({
+    asset: {
+      disputePublicKey: disputeAccount.publicKey,
+      casePublicKey: casePublicKey,
+      projectPublicKey: projectPublicKey,
+      suit: suit,
+      maxDays: maxDays,
+    },
+    networkIdentifier: networkIdentifier,
+    timestamp: utils.getTimeFromBlockchainEpoch(),
+  });
+  tx.sign(senderPassphrase);
+  await api.transactions
+    .broadcast(tx.toJSON())
+    .then((res) => {
+      ret = res;
+    })
+    .catch((err) => {
+      console.log(err);
+      ret = err;
+    });
+  return ret;
+};
 
 const voteDispute = () => {};
 

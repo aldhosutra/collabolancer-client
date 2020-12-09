@@ -9,6 +9,7 @@ import Countdown from "react-countdown";
 import { toast } from "react-toastify";
 import LeaderTerminateDialog from "../dialog/leaderTerminateDialog";
 import ClaimDialog from "../dialog/claimDialog";
+import DisputeList from "./disputeList";
 const dateFormat = require("dateformat");
 const { utils } = require("@liskhq/lisk-transactions");
 
@@ -37,23 +38,32 @@ class ProjectDetails extends React.Component {
         case this.props.project.asset.employer:
           actionButton = claimReady ? (
             claimButton
-          ) : (
+          ) : [
+              STATUS.PROJECT.REQUEST_REVISION,
+              STATUS.PROJECT.WORKING,
+            ].includes(this.props.project.asset.status) ? (
             <EmployerCancelDialog
               id={this.props.id}
               account={this.props.account}
               project={this.props.project}
             />
+          ) : (
+            actionButton
           );
           break;
         case proposal.asset.leader:
           actionButton = claimReady ? (
             claimButton
-          ) : (
+          ) : [STATUS.PROJECT.SUBMITTED].includes(
+              this.props.project.asset.status
+            ) ? (
             <LeaderTerminateDialog
               id={this.props.id}
               account={this.props.account}
               project={this.props.project}
             />
+          ) : (
+            actionButton
           );
           break;
         default:
@@ -368,6 +378,10 @@ class ProjectDetails extends React.Component {
               </div>
               <div className="col details">{actionButton}</div>
             </div>
+            <DisputeList
+              project={this.props.project}
+              account={this.props.account}
+            />
             <SubmittedWork
               project={this.props.project}
               proposal={
