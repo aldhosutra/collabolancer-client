@@ -50,7 +50,10 @@ class LeaderTerminateDialog extends React.Component {
             toast.success(
               "Terminate project successfull, page will be reloaded after " +
                 config.block_time / 1000 +
-                " seconds!"
+                " seconds!",
+              {
+                autoClose: config.block_time,
+              }
             );
             window
               .$(

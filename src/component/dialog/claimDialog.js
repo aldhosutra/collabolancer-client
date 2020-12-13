@@ -46,7 +46,10 @@ class ClaimDialog extends React.Component {
             toast.success(
               "Claim successfull, page will be reloaded after " +
                 config.block_time / 1000 +
-                " seconds!"
+                " seconds!",
+              {
+                autoClose: config.block_time,
+              }
             );
             window
               .$(

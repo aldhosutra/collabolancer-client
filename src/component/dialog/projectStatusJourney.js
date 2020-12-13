@@ -28,12 +28,12 @@ class ProjectStatusJourneyDialog extends React.PureComponent {
       {
         status: STATUS.PROJECT.REJECTED,
         description:
-          "The employer decides not to accept the previous job, because the worker does not have the opportunity based on the revised maximum limit, the worker (and his team) are rejected, and the project prize is not given",
+          "The employer decides not to accept the previous job, because the worker does not have the opportunity based on the revised maximum limit, the worker (and his team) are rejected, and the project prize is not given. Rejected Project need to be marked as refused to be able to proceed.",
       },
       {
         status: STATUS.PROJECT.REFUSED,
         description:
-          "The project status is rejected, and a dispute can be opened by the party with the objection within the initial time limit of: " +
+          "The project status is rejected, and marked refused, and a dispute can be opened by the party with the objection within the initial time limit of: " +
           MISCELLANEOUS.FUND_FREEZED_PERIOD / 60 / 60 / 24 +
           " day(s)",
       },

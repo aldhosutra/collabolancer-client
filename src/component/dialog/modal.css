@@ -1,0 +1,18 @@
+.modal.full {
+  padding: 0 !important;
+}
+.modal.full .modal-dialog {
+  width: 100%;
+  max-width: none;
+  height: 100%;
+  margin: 0;
+}
+.modal.full .modal-content {
+  height: 100%;
+  border: 0;
+  border-radius: 0;
+  overflow: auto;
+}
+.modal.full .modal-body {
+  overflow-y: auto;
+}

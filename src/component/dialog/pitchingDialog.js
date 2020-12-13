@@ -3,6 +3,7 @@ import PitchingLogo from "../../asset/undraw_all_the_data_h4ki.svg";
 import { STATUS } from "../../transactions/constants";
 import { renderAvatar } from "../avatar";
 import StartWorkButton from "./startWorkButton";
+import "./modal.css";
 const parse = require("html-react-parser");
 
 class PitchingDialog extends React.PureComponent {
@@ -60,7 +61,7 @@ class PitchingDialog extends React.PureComponent {
           <strong>Pitching{hireMe}</strong>
         </button>
         <div
-          className="modal fade"
+          className="modal full fade"
           id={"modal-" + this.props.proposal.publicKey}
           tabIndex={-1}
           role="dialog"

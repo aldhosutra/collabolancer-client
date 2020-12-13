@@ -5,6 +5,8 @@ import { toast } from "react-toastify";
 import { getSession } from "../../utils/tools";
 import PostProjectDialogLogo from "../../asset/undraw_hiring_cyhs.svg";
 import config from "../../config/config.json";
+import "./modal.css";
+import { Editor } from "@tinymce/tinymce-react";
 const { utils } = require("@liskhq/lisk-transactions");
 
 class PostProjectDialog extends React.Component {
@@ -23,6 +25,7 @@ class PostProjectDialog extends React.Component {
       this
     );
     this.onPostProjectFormSubmit = this.onPostProjectFormSubmit.bind(this);
+    this.handleEditorChange = this.handleEditorChange.bind(this);
   }
 
   handlePostProjectFormChange(event) {
@@ -60,7 +63,10 @@ class PostProjectDialog extends React.Component {
             toast.success(
               "Post project successfull, page will be reloaded after " +
                 config.block_time / 1000 +
-                " seconds!"
+                " seconds!",
+              {
+                autoClose: config.block_time,
+              }
             );
             this.setState((state) => {
               return {
@@ -99,6 +105,29 @@ class PostProjectDialog extends React.Component {
     });
   }
 
+  componentDidMount() {
+    window.$(document).on("focusin", function (e) {
+      if (
+        window
+          .$(e.target)
+          .closest(
+            ".tox-tinymce, .tox-tinymce-aux, .moxman-window, .tam-assetmanager-root"
+          ).length
+      ) {
+        e.stopImmediatePropagation();
+      }
+    });
+  }
+
+  handleEditorChange = (content, editor) => {
+    this.setState((state) => {
+      return {
+        ...state,
+        "form-description": content,
+      };
+    });
+  };
+
   render() {
     return (
       <div>
@@ -119,7 +148,7 @@ class PostProjectDialog extends React.Component {
             </button>
           </div>
           <div
-            className="modal fade"
+            className="modal full fade"
             id="postProject"
             tabIndex={-1}
             role="dialog"
@@ -206,24 +235,20 @@ class PostProjectDialog extends React.Component {
                       />
                     </div>
                     <div className="md-form mb-4">
-                      <label
-                        data-error="wrong"
-                        data-success="right"
-                        htmlFor="form-description"
-                        style={{ fontWeight: "bold" }}
-                      >
-                        Project Description
-                      </label>
-                      <textarea
-                        id="form-description"
-                        name="form-description"
-                        value={this.state["form-description"]}
-                        className="form-control validate"
-                        placeholder="Elaborate more about your project, make sure your worker will understand what to be done about your project. Support HTML Tag"
-                        rows="4"
-                        cols="50"
-                        onChange={this.handlePostProjectFormChange}
-                        required
+                      <p style={{ fontWeight: "bold" }}>Project Description</p>
+                      <Editor
+                        init={{
+                          height: 500,
+                          menubar: false,
+                          plugins: [
+                            "advlist autolink lists link image charmap print preview anchor",
+                            "searchreplace visualblocks code fullscreen",
+                            "insertdatetime media table paste code help wordcount",
+                          ],
+                          toolbar:
+                            "undo redo | formatselect | bold italic backcolor | alignleft aligncenter alignright alignjustify | image bullist numlist outdent indent | removeformat | help",
+                        }}
+                        onEditorChange={this.handleEditorChange}
                       />
                     </div>
                     <div className="md-form mb-4">

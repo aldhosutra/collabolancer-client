@@ -10,6 +10,7 @@ import EmployerRejectDialog from "../dialog/employerRejectDialog";
 import { STATUS } from "../../transactions/constants";
 import config from "../../config/config.json";
 import EmployerAcceptFinishDialog from "../dialog/employerAcceptFinishDialog";
+const { htmlToText } = require("html-to-text");
 const dateFormat = require("dateformat");
 
 class WorkItem extends React.Component {
@@ -392,7 +393,13 @@ class WorkItem extends React.Component {
                           lineHeight: "1.5em",
                         }}
                       >
-                        {this.props.note.reason}
+                        {htmlToText(this.props.note.reason, {
+                          tags: {
+                            img: {
+                              format: "skip",
+                            },
+                          },
+                        })}
                       </p>
                     </div>
                   </button>

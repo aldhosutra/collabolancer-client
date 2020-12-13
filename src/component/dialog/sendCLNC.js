@@ -4,6 +4,7 @@ import { getSession } from "../../utils/tools";
 import { transfer } from "../../utils/transaction";
 import SendLogo from "../../asset/undraw_transfer_money_rywa.svg";
 import config from "../../config/config.json";
+import "./modal.css";
 const { utils } = require("@liskhq/lisk-transactions");
 
 class SendCLNCDialog extends React.PureComponent {
@@ -78,7 +79,7 @@ class SendCLNCDialog extends React.PureComponent {
     return (
       <div>
         <div
-          className="modal fade"
+          className="modal full fade"
           id={this.props.id}
           tabIndex={-1}
           role="dialog"

@@ -5,8 +5,8 @@ import { deflationaryMultiplier, getSession } from "../../utils/tools";
 import { joinTeam } from "../../utils/transaction";
 import JoinAsTeamLogo from "../../asset/undraw_team_spirit_hrr4.svg";
 import config from "../../config/config.json";
+import "./modal.css";
 const { utils } = require("@liskhq/lisk-transactions");
-const parse = require("html-react-parser");
 
 class JoinAsTeamDialog extends React.Component {
   constructor() {
@@ -30,7 +30,10 @@ class JoinAsTeamDialog extends React.Component {
             toast.success(
               "Join team successfull, page will be reloaded after " +
                 config.block_time / 1000 +
-                " seconds!"
+                " seconds!",
+              {
+                autoClose: config.block_time,
+              }
             );
             this.setState((state) => {
               return {
@@ -109,7 +112,7 @@ class JoinAsTeamDialog extends React.Component {
           <strong>Apply</strong>
         </button>
         <div
-          className="modal fade"
+          className="modal full fade"
           id={
             "team-apply-" +
             this.props.proposal.publicKey +
@@ -186,23 +189,6 @@ class JoinAsTeamDialog extends React.Component {
                       width: "100px",
                     }}
                   />
-                  <h6
-                    style={{
-                      fontFamily: "Poppins, sans-serif",
-                    }}
-                  >
-                    <strong>Leader Brief</strong>
-                  </h6>
-                  <p
-                    className="text-justify"
-                    style={{
-                      fontFamily: "Poppins, sans-serif",
-                      fontSize: "14px",
-                      overflowWrap: "break-word",
-                    }}
-                  >
-                    {parse(this.props.proposal.asset.term.brief)}
-                  </p>
                   <div className="row">
                     <div className="col-lg-4 details">
                       <h6 style={{ fontFamily: "Poppins, sans-serif" }}>

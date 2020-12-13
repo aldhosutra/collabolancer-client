@@ -45,7 +45,10 @@ class EmployerCancelDialog extends React.Component {
             toast.success(
               "Cancel successfull, page will be reloaded after " +
                 config.block_time / 1000 +
-                " seconds!"
+                " seconds!",
+              {
+                autoClose: config.block_time,
+              }
             );
             window
               .$(

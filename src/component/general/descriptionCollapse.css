@@ -1,0 +1,14 @@
+.description-collapse.collapse:not(.show) {
+  display: block;
+  height: 7.5rem;
+  overflow: hidden;
+}
+
+.description-collapse.collapsing {
+  height: 7.5rem;
+}
+
+.description-collapse {
+  font-size: 1rem;
+  line-height: 1.5;
+}

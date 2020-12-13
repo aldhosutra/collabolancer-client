@@ -1,6 +1,7 @@
 import React from "react";
 import { Link } from "react-router-dom";
 import { renderAvatar } from "../avatar";
+const { htmlToText } = require("html-to-text");
 const { utils } = require("@liskhq/lisk-transactions");
 
 class ProjectCard extends React.PureComponent {
@@ -89,7 +90,13 @@ class ProjectCard extends React.PureComponent {
                 lineHeight: "1.5em",
               }}
             >
-              {this.props.project.asset.description}
+              {htmlToText(this.props.project.asset.description, {
+                tags: {
+                  img: {
+                    format: "skip",
+                  },
+                },
+              })}
             </p>
             <div className="row d-flex">
               <div className="col" id="status">

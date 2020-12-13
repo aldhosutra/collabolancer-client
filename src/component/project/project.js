@@ -10,8 +10,8 @@ import Loading from "../general/loading";
 import * as constants from "@liskhq/lisk-constants";
 import ProjectDetails from "./projectDetails";
 import ProposalList from "./proposalList";
+import DescriptionCollapse from "../general/descriptionCollapse";
 const dateFormat = require("dateformat");
-const parse = require("html-react-parser");
 const {
   getAddressAndPublicKeyFromPassphrase,
 } = require("@liskhq/lisk-cryptography");
@@ -132,12 +132,12 @@ class Project extends React.Component {
                     </strong>
                   </h6>
                 </div>
-                <p
-                  className="text-justify"
-                  style={{ fontFamily: "Poppins, sans-serif" }}
-                >
-                  {parse(this.state.project.asset.description)}
-                </p>
+                <h6 className="text-muted">Description:</h6>
+                <DescriptionCollapse
+                  description={this.state.project.asset.description}
+                  id="project-description"
+                  fontSize={16}
+                />
                 <ProjectDetails
                   project={this.state.project}
                   account={this.state.account}

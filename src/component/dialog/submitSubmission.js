@@ -6,6 +6,7 @@ import { submitWork } from "../../utils/transaction";
 import SubmitSubmissionLogo from "../../asset/undraw_upload_87y9.svg";
 import Dropzone from "react-dropzone";
 import config from "../../config/config.json";
+import "./modal.css";
 const base91 = require("node-base91");
 const mime = require("mime-types");
 
@@ -36,7 +37,10 @@ class SubmitSubmissionDialog extends React.Component {
             toast.success(
               "Submit Submission successfull, page will be reloaded after " +
                 config.block_time / 1000 +
-                " seconds!"
+                " seconds!",
+              {
+                autoClose: config.block_time,
+              }
             );
             this.setState({
               filename: "",
@@ -109,7 +113,7 @@ class SubmitSubmissionDialog extends React.Component {
           <strong>Submit Submission</strong>
         </button>
         <div
-          className="modal fade"
+          className="modal full fade"
           id={
             "submit-submission-" +
             this.props.proposal.publicKey +

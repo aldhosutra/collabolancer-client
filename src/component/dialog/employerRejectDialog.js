@@ -4,6 +4,8 @@ import { getSession } from "../../utils/tools";
 import { employerRequestRevision, finishWork } from "../../utils/transaction";
 import EmployerRejectLogo from "../../asset/undraw_cancel_u1it.svg";
 import config from "../../config/config.json";
+import "./modal.css";
+import { Editor } from "@tinymce/tinymce-react";
 
 class EmployerRejectDialog extends React.Component {
   constructor() {
@@ -17,6 +19,7 @@ class EmployerRejectDialog extends React.Component {
     this.onEmployerRejectFormSubmit = this.onEmployerRejectFormSubmit.bind(
       this
     );
+    this.handleEditorChange = this.handleEditorChange.bind(this);
   }
 
   handleEmployerRejectFormChange(event) {
@@ -37,42 +40,50 @@ class EmployerRejectDialog extends React.Component {
       )
         .then((data) => {
           if (!data.errors) {
-            finishWork(getSession("secret"), this.props.project.publicKey)
-              .then((finish) => {
-                if (!finish.errors) {
-                  toast.success(
-                    "Reject Worker successfull, page will be reloaded after " +
-                      config.block_time / 1000 +
-                      " seconds!"
-                  );
-                  this.setState((state) => {
-                    return {
-                      ...state,
-                      "form-reason": "",
-                    };
-                  });
-                  window
-                    .$(
-                      "#employer-reject-modal-" +
-                        this.props.proposal.publicKey +
-                        "-" +
-                        this.props.id
-                    )
-                    .modal("hide");
-                  setTimeout(() => {
-                    window.location.reload();
-                  }, config.block_time);
-                } else {
-                  toast.error(
-                    data.message +
-                      ": " +
-                      data.errors.map((err) => err.message).toString()
-                  );
-                }
-              })
-              .catch((err) => {
-                toast.error(`Error: ${err.message}`);
-              });
+            toast.success("Please wait for Reject Transaction to Finish", {
+              autoClose: config.block_time,
+            });
+            setTimeout(() => {
+              finishWork(getSession("secret"), this.props.project.publicKey)
+                .then((finish) => {
+                  if (!finish.errors) {
+                    toast.success(
+                      "Reject Worker successfull, page will be reloaded after " +
+                        config.block_time / 1000 +
+                        " seconds!",
+                      {
+                        autoClose: config.block_time,
+                      }
+                    );
+                    this.setState((state) => {
+                      return {
+                        ...state,
+                        "form-reason": "",
+                      };
+                    });
+                    window
+                      .$(
+                        "#employer-reject-modal-" +
+                          this.props.proposal.publicKey +
+                          "-" +
+                          this.props.id
+                      )
+                      .modal("hide");
+                    setTimeout(() => {
+                      window.location.reload();
+                    }, config.block_time);
+                  } else {
+                    toast.error(
+                      finish.message +
+                        ": " +
+                        finish.errors.map((err) => err.message).toString()
+                    );
+                  }
+                })
+                .catch((err) => {
+                  toast.error(`Error: ${err.message}`);
+                });
+            }, config.block_time);
           } else {
             toast.error(
               data.message +
@@ -88,6 +99,29 @@ class EmployerRejectDialog extends React.Component {
       toast.error(`Error: ${err.message}`);
     }
   }
+
+  componentDidMount() {
+    window.$(document).on("focusin", function (e) {
+      if (
+        window
+          .$(e.target)
+          .closest(
+            ".tox-tinymce, .tox-tinymce-aux, .moxman-window, .tam-assetmanager-root"
+          ).length
+      ) {
+        e.stopImmediatePropagation();
+      }
+    });
+  }
+
+  handleEditorChange = (content, editor) => {
+    this.setState((state) => {
+      return {
+        ...state,
+        "form-reason": content,
+      };
+    });
+  };
 
   render() {
     return (
@@ -115,7 +149,7 @@ class EmployerRejectDialog extends React.Component {
           <strong>Reject</strong>
         </button>
         <div
-          className="modal fade"
+          className="modal full fade"
           id={
             "employer-reject-modal-" +
             this.props.proposal.publicKey +
@@ -180,25 +214,20 @@ class EmployerRejectDialog extends React.Component {
                     }}
                   />
                   <div className="md-form mb-4 text-left">
-                    <label
-                      data-error="wrong"
-                      data-success="right"
-                      htmlFor="form-reason"
-                      style={{ fontWeight: "bold" }}
-                    >
-                      Reason:
-                    </label>
-                    <textarea
-                      type="text"
-                      placeholder="Please describe why you want to reject this worker?"
-                      id="form-reason"
-                      name="form-reason"
-                      className="form-control validate"
-                      onChange={this.handleEmployerRejectFormChange}
-                      value={this.state["form-reason"]}
-                      rows="4"
-                      cols="50"
-                      required
+                    <p style={{ fontWeight: "bold" }}>Reason:</p>
+                    <Editor
+                      init={{
+                        height: 500,
+                        menubar: false,
+                        plugins: [
+                          "advlist autolink lists link image charmap print preview anchor",
+                          "searchreplace visualblocks code fullscreen",
+                          "insertdatetime media table paste code help wordcount",
+                        ],
+                        toolbar:
+                          "undo redo | formatselect | bold italic backcolor | alignleft aligncenter alignright alignjustify | image bullist numlist outdent indent | removeformat | help",
+                      }}
+                      onEditorChange={this.handleEditorChange}
                     />
                   </div>
                 </div>

@@ -9,6 +9,8 @@ import { getSession } from "../../utils/tools";
 import config from "../../config/config.json";
 import { toast } from "react-toastify";
 import CompactContractCard from "../general/compactContractCard";
+import "./modal.css";
+import { Editor } from "@tinymce/tinymce-react";
 const { utils } = require("@liskhq/lisk-transactions");
 
 class LeaderDisputeDialog extends React.Component {
@@ -48,7 +50,10 @@ class LeaderDisputeDialog extends React.Component {
             toast.success(
               "Open Leader vs Employer dispute successfull, page will be reloaded after " +
                 config.block_time / 1000 +
-                " seconds!"
+                " seconds!",
+              {
+                autoClose: config.block_time,
+              }
             );
             this.setState((state) => {
               return {
@@ -82,7 +87,27 @@ class LeaderDisputeDialog extends React.Component {
     }
   }
 
+  handleEditorChange = (content, editor) => {
+    this.setState((state) => {
+      return {
+        ...state,
+        "form-suit": content,
+      };
+    });
+  };
+
   componentDidMount() {
+    window.$(document).on("focusin", function (e) {
+      if (
+        window
+          .$(e.target)
+          .closest(
+            ".tox-tinymce, .tox-tinymce-aux, .moxman-window, .tam-assetmanager-root"
+          ).length
+      ) {
+        e.stopImmediatePropagation();
+      }
+    });
     if (
       [
         STATUS.PROJECT.REFUSED,
@@ -132,7 +157,7 @@ class LeaderDisputeDialog extends React.Component {
         {this.state.available ? (
           <div>
             <div
-              className="modal fade"
+              className="modal full fade"
               id={
                 "leader-vs-employer-open-dispute-" +
                 this.props.project.publicKey
@@ -330,25 +355,27 @@ class LeaderDisputeDialog extends React.Component {
                         </div>
                       </div>
                       <div className="md-form mb-4 text-left">
-                        <label
+                        <p
                           data-error="wrong"
                           data-success="right"
                           htmlFor="form-suit"
                           style={{ fontWeight: "bold" }}
                         >
                           Suit:
-                        </label>
-                        <textarea
-                          type="text"
-                          placeholder="Please Describe the Case as Clear and as Honest as possible, make sure Solver will vote the right party!"
-                          id="form-suit"
-                          name="form-suit"
-                          className="form-control validate"
-                          onChange={this.handleLeaderDisputeFormChange}
-                          value={this.state["form-suit"]}
-                          rows="4"
-                          cols="50"
-                          required
+                        </p>
+                        <Editor
+                          init={{
+                            height: 500,
+                            menubar: false,
+                            plugins: [
+                              "advlist autolink lists link image charmap print preview anchor",
+                              "searchreplace visualblocks code fullscreen",
+                              "insertdatetime media table paste code help wordcount",
+                            ],
+                            toolbar:
+                              "undo redo | formatselect | bold italic backcolor | alignleft aligncenter alignright alignjustify | image bullist numlist outdent indent | removeformat | help",
+                          }}
+                          onEditorChange={this.handleEditorChange}
                         />
                       </div>
                       <div className="md-form mb-4">

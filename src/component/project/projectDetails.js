@@ -10,6 +10,7 @@ import { toast } from "react-toastify";
 import LeaderTerminateDialog from "../dialog/leaderTerminateDialog";
 import ClaimDialog from "../dialog/claimDialog";
 import DisputeList from "./disputeList";
+import EmployerRefuseDialog from "../dialog/employerFinishDialog";
 const dateFormat = require("dateformat");
 const { utils } = require("@liskhq/lisk-transactions");
 
@@ -48,6 +49,14 @@ class ProjectDetails extends React.Component {
               account={this.props.account}
               project={this.props.project}
             />
+          ) : [STATUS.PROJECT.REJECTED].includes(
+              this.props.project.asset.status
+            ) ? (
+            <EmployerRefuseDialog
+              id={this.props.id}
+              account={this.props.account}
+              project={this.props.project}
+            />
           ) : (
             actionButton
           );
@@ -81,10 +90,7 @@ class ProjectDetails extends React.Component {
     }
     return (
       <div>
-        <div
-          className="border rounded-0"
-          style={{ marginTop: "10px", marginBottom: "20px" }}
-        />
+        <div className="border rounded-0" style={{ marginBottom: "20px" }} />
         <h5 style={{ fontFamily: "Poppins, sans-serif", marginBottom: "16px" }}>
           <strong>Project Contract:</strong>
         </h5>

@@ -9,8 +9,8 @@ import CompactContractCard from "../general/compactContractDetails";
 import { MISCELLANEOUS, STATUS } from "../../transactions/constants";
 import Countdown from "react-countdown";
 import { toast } from "react-toastify";
+import DescriptionCollapse from "../general/descriptionCollapse";
 const { utils } = require("@liskhq/lisk-transactions");
-const parse = require("html-react-parser");
 const dateFormat = require("dateformat");
 
 class Proposal extends React.Component {
@@ -196,28 +196,18 @@ class Proposal extends React.Component {
               >
                 <strong>Collaboration Provisions</strong>
               </h4>
-              <div className="row">
-                <div className="col-lg-3 details">
-                  <h6
-                    style={{
-                      fontFamily: "Poppins, sans-serif",
-                    }}
-                  >
-                    <strong>Leader Brief</strong>
-                  </h6>
-                </div>
-                <div className="col details">
-                  <p
-                    style={{
-                      fontFamily: "Poppins, sans-serif",
-                      fontSize: "14px",
-                      overflowWrap: "break-word",
-                    }}
-                  >
-                    {parse(this.props.proposal.asset.term.brief)}
-                  </p>
-                </div>
-              </div>
+              <h6
+                style={{
+                  fontFamily: "Poppins, sans-serif",
+                }}
+              >
+                <strong>Leader Brief</strong>
+              </h6>
+              <DescriptionCollapse
+                description={this.props.proposal.asset.term.brief}
+                id={"proposal-description-" + this.props.proposal.publicKey}
+                fontSize={14}
+              />
               {[STATUS.PROPOSAL.APPLIED, STATUS.PROPOSAL.NOT_SELECTED].includes(
                 this.props.proposal.asset.status
               ) ? (

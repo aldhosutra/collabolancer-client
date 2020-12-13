@@ -5,6 +5,8 @@ import { deflationaryMultiplier, getSession } from "../../utils/tools";
 import { postProposal } from "../../utils/transaction";
 import PostProposalLogo from "../../asset/undraw_resume_1hqp.svg";
 import config from "../../config/config.json";
+import "./modal.css";
+import { Editor } from "@tinymce/tinymce-react";
 const { utils } = require("@liskhq/lisk-transactions");
 
 class PostProposalDialog extends React.Component {
@@ -24,6 +26,12 @@ class PostProposalDialog extends React.Component {
       this
     );
     this.onPostProposalFormSubmit = this.onPostProposalFormSubmit.bind(this);
+    this.handlePitchingEditorChange = this.handlePitchingEditorChange.bind(
+      this
+    );
+    this.handleTermBriefEditorChange = this.handleTermBriefEditorChange.bind(
+      this
+    );
   }
 
   handlePostProposalFormChange(event) {
@@ -63,7 +71,10 @@ class PostProposalDialog extends React.Component {
             toast.success(
               "Post proposal successfull, page will be reloaded after " +
                 config.block_time / 1000 +
-                " seconds!"
+                " seconds!",
+              {
+                autoClose: config.block_time,
+              }
             );
             this.setState((state) => {
               return {
@@ -97,6 +108,38 @@ class PostProposalDialog extends React.Component {
       toast.error(`Error: ${err.message}`);
     }
   }
+
+  componentDidMount() {
+    window.$(document).on("focusin", function (e) {
+      if (
+        window
+          .$(e.target)
+          .closest(
+            ".tox-tinymce, .tox-tinymce-aux, .moxman-window, .tam-assetmanager-root"
+          ).length
+      ) {
+        e.stopImmediatePropagation();
+      }
+    });
+  }
+
+  handlePitchingEditorChange = (content, editor) => {
+    this.setState((state) => {
+      return {
+        ...state,
+        "form-pitching": content,
+      };
+    });
+  };
+
+  handleTermBriefEditorChange = (content, editor) => {
+    this.setState((state) => {
+      return {
+        ...state,
+        "form-term-brief": content,
+      };
+    });
+  };
 
   render() {
     const roleListInput = [];
@@ -213,7 +256,7 @@ class PostProposalDialog extends React.Component {
           <strong>Post New Proposal</strong>
         </button>
         <div
-          className="modal fade"
+          className="modal full fade"
           id="postProposal"
           tabIndex={-1}
           role="dialog"
@@ -276,25 +319,22 @@ class PostProposalDialog extends React.Component {
                     }}
                   />
                   <div className="md-form mb-4">
-                    <label
-                      data-error="wrong"
-                      data-success="right"
-                      htmlFor="form-pitching"
-                      style={{ fontWeight: "bold" }}
-                    >
+                    <p style={{ fontWeight: "bold" }}>
                       Pitching, Why Employer Should Choose You?
-                    </label>
-                    <textarea
-                      type="text"
-                      placeholder="Pitch yourself! Give best reason why employer should choose you?"
-                      id="form-pitching"
-                      name="form-pitching"
-                      className="form-control validate"
-                      onChange={this.handlePostProposalFormChange}
-                      value={this.state["form-pitching"]}
-                      rows="4"
-                      cols="50"
-                      required
+                    </p>
+                    <Editor
+                      init={{
+                        height: 300,
+                        menubar: false,
+                        plugins: [
+                          "advlist autolink lists link image charmap print preview anchor",
+                          "searchreplace visualblocks code fullscreen",
+                          "insertdatetime media table paste code help wordcount",
+                        ],
+                        toolbar:
+                          "undo redo | formatselect | bold italic backcolor | alignleft aligncenter alignright alignjustify | image bullist numlist outdent indent | removeformat | help",
+                      }}
+                      onEditorChange={this.handlePitchingEditorChange}
                     />
                   </div>
                   {!this.state.collaboration ? (
@@ -337,24 +377,22 @@ class PostProposalDialog extends React.Component {
                       </label>
                       <div className="md-form mb-4">{roleListInput}</div>
                       <div className="md-form mb-4">
-                        <label
-                          data-error="wrong"
-                          data-success="right"
-                          htmlFor="form-term-brief"
-                          style={{ fontWeight: "bold" }}
-                        >
+                        <p style={{ fontWeight: "bold" }}>
                           Tell a Brief Description for Your Team
-                        </label>
-                        <textarea
-                          id="form-term-brief"
-                          name="form-term-brief"
-                          value={this.state["form-term-brief"]}
-                          className="form-control validate"
-                          placeholder="Maybe some specific terms, or how your team should contact each other?"
-                          rows="4"
-                          cols="50"
-                          onChange={this.handlePostProposalFormChange}
-                          required
+                        </p>
+                        <Editor
+                          init={{
+                            height: 300,
+                            menubar: false,
+                            plugins: [
+                              "advlist autolink lists link image charmap print preview anchor",
+                              "searchreplace visualblocks code fullscreen",
+                              "insertdatetime media table paste code help wordcount",
+                            ],
+                            toolbar:
+                              "undo redo | formatselect | bold italic backcolor | alignleft aligncenter alignright alignjustify | image bullist numlist outdent indent | removeformat | help",
+                          }}
+                          onEditorChange={this.handleTermBriefEditorChange}
                         />
                       </div>
                       <div className="md-form mb-4">

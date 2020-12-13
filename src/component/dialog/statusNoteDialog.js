@@ -1,6 +1,8 @@
 import React from "react";
 import * as constants from "@liskhq/lisk-constants";
 import StatusNoteLogo from "../../asset/undraw_ideas_s70l.svg";
+import "./modal.css";
+const parse = require("html-react-parser");
 const dateFormat = require("dateformat");
 
 class StatusNoteDialog extends React.Component {
@@ -8,7 +10,7 @@ class StatusNoteDialog extends React.Component {
     return (
       <div>
         <div
-          className="modal fade"
+          className="modal full fade"
           id={this.props.id}
           tabIndex={-1}
           role="dialog"
@@ -101,7 +103,7 @@ class StatusNoteDialog extends React.Component {
                         margin: "0px",
                       }}
                     >
-                      {this.props.note.reason}
+                      {parse(this.props.note.reason)}
                     </p>
                   </div>
                 </div>
