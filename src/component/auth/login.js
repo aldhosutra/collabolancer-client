@@ -9,6 +9,7 @@ import { toast } from "react-toastify";
 
 import { Link, Redirect, withRouter } from "react-router-dom";
 import Register from "./register";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 
 const { ACCOUNT } = require("../../transactions/constants");
 
@@ -50,6 +51,7 @@ class Login extends React.Component {
       signInPassphrase: "",
       index: 0,
       regIndex: -1,
+      passwordShow: false,
     };
   }
 
@@ -61,31 +63,59 @@ class Login extends React.Component {
     const tab = [
       <div>
         <p>Passphrase</p>
-        <input
-          className="border rounded-0"
-          type="password"
-          name="passphrase"
-          placeholder="Input Your Passphrase Here"
+        <div
+          className="input-group"
           style={{ width: "100%", height: "40px", marginBottom: "30px" }}
-          onKeyDown={async (e) => {
-            if (e.key === "Enter") {
-              if (await login(this.state.signInPassphrase)) {
-                if (query.get("target") !== undefined) {
-                  this.setState({ redirect: query.get("target") });
-                } else {
-                  this.setState({ redirect: "/app" });
+        >
+          <input
+            className="border rounded-0 form-control"
+            type={this.state.passwordShow ? "text" : "password"}
+            name="passphrase"
+            placeholder="Input Your Passphrase Here"
+            style={{
+              height: "40px",
+            }}
+            onKeyDown={async (e) => {
+              if (e.key === "Enter") {
+                if (await login(this.state.signInPassphrase)) {
+                  if (query.get("target") !== undefined) {
+                    this.setState({ redirect: query.get("target") });
+                  } else {
+                    this.setState({ redirect: "/app" });
+                  }
                 }
               }
-            }
-          }}
-          onChange={(event) => {
-            const text = event.target.value;
-            this.setState((state) => ({
-              ...state,
-              signInPassphrase: text,
-            }));
-          }}
-        />
+            }}
+            onChange={(event) => {
+              const text = event.target.value;
+              this.setState((state) => ({
+                ...state,
+                signInPassphrase: text,
+              }));
+            }}
+          />
+          <div class="input-group-append">
+            <button
+              class="btn border"
+              type="button"
+              style={{
+                height: "40px",
+              }}
+              onClick={() =>
+                this.setState((state) => {
+                  return {
+                    ...state,
+                    passwordShow: !this.state.passwordShow,
+                  };
+                })
+              }
+            >
+              <FontAwesomeIcon
+                icon={this.state.passwordShow ? "eye-slash" : "eye"}
+              />
+            </button>
+          </div>
+        </div>
         <div className="d-flex justify-content-xl-center">
           <button
             className="btn btn-primary text-center border rounded-0"

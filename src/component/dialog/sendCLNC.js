@@ -5,12 +5,14 @@ import { transfer } from "../../utils/transaction";
 import SendLogo from "../../asset/undraw_transfer_money_rywa.svg";
 import config from "../../config/config.json";
 import "./modal.css";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 const { utils } = require("@liskhq/lisk-transactions");
 
 class SendCLNCDialog extends React.PureComponent {
   constructor() {
     super();
     this.state = {
+      passwordShow: false,
       recipientId: "",
       amount: "",
       passphrase: "",
@@ -192,24 +194,44 @@ class SendCLNCDialog extends React.PureComponent {
                     </p>
                   </div>
                   <div className="md-form mb-4">
-                    <label
+                    <p
                       data-error="wrong"
                       data-success="right"
                       htmlFor="passphrase"
-                      style={{ fontWeight: "bold" }}
+                      style={{ fontWeight: "bold", marginBottom: "8px" }}
                     >
                       Passphrase
-                    </label>
-                    <input
-                      type="password"
-                      placeholder="Input Your Account Passphrase"
-                      id="passphrase"
-                      name="passphrase"
-                      className="form-control validate"
-                      onChange={this.handlePostProjectFormChange}
-                      value={this.state["passphrase"]}
-                      required
-                    />
+                    </p>
+                    <div className="input-group">
+                      <input
+                        type={this.state.passwordShow ? "text" : "password"}
+                        placeholder="Input Your Account Passphrase"
+                        id="passphrase"
+                        name="passphrase"
+                        className="form-control validate"
+                        onChange={this.handlePostProjectFormChange}
+                        value={this.state["passphrase"]}
+                        required
+                      />
+                      <div class="input-group-append">
+                        <button
+                          class="btn border"
+                          type="button"
+                          onClick={() =>
+                            this.setState((state) => {
+                              return {
+                                ...state,
+                                passwordShow: !this.state.passwordShow,
+                              };
+                            })
+                          }
+                        >
+                          <FontAwesomeIcon
+                            icon={this.state.passwordShow ? "eye-slash" : "eye"}
+                          />
+                        </button>
+                      </div>
+                    </div>
                   </div>
                 </div>
                 <div
