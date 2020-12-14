@@ -74,91 +74,99 @@ class PitchingDialog extends React.PureComponent {
                 className="modal-header text-center"
                 style={{ borderBottom: "0 none" }}
               >
-                <button
-                  type="button"
-                  className="close"
-                  data-dismiss="modal"
-                  aria-label="Close"
-                >
-                  <span aria-hidden="true">×</span>
-                </button>
+                <div className="container">
+                  <button
+                    type="button"
+                    className="close"
+                    data-dismiss="modal"
+                    aria-label="Close"
+                  >
+                    <span aria-hidden="true">×</span>
+                  </button>
+                </div>
               </div>
               <div className="modal-body">
-                <img
-                  role="status"
-                  style={{
-                    width: "180px",
-                    marginLeft: "auto",
-                    marginRight: "auto",
-                    marginBottom: "16px",
-                    display: "block",
-                  }}
-                  alt="Solo Proposal"
-                  src={PitchingLogo}
-                />
-                <h3
-                  className="modal-title w-100 dark-grey-text font-weight-bold my-1 text-center"
-                  id={"modal-label-" + this.props.proposal.publicKey}
-                >
-                  <strong>Why Should I Be Hired?</strong>
-                </h3>
-                <p
-                  style={{
-                    fontFamily: "Poppins, sans-serif",
-                    textAlign: "center",
-                  }}
-                >
-                  {"This is to show the Employer, how amazing this worker are!"}
-                </p>
-                <div
-                  className="border rounded-0 text-center"
-                  style={{
-                    marginTop: "10px",
-                    marginBottom: "20px",
-                    marginRight: "auto",
-                    marginLeft: "auto",
-                    width: "100px",
-                  }}
-                />
-                <p
-                  style={{
-                    fontFamily: "Poppins, sans-serif",
-                    backgroundImage: `url('data:image/svg+xml,${renderAvatar(
-                      this.props.proposal.asset.leader,
-                      250
-                    )}')`,
-                    backgroundRepeat: "no-repeat",
-                    backgroundSize: "contain",
-                    backgroundPosition: "left",
-                    paddingLeft: "30px",
-                  }}
-                >
-                  <strong>{this.props.proposal.asset.leader}</strong>
-                </p>
-                <p className="text-justify">
-                  {parse(this.props.proposal.asset.pitching)}
-                </p>
-                {hireCheckbox}
+                <div className="container">
+                  <img
+                    role="status"
+                    style={{
+                      width: "180px",
+                      marginLeft: "auto",
+                      marginRight: "auto",
+                      marginBottom: "16px",
+                      display: "block",
+                    }}
+                    alt="Solo Proposal"
+                    src={PitchingLogo}
+                  />
+                  <h3
+                    className="modal-title w-100 dark-grey-text font-weight-bold my-1 text-center"
+                    id={"modal-label-" + this.props.proposal.publicKey}
+                  >
+                    <strong>Why Should I Be Hired?</strong>
+                  </h3>
+                  <p
+                    style={{
+                      fontFamily: "Poppins, sans-serif",
+                      textAlign: "center",
+                    }}
+                  >
+                    {
+                      "This is to show the Employer, how amazing this worker are!"
+                    }
+                  </p>
+                  <div
+                    className="border rounded-0 text-center"
+                    style={{
+                      marginTop: "10px",
+                      marginBottom: "20px",
+                      marginRight: "auto",
+                      marginLeft: "auto",
+                      width: "100px",
+                    }}
+                  />
+                  <p
+                    style={{
+                      fontFamily: "Poppins, sans-serif",
+                      backgroundImage: `url('data:image/svg+xml,${renderAvatar(
+                        this.props.proposal.asset.leader,
+                        250
+                      )}')`,
+                      backgroundRepeat: "no-repeat",
+                      backgroundSize: "contain",
+                      backgroundPosition: "left",
+                      paddingLeft: "30px",
+                    }}
+                  >
+                    <strong>{this.props.proposal.asset.leader}</strong>
+                  </p>
+                  <p className="text-justify">
+                    {parse(this.props.proposal.asset.pitching)}
+                  </p>
+                  {hireCheckbox}
+                </div>
               </div>
-              <div className="modal-footer" style={{ borderTop: "0 none" }}>
-                <button
-                  className="btn btn-light"
-                  type="button"
-                  data-dismiss="modal"
-                  style={{
-                    width: "150px",
-                    backgroundColor: "#2B2D42",
-                    color: "rgb(255,255,255)",
-                  }}
-                >
-                  OK
-                </button>
-                <StartWorkButton
-                  enabled={this.state.checked}
-                  proposal={this.props.proposal}
-                  account={this.props.account}
-                  project={this.props.project}
-                />
+              <div className="container">
+                <div className="modal-footer" style={{ borderTop: "0 none" }}>
+                  <button
+                    className="btn btn-light"
+                    type="button"
+                    data-dismiss="modal"
+                    style={{
+                      width: "150px",
+                      backgroundColor: "#2B2D42",
+                      color: "rgb(255,255,255)",
+                    }}
+                  >
+                    OK
+                  </button>
+                  <StartWorkButton
+                    enabled={this.state.checked}
+                    proposal={this.props.proposal}
+                    account={this.props.account}
+                    project={this.props.project}
+                  />
+                </div>
               </div>
             </div>
           </div>

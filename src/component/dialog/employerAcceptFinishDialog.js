@@ -24,9 +24,15 @@ class EmployerAcceptFinishDialog extends React.Component {
             toast.success(
               "Finish work successfull, page will be reloaded after " +
                 config.block_time / 1000 +
-                " seconds!",
+                " seconds!, click this to cancel auto reload",
               {
                 autoClose: config.block_time,
+                closeButton: false,
+                pauseOnHover: false,
+                draggable: false,
+                onClick: () => {
+                  clearTimeout(reloader);
+                },
               }
             );
             this.setState({
@@ -40,7 +46,7 @@ class EmployerAcceptFinishDialog extends React.Component {
                   this.props.id
               )
               .modal("hide");
-            setTimeout(() => {
+            let reloader = setTimeout(() => {
               window.location.reload();
             }, config.block_time);
           } else {

@@ -43,9 +43,15 @@ class LeaderRequestRevisionDialog extends React.Component {
             toast.success(
               "Request Revision successfull, page will be reloaded after " +
                 config.block_time / 1000 +
-                " seconds!",
+                " seconds!, click this to cancel auto reload",
               {
                 autoClose: config.block_time,
+                closeButton: false,
+                pauseOnHover: false,
+                draggable: false,
+                onClick: () => {
+                  clearTimeout(reloader);
+                },
               }
             );
             this.setState((state) => {
@@ -62,7 +68,7 @@ class LeaderRequestRevisionDialog extends React.Component {
                   this.props.id
               )
               .modal("hide");
-            setTimeout(() => {
+            let reloader = setTimeout(() => {
               window.location.reload();
             }, config.block_time);
           } else {
@@ -144,121 +150,127 @@ class LeaderRequestRevisionDialog extends React.Component {
           <div className="modal-dialog modal-lg" role="document">
             <div className="modal-content form-elegant">
               <div className="modal-header" style={{ borderBottom: "0 none" }}>
-                <button
-                  type="button"
-                  className="close"
-                  data-dismiss="modal"
-                  aria-label="Close"
-                >
-                  <span aria-hidden="true">×</span>
-                </button>
+                <div className="container">
+                  <button
+                    type="button"
+                    className="close"
+                    data-dismiss="modal"
+                    aria-label="Close"
+                  >
+                    <span aria-hidden="true">×</span>
+                  </button>
+                </div>
               </div>
               <form
                 className="form-inside-input"
                 onSubmit={this.onLeaderRequestRevisionFormSubmit}
               >
                 <div className="modal-body mx-4">
-                  <img
-                    role="status"
-                    style={{
-                      width: "180px",
-                      marginLeft: "auto",
-                      marginRight: "auto",
-                      marginBottom: "16px",
-                      display: "block",
-                    }}
-                    alt="Solo Proposal"
-                    src={leaderRequestRevisionLogo}
-                  />
-                  <h3 className="modal-title w-100 dark-grey-text font-weight-bold my-1 text-center">
-                    <strong>Request Revision on Contribution</strong>
-                  </h3>
-                  <p
-                    style={{
-                      fontFamily: "Poppins, sans-serif",
-                      textAlign: "center",
-                    }}
-                  >
-                    Don't really like the contributed files?
-                    <br />
-                    Let's tell the Worker, so it will be fixed!
-                  </p>
-                  <div
-                    className="border rounded-0"
-                    style={{
-                      marginTop: "10px",
-                      marginBottom: "20px",
-                      marginRight: "auto",
-                      marginLeft: "auto",
-                      width: "100px",
-                    }}
-                  />
-                  <div className="md-form mb-4 text-left">
-                    <p style={{ fontWeight: "bold" }}>Reason:</p>
-                    <Editor
-                      init={{
-                        height: 500,
-                        menubar: false,
-                        plugins: [
-                          "advlist autolink lists link image charmap print preview anchor",
-                          "searchreplace visualblocks code fullscreen",
-                          "insertdatetime media table paste code help wordcount",
-                        ],
-                        toolbar:
-                          "undo redo | formatselect | bold italic backcolor | alignleft aligncenter alignright alignjustify | image bullist numlist outdent indent | removeformat | help",
-                      }}
-                      onEditorChange={this.handleEditorChange}
-                    />
-                  </div>
-                </div>
-                <div
-                  className="modal-footer mx-5 pt-3 mb-1 form-footer"
-                  style={{ borderTop: "0 none" }}
-                >
-                  <div className="row">
-                    <div
-                      className="col-auto form-fee"
+                  <div className="container">
+                    <img
+                      role="status"
                       style={{
-                        marginRight: "5px",
-                        maxWidth: "400px",
-                        wordWrap: "break-word",
+                        width: "180px",
+                        marginLeft: "auto",
+                        marginRight: "auto",
+                        marginBottom: "16px",
+                        display: "block",
+                      }}
+                      alt="Solo Proposal"
+                      src={leaderRequestRevisionLogo}
+                    />
+                    <h3 className="modal-title w-100 dark-grey-text font-weight-bold my-1 text-center">
+                      <strong>Request Revision on Contribution</strong>
+                    </h3>
+                    <p
+                      style={{
+                        fontFamily: "Poppins, sans-serif",
+                        textAlign: "center",
                       }}
                     >
-                      <div
-                        style={{
-                          textAlign: "right",
-                          color: "#8D99AE",
-                          fontSize: "12px",
-                          fontWeight: "bold",
+                      Don't really like the contributed files?
+                      <br />
+                      Let's tell the Worker, so it will be fixed!
+                    </p>
+                    <div
+                      className="border rounded-0"
+                      style={{
+                        marginTop: "10px",
+                        marginBottom: "20px",
+                        marginRight: "auto",
+                        marginLeft: "auto",
+                        width: "100px",
+                      }}
+                    />
+                    <div className="md-form mb-4 text-left">
+                      <p style={{ fontWeight: "bold" }}>Reason:</p>
+                      <Editor
+                        init={{
+                          height: 500,
+                          menubar: false,
+                          plugins: [
+                            "advlist autolink lists link image charmap print preview anchor",
+                            "searchreplace visualblocks code fullscreen",
+                            "insertdatetime media table paste code help wordcount",
+                          ],
+                          toolbar:
+                            "undo redo | formatselect | bold italic backcolor | alignleft aligncenter alignright alignjustify | image bullist numlist outdent indent | removeformat | help",
                         }}
-                      >
-                        {"Worker Still Have: " +
-                          (
-                            this.props.proposal.asset.term.maxRevision -
-                            this.props.team.asset.contribution.length
-                          ).toString() +
-                          "  More Attempt!"}
-                      </div>
-                      <div
-                        style={{
-                          textAlign: "right",
-                          color: "#8D99AE",
-                          fontSize: "12px",
-                        }}
-                      >
-                        Team contract status will be updated!
-                      </div>
-                    </div>
-                    <div className="col">
-                      <input
-                        className="btn btn-primary border rounded-0 form-submit"
-                        type="submit"
-                        style={{
-                          backgroundColor: "#2B2D42",
-                          width: "200px",
-                        }}
-                        value="Request Revision"
+                        onEditorChange={this.handleEditorChange}
                       />
+                    </div>
+                  </div>
+                </div>
+                <div className="container">
+                  <div
+                    className="modal-footer pt-3 mb-1 form-footer"
+                    style={{ borderTop: "0 none" }}
+                  >
+                    <div className="row">
+                      <div
+                        className="col-auto form-fee"
+                        style={{
+                          marginRight: "5px",
+                          maxWidth: "400px",
+                          wordWrap: "break-word",
+                        }}
+                      >
+                        <div
+                          style={{
+                            textAlign: "right",
+                            color: "#8D99AE",
+                            fontSize: "12px",
+                            fontWeight: "bold",
+                          }}
+                        >
+                          {"Worker Still Have: " +
+                            (
+                              this.props.proposal.asset.term.maxRevision -
+                              this.props.team.asset.contribution.length
+                            ).toString() +
+                            "  More Attempt!"}
+                        </div>
+                        <div
+                          style={{
+                            textAlign: "right",
+                            color: "#8D99AE",
+                            fontSize: "12px",
+                          }}
+                        >
+                          Team contract status will be updated!
+                        </div>
+                      </div>
+                      <div className="col">
+                        <input
+                          className="btn btn-primary border rounded-0 form-submit"
+                          type="submit"
+                          style={{
+                            backgroundColor: "#2B2D42",
+                            width: "200px",
+                          }}
+                          value="Request Revision"
+                        />
+                      </div>
                     </div>
                   </div>
                 </div>

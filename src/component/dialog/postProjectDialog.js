@@ -63,9 +63,15 @@ class PostProjectDialog extends React.Component {
             toast.success(
               "Post project successfull, page will be reloaded after " +
                 config.block_time / 1000 +
-                " seconds!",
+                " seconds!, click this to cancel auto reload",
               {
                 autoClose: config.block_time,
+                closeButton: false,
+                pauseOnHover: false,
+                draggable: false,
+                onClick: () => {
+                  clearTimeout(reloader);
+                },
               }
             );
             this.setState((state) => {
@@ -80,7 +86,7 @@ class PostProjectDialog extends React.Component {
               };
             });
             window.$("#postProject").modal("hide");
-            setTimeout(() => {
+            let reloader = setTimeout(() => {
               window.location.reload();
             }, config.block_time);
           } else {
@@ -162,247 +168,255 @@ class PostProjectDialog extends React.Component {
                   className="modal-header text-center"
                   style={{ borderBottom: "0 none" }}
                 >
-                  <button
-                    type="button"
-                    className="close"
-                    data-dismiss="modal"
-                    aria-label="Close"
-                  >
-                    <span aria-hidden="true">×</span>
-                  </button>
+                  <div className="container">
+                    <button
+                      type="button"
+                      className="close"
+                      data-dismiss="modal"
+                      aria-label="Close"
+                    >
+                      <span aria-hidden="true">×</span>
+                    </button>
+                  </div>
                 </div>
                 <form
                   className="form-inside-input"
                   onSubmit={this.onPostProjectFormSubmit}
                 >
                   <div className="modal-body mx-4">
-                    <img
-                      role="status"
-                      style={{
-                        width: "180px",
-                        marginLeft: "auto",
-                        marginRight: "auto",
-                        marginBottom: "16px",
-                        display: "block",
-                      }}
-                      alt="Solo Proposal"
-                      src={PostProjectDialogLogo}
-                    />
-                    <h3
-                      className="modal-title w-100 dark-grey-text font-weight-bold my-1 text-center"
-                      id="myModalLabel"
-                    >
-                      <strong>Post New Project</strong>
-                    </h3>
-                    <p
-                      style={{
-                        fontFamily: "Poppins, sans-serif",
-                        textAlign: "center",
-                      }}
-                    >
-                      Setup Project that Act as a Contract,
-                      <br />
-                      Describe your Provision and Requirement Below!
-                    </p>
-                    <div
-                      className="border rounded-0 text-center"
-                      style={{
-                        marginTop: "10px",
-                        marginBottom: "20px",
-                        marginRight: "auto",
-                        marginLeft: "auto",
-                        width: "100px",
-                      }}
-                    />
-                    <div className="md-form mb-4">
-                      <label
-                        data-error="wrong"
-                        data-success="right"
-                        htmlFor="form-title"
-                        style={{ fontWeight: "bold" }}
-                      >
-                        Project Title
-                      </label>
-                      <input
-                        type="text"
-                        placeholder="Give your project title, so your worker will know what it is about"
-                        id="form-title"
-                        name="form-title"
-                        className="form-control validate"
-                        onChange={this.handlePostProjectFormChange}
-                        value={this.state["form-title"]}
-                        required
-                      />
-                    </div>
-                    <div className="md-form mb-4">
-                      <p style={{ fontWeight: "bold" }}>Project Description</p>
-                      <Editor
-                        init={{
-                          height: 500,
-                          menubar: false,
-                          plugins: [
-                            "advlist autolink lists link image charmap print preview anchor",
-                            "searchreplace visualblocks code fullscreen",
-                            "insertdatetime media table paste code help wordcount",
-                          ],
-                          toolbar:
-                            "undo redo | formatselect | bold italic backcolor | alignleft aligncenter alignright alignjustify | image bullist numlist outdent indent | removeformat | help",
+                    <div className="container">
+                      <img
+                        role="status"
+                        style={{
+                          width: "180px",
+                          marginLeft: "auto",
+                          marginRight: "auto",
+                          marginBottom: "16px",
+                          display: "block",
                         }}
-                        onEditorChange={this.handleEditorChange}
+                        alt="Solo Proposal"
+                        src={PostProjectDialogLogo}
                       />
-                    </div>
-                    <div className="md-form mb-4">
-                      <label
-                        data-error="wrong"
-                        data-success="right"
-                        htmlFor="form-category"
-                        style={{ fontWeight: "bold", marginRight: "5px" }}
+                      <h3
+                        className="modal-title w-100 dark-grey-text font-weight-bold my-1 text-center"
+                        id="myModalLabel"
                       >
-                        Category:{" "}
-                      </label>
-                      <select
-                        name="form-category"
-                        id="form-category"
-                        onChange={this.handlePostProjectFormChange}
-                        value={this.state["form-category"]}
-                        required
+                        <strong>Post New Project</strong>
+                      </h3>
+                      <p
+                        style={{
+                          fontFamily: "Poppins, sans-serif",
+                          textAlign: "center",
+                        }}
                       >
-                        <option value="none" disabled hidden></option>
-                        {this.props.category ? (
-                          this.props.category.map((data) => (
-                            <option key={data} value={data}>
-                              {data
-                                .replaceAll("-", " ")
-                                .replace(/\w\S*/g, (txt) => {
-                                  return (
-                                    txt.charAt(0).toUpperCase() +
-                                    txt.substr(1).toLowerCase()
-                                  );
-                                })}
-                            </option>
-                          ))
-                        ) : (
-                          <option>Loading...</option>
-                        )}
-                      </select>
-                    </div>
-                    <div className="md-form mb-4">
-                      <label
-                        data-error="wrong"
-                        data-success="right"
-                        htmlFor="form-prize"
-                        style={{ fontWeight: "bold" }}
-                      >
-                        How Much Total Prize in CLNC You Will Pay For Worker?
-                      </label>
-                      <input
-                        type="number"
-                        step="any"
-                        placeholder="Set it proportionally with task dificullities, your workers will love it!"
-                        id="form-prize"
-                        name="form-prize"
-                        value={this.state["form-prize"]}
-                        className="form-control validate"
-                        onChange={this.handlePostProjectFormChange}
-                        required
+                        Setup Project that Act as a Contract,
+                        <br />
+                        Describe your Provision and Requirement Below!
+                      </p>
+                      <div
+                        className="border rounded-0 text-center"
+                        style={{
+                          marginTop: "10px",
+                          marginBottom: "20px",
+                          marginRight: "auto",
+                          marginLeft: "auto",
+                          width: "100px",
+                        }}
                       />
-                    </div>
-                    <div className="md-form mb-4">
-                      <label
-                        data-error="wrong"
-                        data-success="right"
-                        htmlFor="form-maxtime"
-                        style={{ fontWeight: "bold" }}
-                      >
-                        How Much Time Limit You Will Set For This Project?
-                      </label>
-                      <input
-                        type="number"
-                        placeholder="After work is started, your worker will have time limit to submit the finished work"
-                        id="form-maxtime"
-                        name="form-maxtime"
-                        value={this.state["form-maxtime"]}
-                        className="form-control validate"
-                        onChange={this.handlePostProjectFormChange}
-                        required
-                      />
-                    </div>
-                    <div className="md-form mb-4">
-                      <label
-                        data-error="wrong"
-                        data-success="right"
-                        htmlFor="form-maxrevision"
-                        style={{ fontWeight: "bold" }}
-                      >
-                        How Much Revision You Will Tolerate?
-                      </label>
-                      <input
-                        type="number"
-                        placeholder="Specify how much time your worker can submit revision for their submission"
-                        id="form-maxrevision"
-                        name="form-maxrevision"
-                        value={this.state["form-maxrevision"]}
-                        className="form-control validate"
-                        onChange={this.handlePostProjectFormChange}
-                        required
-                      />
+                      <div className="md-form mb-4">
+                        <label
+                          data-error="wrong"
+                          data-success="right"
+                          htmlFor="form-title"
+                          style={{ fontWeight: "bold" }}
+                        >
+                          Project Title
+                        </label>
+                        <input
+                          type="text"
+                          placeholder="Give your project title, so your worker will know what it is about"
+                          id="form-title"
+                          name="form-title"
+                          className="form-control validate"
+                          onChange={this.handlePostProjectFormChange}
+                          value={this.state["form-title"]}
+                          required
+                        />
+                      </div>
+                      <div className="md-form mb-4">
+                        <p style={{ fontWeight: "bold" }}>
+                          Project Description
+                        </p>
+                        <Editor
+                          init={{
+                            height: 500,
+                            menubar: false,
+                            plugins: [
+                              "advlist autolink lists link image charmap print preview anchor",
+                              "searchreplace visualblocks code fullscreen",
+                              "insertdatetime media table paste code help wordcount",
+                            ],
+                            toolbar:
+                              "undo redo | formatselect | bold italic backcolor | alignleft aligncenter alignright alignjustify | image bullist numlist outdent indent | removeformat | help",
+                          }}
+                          onEditorChange={this.handleEditorChange}
+                        />
+                      </div>
+                      <div className="md-form mb-4">
+                        <label
+                          data-error="wrong"
+                          data-success="right"
+                          htmlFor="form-category"
+                          style={{ fontWeight: "bold", marginRight: "5px" }}
+                        >
+                          Category:{" "}
+                        </label>
+                        <select
+                          name="form-category"
+                          id="form-category"
+                          onChange={this.handlePostProjectFormChange}
+                          value={this.state["form-category"]}
+                          required
+                        >
+                          <option value="none" disabled hidden></option>
+                          {this.props.category ? (
+                            this.props.category.map((data) => (
+                              <option key={data} value={data}>
+                                {data
+                                  .replaceAll("-", " ")
+                                  .replace(/\w\S*/g, (txt) => {
+                                    return (
+                                      txt.charAt(0).toUpperCase() +
+                                      txt.substr(1).toLowerCase()
+                                    );
+                                  })}
+                              </option>
+                            ))
+                          ) : (
+                            <option>Loading...</option>
+                          )}
+                        </select>
+                      </div>
+                      <div className="md-form mb-4">
+                        <label
+                          data-error="wrong"
+                          data-success="right"
+                          htmlFor="form-prize"
+                          style={{ fontWeight: "bold" }}
+                        >
+                          How Much Total Prize in CLNC You Will Pay For Worker?
+                        </label>
+                        <input
+                          type="number"
+                          step="any"
+                          placeholder="Set it proportionally with task dificullities, your workers will love it!"
+                          id="form-prize"
+                          name="form-prize"
+                          value={this.state["form-prize"]}
+                          className="form-control validate"
+                          onChange={this.handlePostProjectFormChange}
+                          required
+                        />
+                      </div>
+                      <div className="md-form mb-4">
+                        <label
+                          data-error="wrong"
+                          data-success="right"
+                          htmlFor="form-maxtime"
+                          style={{ fontWeight: "bold" }}
+                        >
+                          How Much Time Limit You Will Set For This Project?
+                        </label>
+                        <input
+                          type="number"
+                          placeholder="After work is started, your worker will have time limit to submit the finished work"
+                          id="form-maxtime"
+                          name="form-maxtime"
+                          value={this.state["form-maxtime"]}
+                          className="form-control validate"
+                          onChange={this.handlePostProjectFormChange}
+                          required
+                        />
+                      </div>
+                      <div className="md-form mb-4">
+                        <label
+                          data-error="wrong"
+                          data-success="right"
+                          htmlFor="form-maxrevision"
+                          style={{ fontWeight: "bold" }}
+                        >
+                          How Much Revision You Will Tolerate?
+                        </label>
+                        <input
+                          type="number"
+                          placeholder="Specify how much time your worker can submit revision for their submission"
+                          id="form-maxrevision"
+                          name="form-maxrevision"
+                          value={this.state["form-maxrevision"]}
+                          className="form-control validate"
+                          onChange={this.handlePostProjectFormChange}
+                          required
+                        />
+                      </div>
                     </div>
                   </div>
-                  <div
-                    className="modal-footer mx-5 pt-3 mb-1 form-footer"
-                    style={{ borderTop: "0 none" }}
-                  >
-                    <div className="row">
-                      <div
-                        className="col-auto form-fee"
-                        style={{
-                          marginRight: "5px",
-                          maxWidth: "400px",
-                          wordWrap: "break-word",
-                        }}
-                      >
+                  <div className="container">
+                    <div
+                      className="modal-footer pt-3 mb-1 form-footer"
+                      style={{ borderTop: "0 none" }}
+                    >
+                      <div className="row">
                         <div
+                          className="col-auto form-fee"
                           style={{
-                            textAlign: "right",
-                            color: "#8D99AE",
-                            fontSize: "12px",
-                            fontWeight: "bold",
+                            marginRight: "5px",
+                            maxWidth: "400px",
+                            wordWrap: "break-word",
                           }}
                         >
-                          {"Commitment Fee: " +
-                            (this.state["form-prize"]
-                              ? utils
-                                  .BigNum(this.state["form-prize"])
-                                  .mul(
-                                    MISCELLANEOUS.EMPLOYER_COMMITMENT_PERCENTAGE
-                                  )
-                                  .toString()
-                              : "0") +
-                            " CLNC"}
+                          <div
+                            style={{
+                              textAlign: "right",
+                              color: "#8D99AE",
+                              fontSize: "12px",
+                              fontWeight: "bold",
+                            }}
+                          >
+                            {"Commitment Fee: " +
+                              (this.state["form-prize"]
+                                ? utils
+                                    .BigNum(this.state["form-prize"])
+                                    .mul(
+                                      MISCELLANEOUS.EMPLOYER_COMMITMENT_PERCENTAGE
+                                    )
+                                    .toString()
+                                : "0") +
+                              " CLNC"}
+                          </div>
+                          <div
+                            style={{
+                              textAlign: "right",
+                              color: "#8D99AE",
+                              fontSize: "12px",
+                            }}
+                          >
+                            Commitment fee will be kept until project is
+                            finished. <br />
+                            If you are fooling around in this project, this fee
+                            will never back
+                          </div>
                         </div>
-                        <div
-                          style={{
-                            textAlign: "right",
-                            color: "#8D99AE",
-                            fontSize: "12px",
-                          }}
-                        >
-                          Commitment fee will be kept until project is finished.{" "}
-                          <br />
-                          If you are fooling around in this project, this fee
-                          will never back
+                        <div className="col">
+                          <input
+                            className="btn btn-primary border rounded-0 form-submit"
+                            type="submit"
+                            style={{
+                              backgroundColor: "#2B2D42",
+                              width: "200px",
+                            }}
+                            value="Post"
+                          />
                         </div>
-                      </div>
-                      <div className="col">
-                        <input
-                          className="btn btn-primary border rounded-0 form-submit"
-                          type="submit"
-                          style={{
-                            backgroundColor: "#2B2D42",
-                            width: "200px",
-                          }}
-                          value="Post"
-                        />
                       </div>
                     </div>
                   </div>

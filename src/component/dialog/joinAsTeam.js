@@ -30,9 +30,15 @@ class JoinAsTeamDialog extends React.Component {
             toast.success(
               "Join team successfull, page will be reloaded after " +
                 config.block_time / 1000 +
-                " seconds!",
+                " seconds!, click this to cancel auto reload",
               {
                 autoClose: config.block_time,
+                closeButton: false,
+                pauseOnHover: false,
+                draggable: false,
+                onClick: () => {
+                  clearTimeout(reloader);
+                },
               }
             );
             this.setState((state) => {
@@ -51,7 +57,7 @@ class JoinAsTeamDialog extends React.Component {
                   this.props.id
               )
               .modal("hide");
-            setTimeout(() => {
+            let reloader = setTimeout(() => {
               window.location.reload();
             }, config.block_time);
           } else {
@@ -132,227 +138,237 @@ class JoinAsTeamDialog extends React.Component {
                 className="modal-header text-center"
                 style={{ borderBottom: "0 none" }}
               >
-                <button
-                  type="button"
-                  className="close"
-                  data-dismiss="modal"
-                  aria-label="Close"
-                >
-                  <span aria-hidden="true">×</span>
-                </button>
+                <div>
+                  <button
+                    type="button"
+                    className="close"
+                    data-dismiss="modal"
+                    aria-label="Close"
+                  >
+                    <span aria-hidden="true">×</span>
+                  </button>
+                </div>
               </div>
               <form
                 className="form-inside-input"
                 onSubmit={this.onJoinAsTeamFormSubmit}
               >
                 <div className="modal-body mx-4">
-                  <img
-                    role="status"
-                    style={{
-                      width: "180px",
-                      marginLeft: "auto",
-                      marginRight: "auto",
-                      marginBottom: "16px",
-                      display: "block",
-                    }}
-                    alt="Solo Proposal"
-                    src={JoinAsTeamLogo}
-                  />
-                  <h3
-                    className="modal-title w-100 dark-grey-text font-weight-bold my-1 text-center"
-                    id={
-                      "modal-label-" +
-                      this.props.proposal.publicKey +
-                      "-" +
-                      this.props.prefix
-                    }
-                  >
-                    <strong>Join As Team Member</strong>
-                  </h3>
-                  <p
-                    style={{
-                      fontFamily: "Poppins, sans-serif",
-                      textAlign: "center",
-                    }}
-                  >
-                    {
-                      "Start Collaborating With Other Amazing Workers, Just Like You!"
-                    }
-                  </p>
-                  <div
-                    className="border rounded-0 text-center"
-                    style={{
-                      marginTop: "10px",
-                      marginBottom: "20px",
-                      marginRight: "auto",
-                      marginLeft: "auto",
-                      width: "100px",
-                    }}
-                  />
-                  <div className="row">
-                    <div className="col-lg-4 details">
-                      <h6 style={{ fontFamily: "Poppins, sans-serif" }}>
-                        <strong>Role</strong>
-                      </h6>
-                    </div>
-                    <div className="col details">
-                      <p
-                        style={{
-                          fontFamily: "Poppins, sans-serif",
-                          fontSize: "14px",
-                        }}
-                      >
-                        {this.props.role}
-                      </p>
-                    </div>
-                  </div>
-                  <div className="row">
-                    <div className="col-lg-4 details">
-                      <h6
-                        style={{
-                          fontFamily: "Poppins, sans-serif",
-                          color: "rgb(239, 35, 60)",
-                        }}
-                      >
-                        <strong>Potential Earning</strong>
-                      </h6>
-                    </div>
-                    <div className="col details">
-                      <p
-                        style={{
-                          fontFamily: "Poppins, sans-serif",
-                          fontSize: "14px",
-                          color: "rgb(239, 35, 60)",
-                        }}
-                      >
-                        <strong>
-                          {utils.convertBeddowsToLSK(
-                            this.props.proposal.asset.potentialEarning
-                          )}{" "}
-                          CLNC
-                        </strong>
-                      </p>
-                    </div>
-                  </div>
-                  <div className="row">
-                    <div className="col-lg-4 details">
-                      <h6 style={{ fontFamily: "Poppins, sans-serif" }}>
-                        <strong>Working TIme Limit</strong>
-                      </h6>
-                    </div>
-                    <div className="col details">
-                      <p
-                        style={{
-                          fontFamily: "Poppins, sans-serif",
-                          fontSize: "14px",
-                        }}
-                      >
-                        {this.props.proposal.asset.term.maxTime} Days
-                      </p>
-                    </div>
-                  </div>
-                  <div className="row">
-                    <div className="col-lg-4 details">
-                      <h6 style={{ fontFamily: "Poppins, sans-serif" }}>
-                        <strong>Maximum Revision</strong>
-                      </h6>
-                    </div>
-                    <div className="col details">
-                      <p
-                        style={{
-                          fontFamily: "Poppins, sans-serif",
-                          fontSize: "14px",
-                        }}
-                      >
-                        {this.props.proposal.asset.term.maxRevision} Times
-                      </p>
-                    </div>
-                  </div>
-                  <div className="form-check" style={{ marginTop: "16px" }}>
-                    <input
-                      className="form-check-input"
-                      type="checkbox"
-                      id="formCheck-1"
-                      onChange={(event) =>
-                        this.setState({
-                          checked: event.target.checked,
-                        })
-                      }
-                    />
-                    <label className="form-check-label" htmlFor="formCheck-1">
-                      I have read the provisions above, and am willing to apply
-                      as a team
-                    </label>
-                  </div>
-                </div>
-                <div
-                  className="modal-footer mx-5 pt-3 mb-1 form-footer"
-                  style={{ borderTop: "0 none" }}
-                >
-                  <div className="row">
-                    <div
-                      className="col-auto form-fee"
+                  <div className="container">
+                    <img
+                      role="status"
                       style={{
-                        marginRight: "5px",
-                        maxWidth: "400px",
-                        wordWrap: "break-word",
+                        width: "180px",
+                        marginLeft: "auto",
+                        marginRight: "auto",
+                        marginBottom: "16px",
+                        display: "block",
+                      }}
+                      alt="Solo Proposal"
+                      src={JoinAsTeamLogo}
+                    />
+                    <h3
+                      className="modal-title w-100 dark-grey-text font-weight-bold my-1 text-center"
+                      id={
+                        "modal-label-" +
+                        this.props.proposal.publicKey +
+                        "-" +
+                        this.props.prefix
+                      }
+                    >
+                      <strong>Join As Team Member</strong>
+                    </h3>
+                    <p
+                      style={{
+                        fontFamily: "Poppins, sans-serif",
+                        textAlign: "center",
                       }}
                     >
-                      <div
-                        style={{
-                          textAlign: "right",
-                          color: "#8D99AE",
-                          fontSize: "12px",
-                          fontWeight: "bold",
-                        }}
-                      >
-                        {"Commitment Fee: " +
-                          utils.convertBeddowsToLSK(
-                            this.props.proposal.asset.term.commitmentFee
-                          ) +
-                          " CLNC"}
+                      {
+                        "Start Collaborating With Other Amazing Workers, Just Like You!"
+                      }
+                    </p>
+                    <div
+                      className="border rounded-0 text-center"
+                      style={{
+                        marginTop: "10px",
+                        marginBottom: "20px",
+                        marginRight: "auto",
+                        marginLeft: "auto",
+                        width: "100px",
+                      }}
+                    />
+                    <div className="row">
+                      <div className="col-lg-4 details">
+                        <h6 style={{ fontFamily: "Poppins, sans-serif" }}>
+                          <strong>Role</strong>
+                        </h6>
                       </div>
-                      <div
-                        style={{
-                          textAlign: "right",
-                          color: "#8D99AE",
-                          fontSize: "12px",
-                        }}
-                      >
-                        Commitment fee will be kept until project is finished.{" "}
-                        <br />
+                      <div className="col details">
                         <p
                           style={{
-                            color: "#EF233C",
                             fontFamily: "Poppins, sans-serif",
+                            fontSize: "14px",
+                          }}
+                        >
+                          {this.props.role}
+                        </p>
+                      </div>
+                    </div>
+                    <div className="row">
+                      <div className="col-lg-4 details">
+                        <h6
+                          style={{
+                            fontFamily: "Poppins, sans-serif",
+                            color: "rgb(239, 35, 60)",
+                          }}
+                        >
+                          <strong>Potential Earning</strong>
+                        </h6>
+                      </div>
+                      <div className="col details">
+                        <p
+                          style={{
+                            fontFamily: "Poppins, sans-serif",
+                            fontSize: "14px",
+                            color: "rgb(239, 35, 60)",
                           }}
                         >
                           <strong>
-                            Potential Bonus:{" "}
                             {utils.convertBeddowsToLSK(
-                              utils
-                                .BigNum(MISCELLANEOUS.TEAM_CASHBACK_PERCENTAGE)
-                                .mul(deflationaryRate)
-                                .mul(this.props.proposal.asset.potentialEarning)
-                                .round()
-                                .toString()
+                              this.props.proposal.asset.potentialEarning
                             )}{" "}
                             CLNC
                           </strong>
                         </p>
                       </div>
                     </div>
-                    <div className="col">
+                    <div className="row">
+                      <div className="col-lg-4 details">
+                        <h6 style={{ fontFamily: "Poppins, sans-serif" }}>
+                          <strong>Working TIme Limit</strong>
+                        </h6>
+                      </div>
+                      <div className="col details">
+                        <p
+                          style={{
+                            fontFamily: "Poppins, sans-serif",
+                            fontSize: "14px",
+                          }}
+                        >
+                          {this.props.proposal.asset.term.maxTime} Days
+                        </p>
+                      </div>
+                    </div>
+                    <div className="row">
+                      <div className="col-lg-4 details">
+                        <h6 style={{ fontFamily: "Poppins, sans-serif" }}>
+                          <strong>Maximum Revision</strong>
+                        </h6>
+                      </div>
+                      <div className="col details">
+                        <p
+                          style={{
+                            fontFamily: "Poppins, sans-serif",
+                            fontSize: "14px",
+                          }}
+                        >
+                          {this.props.proposal.asset.term.maxRevision} Times
+                        </p>
+                      </div>
+                    </div>
+                    <div className="form-check" style={{ marginTop: "16px" }}>
                       <input
-                        className="btn btn-primary border rounded-0 form-submit"
-                        type="submit"
-                        style={{
-                          backgroundColor: "#2B2D42",
-                          width: "200px",
-                        }}
-                        disabled={!this.state.checked}
-                        value="Apply"
+                        className="form-check-input"
+                        type="checkbox"
+                        id="formCheck-1"
+                        onChange={(event) =>
+                          this.setState({
+                            checked: event.target.checked,
+                          })
+                        }
                       />
+                      <label className="form-check-label" htmlFor="formCheck-1">
+                        I have read the provisions above, and am willing to
+                        apply as a team
+                      </label>
+                    </div>
+                  </div>
+                </div>
+                <div className="container">
+                  <div
+                    className="modal-footer pt-3 mb-1 form-footer"
+                    style={{ borderTop: "0 none" }}
+                  >
+                    <div className="row">
+                      <div
+                        className="col-auto form-fee"
+                        style={{
+                          marginRight: "5px",
+                          maxWidth: "400px",
+                          wordWrap: "break-word",
+                        }}
+                      >
+                        <div
+                          style={{
+                            textAlign: "right",
+                            color: "#8D99AE",
+                            fontSize: "12px",
+                            fontWeight: "bold",
+                          }}
+                        >
+                          {"Commitment Fee: " +
+                            utils.convertBeddowsToLSK(
+                              this.props.proposal.asset.term.commitmentFee
+                            ) +
+                            " CLNC"}
+                        </div>
+                        <div
+                          style={{
+                            textAlign: "right",
+                            color: "#8D99AE",
+                            fontSize: "12px",
+                          }}
+                        >
+                          Commitment fee will be kept until project is finished.{" "}
+                          <br />
+                          <p
+                            style={{
+                              color: "#EF233C",
+                              fontFamily: "Poppins, sans-serif",
+                            }}
+                          >
+                            <strong>
+                              Potential Bonus:{" "}
+                              {utils.convertBeddowsToLSK(
+                                utils
+                                  .BigNum(
+                                    MISCELLANEOUS.TEAM_CASHBACK_PERCENTAGE
+                                  )
+                                  .mul(deflationaryRate)
+                                  .mul(
+                                    this.props.proposal.asset.potentialEarning
+                                  )
+                                  .round()
+                                  .toString()
+                              )}{" "}
+                              CLNC
+                            </strong>
+                          </p>
+                        </div>
+                      </div>
+                      <div className="col">
+                        <input
+                          className="btn btn-primary border rounded-0 form-submit"
+                          type="submit"
+                          style={{
+                            backgroundColor: "#2B2D42",
+                            width: "200px",
+                          }}
+                          disabled={!this.state.checked}
+                          value="Apply"
+                        />
+                      </div>
                     </div>
                   </div>
                 </div>

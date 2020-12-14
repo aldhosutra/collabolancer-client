@@ -71,9 +71,15 @@ class PostProposalDialog extends React.Component {
             toast.success(
               "Post proposal successfull, page will be reloaded after " +
                 config.block_time / 1000 +
-                " seconds!",
+                " seconds!, click this to cancel auto reload",
               {
                 autoClose: config.block_time,
+                closeButton: false,
+                pauseOnHover: false,
+                draggable: false,
+                onClick: () => {
+                  clearTimeout(reloader);
+                },
               }
             );
             this.setState((state) => {
@@ -90,7 +96,7 @@ class PostProposalDialog extends React.Component {
               };
             });
             window.$("#postProposal").modal("hide");
-            setTimeout(() => {
+            let reloader = setTimeout(() => {
               window.location.reload();
             }, config.block_time);
           } else {
@@ -269,356 +275,362 @@ class PostProposalDialog extends React.Component {
                 className="modal-header text-center"
                 style={{ borderBottom: "0 none" }}
               >
-                <button
-                  type="button"
-                  className="close"
-                  data-dismiss="modal"
-                  aria-label="Close"
-                >
-                  <span aria-hidden="true">×</span>
-                </button>
+                <div className="container">
+                  <button
+                    type="button"
+                    className="close"
+                    data-dismiss="modal"
+                    aria-label="Close"
+                  >
+                    <span aria-hidden="true">×</span>
+                  </button>
+                </div>
               </div>
               <form
                 className="form-inside-input"
                 onSubmit={this.onPostProposalFormSubmit}
               >
                 <div className="modal-body mx-4">
-                  <img
-                    role="status"
-                    style={{
-                      width: "180px",
-                      marginLeft: "auto",
-                      marginRight: "auto",
-                      marginBottom: "16px",
-                      display: "block",
-                    }}
-                    alt="Solo Proposal"
-                    src={PostProposalLogo}
-                  />
-                  <h3 className="modal-title w-100 dark-grey-text font-weight-bold my-1 text-center">
-                    <strong>Post New Proposal</strong>
-                  </h3>
-                  <p
-                    style={{
-                      fontFamily: "Poppins, sans-serif",
-                      textAlign: "center",
-                    }}
-                  >
-                    Ready to Work? Let's Pitch your Best-Self!
-                    <br />
-                    Enable Collaboration, and earn many bonuses!
-                  </p>
-                  <div
-                    className="border rounded-0 text-center"
-                    style={{
-                      marginTop: "10px",
-                      marginBottom: "20px",
-                      marginRight: "auto",
-                      marginLeft: "auto",
-                      width: "100px",
-                    }}
-                  />
-                  <div className="md-form mb-4">
-                    <p style={{ fontWeight: "bold" }}>
-                      Pitching, Why Employer Should Choose You?
-                    </p>
-                    <Editor
-                      init={{
-                        height: 300,
-                        menubar: false,
-                        plugins: [
-                          "advlist autolink lists link image charmap print preview anchor",
-                          "searchreplace visualblocks code fullscreen",
-                          "insertdatetime media table paste code help wordcount",
-                        ],
-                        toolbar:
-                          "undo redo | formatselect | bold italic backcolor | alignleft aligncenter alignright alignjustify | image bullist numlist outdent indent | removeformat | help",
-                      }}
-                      onEditorChange={this.handlePitchingEditorChange}
-                    />
-                  </div>
-                  {!this.state.collaboration ? (
-                    <div>
-                      <button
-                        className="btn btn-primary border rounded-0 top-button"
-                        style={{
-                          backgroundColor: "#EF233C",
-                          width: "200px",
-                        }}
-                        onClick={() => {
-                          this.setState((state) => {
-                            return {
-                              ...state,
-                              collaboration: true,
-                              "form-term-rolelist": [""],
-                            };
-                          });
-                        }}
-                      >
-                        <strong>Enable Collaboration</strong>
-                      </button>
-                    </div>
-                  ) : (
-                    <div></div>
-                  )}
-                  {this.state.collaboration ? (
-                    <div>
-                      <div
-                        className="border rounded-0"
-                        style={{ marginTop: "10px", marginBottom: "20px" }}
-                      />
-                      <label
-                        data-error="wrong"
-                        data-success="right"
-                        htmlFor="form-term-rolelist"
-                        style={{ fontWeight: "bold" }}
-                      >
-                        What Role You Need in Your Team?
-                      </label>
-                      <div className="md-form mb-4">{roleListInput}</div>
-                      <div className="md-form mb-4">
-                        <p style={{ fontWeight: "bold" }}>
-                          Tell a Brief Description for Your Team
-                        </p>
-                        <Editor
-                          init={{
-                            height: 300,
-                            menubar: false,
-                            plugins: [
-                              "advlist autolink lists link image charmap print preview anchor",
-                              "searchreplace visualblocks code fullscreen",
-                              "insertdatetime media table paste code help wordcount",
-                            ],
-                            toolbar:
-                              "undo redo | formatselect | bold italic backcolor | alignleft aligncenter alignright alignjustify | image bullist numlist outdent indent | removeformat | help",
-                          }}
-                          onEditorChange={this.handleTermBriefEditorChange}
-                        />
-                      </div>
-                      <div className="md-form mb-4">
-                        <label
-                          data-error="wrong"
-                          data-success="right"
-                          htmlFor="form-term-maxtime"
-                          style={{ fontWeight: "bold" }}
-                        >
-                          How Long Your Team Should Finishing Project?
-                        </label>
-                        <input
-                          type="number"
-                          placeholder="After this time limit, employer will be able to cancel the project!"
-                          id="form-term-maxtime"
-                          name="form-term-maxtime"
-                          value={this.state["form-term-maxtime"]}
-                          className="form-control validate"
-                          onChange={this.handlePostProposalFormChange}
-                          required
-                        />
-                      </div>
-                      <div className="md-form mb-4">
-                        <label
-                          data-error="wrong"
-                          data-success="right"
-                          htmlFor="form-term-maxrevision"
-                          style={{ fontWeight: "bold" }}
-                        >
-                          How Much Initial Chance For Your Team to Submit
-                          Revision?
-                        </label>
-                        <input
-                          type="number"
-                          placeholder="Your team should not slow you down, right?"
-                          id="form-term-maxrevision"
-                          name="form-term-maxrevision"
-                          value={this.state["form-term-maxrevision"]}
-                          className="form-control validate"
-                          onChange={this.handlePostProposalFormChange}
-                          required
-                        />
-                      </div>
-                      <div className="md-form mb-4">
-                        <p style={{ fontWeight: "bold", marginRight: "5px" }}>
-                          How You Will Distribute Prize With Your Team?
-                        </p>
-                        <div onChange={this.handlePostProposalFormChange}>
-                          <input
-                            type="radio"
-                            id="form-term-distribution-mode"
-                            name="form-term-distribution-mode"
-                            checked={
-                              this.state["form-term-distribution-mode"] ===
-                              MISCELLANEOUS.DISTRIBUTION.ALL_EQUAL
-                            }
-                            value={MISCELLANEOUS.DISTRIBUTION.ALL_EQUAL}
-                            required
-                          />
-                          <label
-                            htmlFor={MISCELLANEOUS.DISTRIBUTION.ALL_EQUAL}
-                            style={{ marginLeft: "10px" }}
-                          >
-                            Prize will be distributed equally between me and my
-                            team
-                          </label>
-                          <br />
-                          <input
-                            type="radio"
-                            id="form-term-distribution-mode"
-                            name="form-term-distribution-mode"
-                            checked={
-                              this.state["form-term-distribution-mode"] ===
-                              MISCELLANEOUS.DISTRIBUTION.LEADER_FIRST
-                            }
-                            value={MISCELLANEOUS.DISTRIBUTION.LEADER_FIRST}
-                            required
-                          />
-                          <label
-                            htmlFor={MISCELLANEOUS.DISTRIBUTION.LEADER_FIRST}
-                            style={{ marginLeft: "10px" }}
-                          >
-                            I will determine my share, the rest will be shared
-                            equally between my team
-                          </label>
-                        </div>
-                        {this.state["form-term-distribution-mode"] ===
-                        MISCELLANEOUS.DISTRIBUTION.LEADER_FIRST ? (
-                          <input
-                            type="text"
-                            placeholder="What percentage is your share?"
-                            id="form-term-distribution-value"
-                            name="form-term-distribution-value"
-                            className="form-control validate"
-                            onChange={this.handlePostProposalFormChange}
-                            value={this.state["form-term-distribution-value"]}
-                            required
-                          />
-                        ) : (
-                          <div></div>
-                        )}
-                      </div>
-                      <div className="md-form mb-4">
-                        <p
-                          style={{
-                            fontWeight: "bold",
-                            color: "#EF233C",
-                            fontFamily: "Poppins, sans-serif",
-                          }}
-                        >
-                          {(this.state["form-term-distribution-mode"] ===
-                            MISCELLANEOUS.DISTRIBUTION.LEADER_FIRST &&
-                            isNaN(
-                              parseFloat(
-                                this.state["form-term-distribution-value"]
-                              )
-                            )) ||
-                          (parseFloat(
-                            this.state["form-term-distribution-value"]
-                          ) < 0 &&
-                            parseFloat(
-                              this.state["form-term-distribution-value"]
-                            ) > 100)
-                            ? "Percentage Should Be Between 0 and 100!"
-                            : `Your Share: ${yourShare}% (${utils.convertBeddowsToLSK(
-                                utils
-                                  .BigNum(yourShare)
-                                  .div(100)
-                                  .mul(this.props.project.asset.prize)
-                                  .toString()
-                              )} CLNC); Each Team Share: ${teamShare}% (${utils.convertBeddowsToLSK(
-                                utils
-                                  .BigNum(teamShare)
-                                  .div(100)
-                                  .mul(this.props.project.asset.prize)
-                                  .toString()
-                              )} CLNC)`}
-                        </p>
-                      </div>
-                    </div>
-                  ) : (
-                    <div></div>
-                  )}
-                </div>
-                <div
-                  className="modal-footer mx-5 pt-3 mb-1 form-footer"
-                  style={{ borderTop: "0 none" }}
-                >
-                  <div className="row">
-                    <div
-                      className="col-auto form-fee"
+                  <div className="container">
+                    <img
+                      role="status"
                       style={{
-                        marginRight: "5px",
-                        maxWidth: "400px",
-                        wordWrap: "break-word",
+                        width: "180px",
+                        marginLeft: "auto",
+                        marginRight: "auto",
+                        marginBottom: "16px",
+                        display: "block",
+                      }}
+                      alt="Solo Proposal"
+                      src={PostProposalLogo}
+                    />
+                    <h3 className="modal-title w-100 dark-grey-text font-weight-bold my-1 text-center">
+                      <strong>Post New Proposal</strong>
+                    </h3>
+                    <p
+                      style={{
+                        fontFamily: "Poppins, sans-serif",
+                        textAlign: "center",
                       }}
                     >
-                      <div
-                        style={{
-                          textAlign: "right",
-                          color: "#8D99AE",
-                          fontSize: "12px",
-                          fontWeight: "bold",
+                      Ready to Work? Let's Pitch your Best-Self!
+                      <br />
+                      Enable Collaboration, and earn many bonuses!
+                    </p>
+                    <div
+                      className="border rounded-0 text-center"
+                      style={{
+                        marginTop: "10px",
+                        marginBottom: "20px",
+                        marginRight: "auto",
+                        marginLeft: "auto",
+                        width: "100px",
+                      }}
+                    />
+                    <div className="md-form mb-4">
+                      <p style={{ fontWeight: "bold" }}>
+                        Pitching, Why Employer Should Choose You?
+                      </p>
+                      <Editor
+                        init={{
+                          height: 300,
+                          menubar: false,
+                          plugins: [
+                            "advlist autolink lists link image charmap print preview anchor",
+                            "searchreplace visualblocks code fullscreen",
+                            "insertdatetime media table paste code help wordcount",
+                          ],
+                          toolbar:
+                            "undo redo | formatselect | bold italic backcolor | alignleft aligncenter alignright alignjustify | image bullist numlist outdent indent | removeformat | help",
                         }}
-                      >
-                        {"Commitment Fee: " +
-                          utils.convertBeddowsToLSK(
-                            this.props.project.asset.commitmentFee
-                          ) +
-                          " CLNC"}
+                        onEditorChange={this.handlePitchingEditorChange}
+                      />
+                    </div>
+                    {!this.state.collaboration ? (
+                      <div>
+                        <button
+                          className="btn btn-primary border rounded-0 top-button"
+                          style={{
+                            backgroundColor: "#EF233C",
+                            width: "200px",
+                          }}
+                          onClick={() => {
+                            this.setState((state) => {
+                              return {
+                                ...state,
+                                collaboration: true,
+                                "form-term-rolelist": [""],
+                              };
+                            });
+                          }}
+                        >
+                          <strong>Enable Collaboration</strong>
+                        </button>
                       </div>
-                      <div
-                        style={{
-                          textAlign: "right",
-                          color: "#8D99AE",
-                          fontSize: "12px",
-                        }}
-                      >
-                        Commitment fee will be kept until project is finished.{" "}
-                        <br />
-                        {this.state.collaboration ? (
+                    ) : (
+                      <div></div>
+                    )}
+                    {this.state.collaboration ? (
+                      <div>
+                        <div
+                          className="border rounded-0"
+                          style={{ marginTop: "10px", marginBottom: "20px" }}
+                        />
+                        <label
+                          data-error="wrong"
+                          data-success="right"
+                          htmlFor="form-term-rolelist"
+                          style={{ fontWeight: "bold" }}
+                        >
+                          What Role You Need in Your Team?
+                        </label>
+                        <div className="md-form mb-4">{roleListInput}</div>
+                        <div className="md-form mb-4">
+                          <p style={{ fontWeight: "bold" }}>
+                            Tell a Brief Description for Your Team
+                          </p>
+                          <Editor
+                            init={{
+                              height: 300,
+                              menubar: false,
+                              plugins: [
+                                "advlist autolink lists link image charmap print preview anchor",
+                                "searchreplace visualblocks code fullscreen",
+                                "insertdatetime media table paste code help wordcount",
+                              ],
+                              toolbar:
+                                "undo redo | formatselect | bold italic backcolor | alignleft aligncenter alignright alignjustify | image bullist numlist outdent indent | removeformat | help",
+                            }}
+                            onEditorChange={this.handleTermBriefEditorChange}
+                          />
+                        </div>
+                        <div className="md-form mb-4">
+                          <label
+                            data-error="wrong"
+                            data-success="right"
+                            htmlFor="form-term-maxtime"
+                            style={{ fontWeight: "bold" }}
+                          >
+                            How Long Your Team Should Finishing Project?
+                          </label>
+                          <input
+                            type="number"
+                            placeholder="After this time limit, employer will be able to cancel the project!"
+                            id="form-term-maxtime"
+                            name="form-term-maxtime"
+                            value={this.state["form-term-maxtime"]}
+                            className="form-control validate"
+                            onChange={this.handlePostProposalFormChange}
+                            required
+                          />
+                        </div>
+                        <div className="md-form mb-4">
+                          <label
+                            data-error="wrong"
+                            data-success="right"
+                            htmlFor="form-term-maxrevision"
+                            style={{ fontWeight: "bold" }}
+                          >
+                            How Much Initial Chance For Your Team to Submit
+                            Revision?
+                          </label>
+                          <input
+                            type="number"
+                            placeholder="Your team should not slow you down, right?"
+                            id="form-term-maxrevision"
+                            name="form-term-maxrevision"
+                            value={this.state["form-term-maxrevision"]}
+                            className="form-control validate"
+                            onChange={this.handlePostProposalFormChange}
+                            required
+                          />
+                        </div>
+                        <div className="md-form mb-4">
+                          <p style={{ fontWeight: "bold", marginRight: "5px" }}>
+                            How You Will Distribute Prize With Your Team?
+                          </p>
+                          <div onChange={this.handlePostProposalFormChange}>
+                            <input
+                              type="radio"
+                              id="form-term-distribution-mode"
+                              name="form-term-distribution-mode"
+                              checked={
+                                this.state["form-term-distribution-mode"] ===
+                                MISCELLANEOUS.DISTRIBUTION.ALL_EQUAL
+                              }
+                              value={MISCELLANEOUS.DISTRIBUTION.ALL_EQUAL}
+                              required
+                            />
+                            <label
+                              htmlFor={MISCELLANEOUS.DISTRIBUTION.ALL_EQUAL}
+                              style={{ marginLeft: "10px" }}
+                            >
+                              Prize will be distributed equally between me and
+                              my team
+                            </label>
+                            <br />
+                            <input
+                              type="radio"
+                              id="form-term-distribution-mode"
+                              name="form-term-distribution-mode"
+                              checked={
+                                this.state["form-term-distribution-mode"] ===
+                                MISCELLANEOUS.DISTRIBUTION.LEADER_FIRST
+                              }
+                              value={MISCELLANEOUS.DISTRIBUTION.LEADER_FIRST}
+                              required
+                            />
+                            <label
+                              htmlFor={MISCELLANEOUS.DISTRIBUTION.LEADER_FIRST}
+                              style={{ marginLeft: "10px" }}
+                            >
+                              I will determine my share, the rest will be shared
+                              equally between my team
+                            </label>
+                          </div>
+                          {this.state["form-term-distribution-mode"] ===
+                          MISCELLANEOUS.DISTRIBUTION.LEADER_FIRST ? (
+                            <input
+                              type="text"
+                              placeholder="What percentage is your share?"
+                              id="form-term-distribution-value"
+                              name="form-term-distribution-value"
+                              className="form-control validate"
+                              onChange={this.handlePostProposalFormChange}
+                              value={this.state["form-term-distribution-value"]}
+                              required
+                            />
+                          ) : (
+                            <div></div>
+                          )}
+                        </div>
+                        <div className="md-form mb-4">
                           <p
                             style={{
+                              fontWeight: "bold",
                               color: "#EF233C",
                               fontFamily: "Poppins, sans-serif",
                             }}
                           >
-                            <strong>
-                              Potential Bonus:{" "}
-                              {utils.convertBeddowsToLSK(
-                                utils
-                                  .BigNum(
-                                    this.state["form-term-rolelist"].length
-                                  )
-                                  .mul(
-                                    MISCELLANEOUS.LEADER_CASHBACK_PERCENTAGE *
-                                      deflationaryRate
-                                  )
-                                  .mul(this.props.project.asset.prize)
-                                  .toString()
-                              )}{" "}
-                              CLNC
-                            </strong>
+                            {(this.state["form-term-distribution-mode"] ===
+                              MISCELLANEOUS.DISTRIBUTION.LEADER_FIRST &&
+                              isNaN(
+                                parseFloat(
+                                  this.state["form-term-distribution-value"]
+                                )
+                              )) ||
+                            (parseFloat(
+                              this.state["form-term-distribution-value"]
+                            ) < 0 &&
+                              parseFloat(
+                                this.state["form-term-distribution-value"]
+                              ) > 100)
+                              ? "Percentage Should Be Between 0 and 100!"
+                              : `Your Share: ${yourShare}% (${utils.convertBeddowsToLSK(
+                                  utils
+                                    .BigNum(yourShare)
+                                    .div(100)
+                                    .mul(this.props.project.asset.prize)
+                                    .toString()
+                                )} CLNC); Each Team Share: ${teamShare}% (${utils.convertBeddowsToLSK(
+                                  utils
+                                    .BigNum(teamShare)
+                                    .div(100)
+                                    .mul(this.props.project.asset.prize)
+                                    .toString()
+                                )} CLNC)`}
                           </p>
-                        ) : (
-                          <p>
-                            Get{" "}
-                            {MISCELLANEOUS.LEADER_CASHBACK_PERCENTAGE *
-                              100 *
-                              deflationaryRate}
-                            % bonus and more benefit, by enabling collaboration
-                            for your proposal contract!
-                          </p>
-                        )}
+                        </div>
                       </div>
-                    </div>
-                    <div className="col">
-                      <input
-                        className="btn btn-primary border rounded-0 form-submit"
-                        type="submit"
+                    ) : (
+                      <div></div>
+                    )}
+                  </div>
+                </div>
+                <div className="container">
+                  <div
+                    className="modal-footer pt-3 mb-1 form-footer"
+                    style={{ borderTop: "0 none" }}
+                  >
+                    <div className="row">
+                      <div
+                        className="col-auto form-fee"
                         style={{
-                          backgroundColor: "#2B2D42",
-                          width: "200px",
+                          marginRight: "5px",
+                          maxWidth: "400px",
+                          wordWrap: "break-word",
                         }}
-                        value="Post"
-                      />
+                      >
+                        <div
+                          style={{
+                            textAlign: "right",
+                            color: "#8D99AE",
+                            fontSize: "12px",
+                            fontWeight: "bold",
+                          }}
+                        >
+                          {"Commitment Fee: " +
+                            utils.convertBeddowsToLSK(
+                              this.props.project.asset.commitmentFee
+                            ) +
+                            " CLNC"}
+                        </div>
+                        <div
+                          style={{
+                            textAlign: "right",
+                            color: "#8D99AE",
+                            fontSize: "12px",
+                          }}
+                        >
+                          Commitment fee will be kept until project is finished.{" "}
+                          <br />
+                          {this.state.collaboration ? (
+                            <p
+                              style={{
+                                color: "#EF233C",
+                                fontFamily: "Poppins, sans-serif",
+                              }}
+                            >
+                              <strong>
+                                Potential Bonus:{" "}
+                                {utils.convertBeddowsToLSK(
+                                  utils
+                                    .BigNum(
+                                      this.state["form-term-rolelist"].length
+                                    )
+                                    .mul(
+                                      MISCELLANEOUS.LEADER_CASHBACK_PERCENTAGE *
+                                        deflationaryRate
+                                    )
+                                    .mul(this.props.project.asset.prize)
+                                    .toString()
+                                )}{" "}
+                                CLNC
+                              </strong>
+                            </p>
+                          ) : (
+                            <p>
+                              Get{" "}
+                              {MISCELLANEOUS.LEADER_CASHBACK_PERCENTAGE *
+                                100 *
+                                deflationaryRate}
+                              % bonus and more benefit, by enabling
+                              collaboration for your proposal contract!
+                            </p>
+                          )}
+                        </div>
+                      </div>
+                      <div className="col">
+                        <input
+                          className="btn btn-primary border rounded-0 form-submit"
+                          type="submit"
+                          style={{
+                            backgroundColor: "#2B2D42",
+                            width: "200px",
+                          }}
+                          value="Post"
+                        />
+                      </div>
                     </div>
                   </div>
                 </div>

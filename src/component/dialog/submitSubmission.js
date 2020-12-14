@@ -37,9 +37,15 @@ class SubmitSubmissionDialog extends React.Component {
             toast.success(
               "Submit Submission successfull, page will be reloaded after " +
                 config.block_time / 1000 +
-                " seconds!",
+                " seconds!, click this to cancel auto reload",
               {
                 autoClose: config.block_time,
+                closeButton: false,
+                pauseOnHover: false,
+                draggable: false,
+                onClick: () => {
+                  clearTimeout(reloader);
+                },
               }
             );
             this.setState({
@@ -58,7 +64,7 @@ class SubmitSubmissionDialog extends React.Component {
                   this.props.id
               )
               .modal("hide");
-            setTimeout(() => {
+            let reloader = setTimeout(() => {
               window.location.reload();
             }, config.block_time);
           } else {
@@ -133,289 +139,295 @@ class SubmitSubmissionDialog extends React.Component {
                 className="modal-header text-center"
                 style={{ borderBottom: "0 none" }}
               >
-                <button
-                  type="button"
-                  className="close"
-                  data-dismiss="modal"
-                  aria-label="Close"
-                >
-                  <span aria-hidden="true">×</span>
-                </button>
+                <div className="container">
+                  <button
+                    type="button"
+                    className="close"
+                    data-dismiss="modal"
+                    aria-label="Close"
+                  >
+                    <span aria-hidden="true">×</span>
+                  </button>
+                </div>
               </div>
               <div className="modal-body mx-4">
-                <img
-                  role="status"
-                  style={{
-                    width: "180px",
-                    marginLeft: "auto",
-                    marginRight: "auto",
-                    marginBottom: "16px",
-                    display: "block",
-                  }}
-                  alt="Solo Proposal"
-                  src={SubmitSubmissionLogo}
-                />
-                <h3
-                  className="modal-title w-100 dark-grey-text font-weight-bold my-1 text-center"
-                  id={
-                    "modal-label-" +
-                    this.props.proposal.publicKey +
-                    "-" +
-                    this.props.prefix
-                  }
-                >
-                  <strong>Submit Submission</strong>
-                </h3>
-                <p
-                  style={{
-                    fontFamily: "Poppins, sans-serif",
-                    textAlign: "center",
-                  }}
-                >
-                  Pheww... Almost There!
-                  <br />
-                  Submit your Finished Work, and let Collabolancer take care of
-                  your contract!
-                </p>
-                <div
-                  className="border rounded-0 text-center"
-                  style={{
-                    marginTop: "10px",
-                    marginBottom: "20px",
-                    marginRight: "auto",
-                    marginLeft: "auto",
-                    width: "100px",
-                  }}
-                />
-                {this.state.filename !== "" ? (
-                  <div
-                    className="border rounded-0"
-                    style={{ padding: "8px", minHeight: "120px" }}
+                <div className="container">
+                  <img
+                    role="status"
+                    style={{
+                      width: "180px",
+                      marginLeft: "auto",
+                      marginRight: "auto",
+                      marginBottom: "16px",
+                      display: "block",
+                    }}
+                    alt="Solo Proposal"
+                    src={SubmitSubmissionLogo}
+                  />
+                  <h3
+                    className="modal-title w-100 dark-grey-text font-weight-bold my-1 text-center"
+                    id={
+                      "modal-label-" +
+                      this.props.proposal.publicKey +
+                      "-" +
+                      this.props.prefix
+                    }
                   >
+                    <strong>Submit Submission</strong>
+                  </h3>
+                  <p
+                    style={{
+                      fontFamily: "Poppins, sans-serif",
+                      textAlign: "center",
+                    }}
+                  >
+                    Pheww... Almost There!
+                    <br />
+                    Submit your Finished Work, and let Collabolancer take care
+                    of your contract!
+                  </p>
+                  <div
+                    className="border rounded-0 text-center"
+                    style={{
+                      marginTop: "10px",
+                      marginBottom: "20px",
+                      marginRight: "auto",
+                      marginLeft: "auto",
+                      width: "100px",
+                    }}
+                  />
+                  {this.state.filename !== "" ? (
                     <div
-                      className="row"
-                      style={{
-                        marginLeft: "0px",
-                        marginRight: "0px",
-                        fontFamily: "Poppins, sans-serif",
-                        minHeight: "102px",
-                      }}
+                      className="border rounded-0"
+                      style={{ padding: "8px", minHeight: "120px" }}
                     >
                       <div
-                        className="col-lg-4 details"
+                        className="row"
                         style={{
-                          color: "#EF233C",
-                          border: "1px solid #EF233C",
-                          margin: "auto",
+                          marginLeft: "0px",
+                          marginRight: "0px",
+                          fontFamily: "Poppins, sans-serif",
+                          minHeight: "102px",
                         }}
                       >
-                        <p
+                        <div
+                          className="col-lg-4 details"
                           style={{
-                            overflowWrap: "break-word",
-                            textAlign: "center",
+                            color: "#EF233C",
+                            border: "1px solid #EF233C",
+                            margin: "auto",
                           }}
                         >
-                          <strong style={{ fontSize: "30px" }}>
-                            {this.state.fileextension !== ""
-                              ? "." + this.state.fileextension
-                              : "???"}
-                          </strong>
-                          <br />
-                          {this.state.filemime}
-                        </p>
-                      </div>
-                      <div
-                        className="col-lg-6 details"
-                        style={{ margin: "auto" }}
-                      >
-                        <p
-                          style={{
-                            overflowWrap: "break-word",
-                            marginBottom: "5px",
-                          }}
+                          <p
+                            style={{
+                              overflowWrap: "break-word",
+                              textAlign: "center",
+                            }}
+                          >
+                            <strong style={{ fontSize: "30px" }}>
+                              {this.state.fileextension !== ""
+                                ? "." + this.state.fileextension
+                                : "???"}
+                            </strong>
+                            <br />
+                            {this.state.filemime}
+                          </p>
+                        </div>
+                        <div
+                          className="col-lg-6 details"
+                          style={{ margin: "auto" }}
                         >
-                          File to be Submitted:
-                          <br />
-                          <strong>{this.state.filename}</strong>
-                          <br />
-                          <strong>
-                            ({parseInt(this.state.filedata.length) / 1000000}{" "}
-                            MB)
-                          </strong>
-                        </p>
-                      </div>
-                      <div
-                        className="col-lg-2 d-flex justify-content-center details"
-                        style={{ margin: "auto" }}
-                      >
-                        <button
-                          className="btn btn-primary border rounded-0 top-button"
-                          type="button"
-                          style={{
-                            paddingRight: "24px",
-                            paddingLeft: "24px",
-                            backgroundColor: "#EF233C",
-                            marginRight: "10px",
-                            fontFamily: "Poppins, sans-serif",
-                            marginBottom: "10px",
-                          }}
-                          onClick={() => {
-                            this.setState((state) => {
-                              return {
-                                ...state,
-                                filename: "",
-                                filemime: "",
-                                fileextension: "",
-                                filedata: "",
-                              };
-                            });
-                          }}
+                          <p
+                            style={{
+                              overflowWrap: "break-word",
+                              marginBottom: "5px",
+                            }}
+                          >
+                            File to be Submitted:
+                            <br />
+                            <strong>{this.state.filename}</strong>
+                            <br />
+                            <strong>
+                              ({parseInt(this.state.filedata.length) / 1000000}{" "}
+                              MB)
+                            </strong>
+                          </p>
+                        </div>
+                        <div
+                          className="col-lg-2 d-flex justify-content-center details"
+                          style={{ margin: "auto" }}
                         >
-                          <strong>Delete</strong>
-                        </button>
+                          <button
+                            className="btn btn-primary border rounded-0 top-button"
+                            type="button"
+                            style={{
+                              paddingRight: "24px",
+                              paddingLeft: "24px",
+                              backgroundColor: "#EF233C",
+                              marginRight: "10px",
+                              fontFamily: "Poppins, sans-serif",
+                              marginBottom: "10px",
+                            }}
+                            onClick={() => {
+                              this.setState((state) => {
+                                return {
+                                  ...state,
+                                  filename: "",
+                                  filemime: "",
+                                  fileextension: "",
+                                  filedata: "",
+                                };
+                              });
+                            }}
+                          >
+                            <strong>Delete</strong>
+                          </button>
+                        </div>
                       </div>
                     </div>
-                  </div>
-                ) : (
-                  <Dropzone
-                    onDrop={(acceptedFiles) => {
-                      if (acceptedFiles.length > 0) {
-                        var re = /(?:\.([^.]+))?$/;
-                        if (re.exec(acceptedFiles[0].name)[1]) {
-                          const reader = new FileReader();
-                          reader.onload = () => {
-                            const binaryStr = reader.result;
-                            this.setState((state) => {
-                              return {
-                                ...state,
-                                filename: acceptedFiles[0].name,
-                                filemime: mime.lookup(
-                                  re.exec(acceptedFiles[0].name)[1]
-                                ),
-                                fileextension: re.exec(
-                                  acceptedFiles[0].name
-                                )[1],
-                                filedata: base91.encode(binaryStr),
-                              };
-                            });
-                          };
-                          reader.readAsArrayBuffer(acceptedFiles[0]);
+                  ) : (
+                    <Dropzone
+                      onDrop={(acceptedFiles) => {
+                        if (acceptedFiles.length > 0) {
+                          var re = /(?:\.([^.]+))?$/;
+                          if (re.exec(acceptedFiles[0].name)[1]) {
+                            const reader = new FileReader();
+                            reader.onload = () => {
+                              const binaryStr = reader.result;
+                              this.setState((state) => {
+                                return {
+                                  ...state,
+                                  filename: acceptedFiles[0].name,
+                                  filemime: mime.lookup(
+                                    re.exec(acceptedFiles[0].name)[1]
+                                  ),
+                                  fileextension: re.exec(
+                                    acceptedFiles[0].name
+                                  )[1],
+                                  filedata: base91.encode(binaryStr),
+                                };
+                              });
+                            };
+                            reader.readAsArrayBuffer(acceptedFiles[0]);
+                          } else {
+                            toast.error(
+                              `Error: Please provide file with extension!`
+                            );
+                          }
                         } else {
                           toast.error(
-                            `Error: Please provide file with extension!`
+                            `Error: Please Make Sure File Not Exceed Size Limit!`
                           );
                         }
-                      } else {
-                        toast.error(
-                          `Error: Please Make Sure File Not Exceed Size Limit!`
-                        );
-                      }
-                    }}
-                    maxFiles={1}
-                    maxSize={MISCELLANEOUS.FILE_MAXSIZE}
-                  >
-                    {({
-                      getRootProps,
-                      getInputProps,
-                      isDragActive,
-                      isDragAccept,
-                      isDragReject,
-                    }) => {
-                      const style = useMemo(
-                        () => ({
-                          flex: 1,
-                          display: "flex",
-                          flexDirection: "column",
-                          alignItems: "center",
-                          padding: "20px",
-                          borderWidth: 2,
-                          borderRadius: 2,
-                          borderColor: "#eeeeee",
-                          borderStyle: "dashed",
-                          backgroundColor: "#fafafa",
-                          color: "#bdbdbd",
-                          outline: "none",
-                          minHeight: "120px",
-                          transition: "border .24s ease-in-out",
-                          fontFamily: "Poppins, sans-serif",
-                          ...(isDragActive
-                            ? {
-                                borderColor: "#2196f3",
-                              }
-                            : {}),
-                          ...(isDragAccept
-                            ? {
-                                borderColor: "#00e676",
-                              }
-                            : {}),
-                          ...(isDragReject
-                            ? {
-                                borderColor: "#ff1744",
-                              }
-                            : {}),
-                        }),
-                        [isDragActive, isDragReject, isDragAccept]
-                      );
-                      return (
-                        <section className="container">
-                          <div {...getRootProps({ style })}>
-                            <input {...getInputProps()} />
-                            <p
-                              style={{
-                                marginTop: "auto",
-                                marginBottom: "auto",
-                              }}
-                            >
-                              Drag 'n' drop some files here, or click to select
-                              files, Max filesize is{" "}
-                              {MISCELLANEOUS.FILE_MAXSIZE / 1000000} MB, and
-                              Files need to be named with extension
-                            </p>
-                          </div>
-                        </section>
-                      );
-                    }}
-                  </Dropzone>
-                )}
-                <p
-                  style={{
-                    paddingLeft: "20px",
-                    paddingRight: "20px",
-                    marginTop: "10px",
-                    marginBottom: "0px",
-                  }}
-                >
-                  {this.props.project.asset.maxRevision -
-                    this.props.project.asset.submission.length >
-                  1
-                    ? `You Have: ${
-                        this.props.project.asset.maxRevision -
-                        this.props.project.asset.submission.length
-                      } Remaining Attempt to Submit Submission`
-                    : "This is you Final Attempt to Submit Submission!"}
-                </p>
-              </div>
-              <div
-                className="modal-footer mx-5 pt-3 mb-1"
-                style={{ borderTop: "0 none", justifyContent: "center" }}
-              >
-                <div className="row">
-                  <div className="col">
-                    <button
-                      className="btn btn-primary border rounded-0 top-button"
-                      style={{
-                        backgroundColor: "rgb(239, 35, 60)",
-                        marginTop: "auto",
-                        marginBottom: "auto",
-                        fontFamily: "Poppins, sans-serif",
-                        width: "150px",
                       }}
-                      onClick={() => {
-                        this.onSubmitSubmission();
-                      }}
+                      maxFiles={1}
+                      maxSize={MISCELLANEOUS.FILE_MAXSIZE}
                     >
-                      <strong>Submit</strong>
-                    </button>
+                      {({
+                        getRootProps,
+                        getInputProps,
+                        isDragActive,
+                        isDragAccept,
+                        isDragReject,
+                      }) => {
+                        const style = useMemo(
+                          () => ({
+                            flex: 1,
+                            display: "flex",
+                            flexDirection: "column",
+                            alignItems: "center",
+                            padding: "20px",
+                            borderWidth: 2,
+                            borderRadius: 2,
+                            borderColor: "#eeeeee",
+                            borderStyle: "dashed",
+                            backgroundColor: "#fafafa",
+                            color: "#bdbdbd",
+                            outline: "none",
+                            minHeight: "120px",
+                            transition: "border .24s ease-in-out",
+                            fontFamily: "Poppins, sans-serif",
+                            ...(isDragActive
+                              ? {
+                                  borderColor: "#2196f3",
+                                }
+                              : {}),
+                            ...(isDragAccept
+                              ? {
+                                  borderColor: "#00e676",
+                                }
+                              : {}),
+                            ...(isDragReject
+                              ? {
+                                  borderColor: "#ff1744",
+                                }
+                              : {}),
+                          }),
+                          [isDragActive, isDragReject, isDragAccept]
+                        );
+                        return (
+                          <section className="container">
+                            <div {...getRootProps({ style })}>
+                              <input {...getInputProps()} />
+                              <p
+                                style={{
+                                  marginTop: "auto",
+                                  marginBottom: "auto",
+                                }}
+                              >
+                                Drag 'n' drop some files here, or click to
+                                select files, Max filesize is{" "}
+                                {MISCELLANEOUS.FILE_MAXSIZE / 1000000} MB, and
+                                Files need to be named with extension
+                              </p>
+                            </div>
+                          </section>
+                        );
+                      }}
+                    </Dropzone>
+                  )}
+                  <p
+                    style={{
+                      paddingLeft: "20px",
+                      paddingRight: "20px",
+                      marginTop: "10px",
+                      marginBottom: "0px",
+                    }}
+                  >
+                    {this.props.project.asset.maxRevision -
+                      this.props.project.asset.submission.length >
+                    1
+                      ? `You Have: ${
+                          this.props.project.asset.maxRevision -
+                          this.props.project.asset.submission.length
+                        } Remaining Attempt to Submit Submission`
+                      : "This is you Final Attempt to Submit Submission!"}
+                  </p>
+                </div>
+              </div>
+              <div className="container">
+                <div
+                  className="modal-footer pt-3 mb-1"
+                  style={{ borderTop: "0 none", justifyContent: "center" }}
+                >
+                  <div className="row">
+                    <div className="col">
+                      <button
+                        className="btn btn-primary border rounded-0 top-button"
+                        style={{
+                          backgroundColor: "rgb(239, 35, 60)",
+                          marginTop: "auto",
+                          marginBottom: "auto",
+                          fontFamily: "Poppins, sans-serif",
+                          width: "150px",
+                        }}
+                        onClick={() => {
+                          this.onSubmitSubmission();
+                        }}
+                      >
+                        <strong>Submit</strong>
+                      </button>
+                    </div>
                   </div>
                 </div>
               </div>

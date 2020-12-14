@@ -222,7 +222,9 @@ class ProjectDetails extends React.Component {
                             fontFamily: "Poppins, sans-serif",
                           }}
                         >
-                          {days} d : {hours} h : {minutes} m : {seconds} s
+                          <strong>
+                            {days} d : {hours} h : {minutes} m : {seconds} s
+                          </strong>
                         </p>
                       );
                     }
@@ -365,7 +367,9 @@ class ProjectDetails extends React.Component {
                                 fontFamily: "Poppins, sans-serif",
                               }}
                             >
-                              {days} d : {hours} h : {minutes} m : {seconds} s
+                              <strong>
+                                {days} d : {hours} h : {minutes} m : {seconds} s
+                              </strong>
                             </p>
                           );
                         }

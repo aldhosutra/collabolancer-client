@@ -51,9 +51,15 @@ class TeamDisputeDialog extends React.Component {
             toast.success(
               "Open Team vs Leader dispute successfull, page will be reloaded after " +
                 config.block_time / 1000 +
-                " seconds!",
+                " seconds!, click this to cancel auto reload",
               {
                 autoClose: config.block_time,
+                closeButton: false,
+                pauseOnHover: false,
+                draggable: false,
+                onClick: () => {
+                  clearTimeout(reloader);
+                },
               }
             );
             this.setState((state) => {
@@ -66,7 +72,7 @@ class TeamDisputeDialog extends React.Component {
             window
               .$("#team-vs-leader-open-dispute-" + this.props.project.publicKey)
               .modal("hide");
-            setTimeout(() => {
+            let reloader = setTimeout(() => {
               window.location.reload();
             }, config.block_time);
           } else {
@@ -176,276 +182,284 @@ class TeamDisputeDialog extends React.Component {
                     className="modal-header"
                     style={{ borderBottom: "0 none" }}
                   >
-                    <button
-                      type="button"
-                      className="close"
-                      data-dismiss="modal"
-                      aria-label="Close"
-                    >
-                      <span aria-hidden="true">×</span>
-                    </button>
+                    <div className="container">
+                      <button
+                        type="button"
+                        className="close"
+                        data-dismiss="modal"
+                        aria-label="Close"
+                      >
+                        <span aria-hidden="true">×</span>
+                      </button>
+                    </div>
                   </div>
                   <form
                     className="form-inside-input"
                     onSubmit={this.onTeamDisputeFormSubmit}
                   >
                     <div className="modal-body mx-4">
-                      <img
-                        role="status"
-                        style={{
-                          width: "180px",
-                          marginLeft: "auto",
-                          marginRight: "auto",
-                          marginBottom: "16px",
-                          display: "block",
-                        }}
-                        alt="Solo Proposal"
-                        src={disputeLogo}
-                      />
-                      <h3 className="modal-title w-100 dark-grey-text font-weight-bold my-1 text-center">
-                        <strong>Feel Aggrieved by the Leader Decision?</strong>
-                      </h3>
-                      <p
-                        style={{
-                          fontFamily: "Poppins, sans-serif",
-                          textAlign: "center",
-                        }}
-                      >
-                        Open 'Team vs Leader' dispute,
-                        <br />
-                        and seek 'immutable & transparent' justice with power of
-                        blockchain
-                      </p>
-                      <div
-                        className="border rounded-0"
-                        style={{
-                          marginTop: "10px",
-                          marginBottom: "20px",
-                          marginRight: "auto",
-                          marginLeft: "auto",
-                          width: "100px",
-                        }}
-                      />
-                      <h6 style={{ marginBottom: "16px" }}>
-                        <strong>Dispute Details:</strong>
-                      </h6>
-                      <div
-                        style={{
-                          padding: "20px",
-                          borderWidth: 2,
-                          borderRadius: 2,
-                          borderColor: "#eeeeee",
-                          borderStyle: "dashed",
-                          marginBottom: "28px",
-                        }}
-                      >
-                        <div className="row" style={{ marginBottom: "16px" }}>
-                          <div className="col-lg-5">
-                            <div
-                              style={{
-                                fontFamily: "Poppins, sans-serif",
-                                backgroundImage: `url('data:image/svg+xml,${renderAvatar(
-                                  this.props.account.address,
-                                  250
-                                )}')`,
-                                backgroundRepeat: "no-repeat",
-                                backgroundSize: "contain",
-                                backgroundPosition: "left",
-                                marginBottom: "1rem",
-                                paddingLeft: "50px",
-                                height: "40px",
-                              }}
-                            >
-                              <p
-                                style={{
-                                  lineHeight: "15px",
-                                  fontSize: "14px",
-                                  marginBottom: "0px",
-                                }}
-                              >
-                                Litigant [YOU]
-                              </p>
-                              <strong>{this.props.account.address}</strong>
-                            </div>
-                          </div>
-                          <div className="col-lg-2">
-                            <h3 className="w-100 font-weight-bold text-center">
-                              VS
-                            </h3>
-                          </div>
-                          <div className="col-lg-5">
-                            <div
-                              style={{
-                                fontFamily: "Poppins, sans-serif",
-                                backgroundImage: `url('data:image/svg+xml,${renderAvatar(
-                                  this.props.proposal.asset.leader,
-                                  250
-                                )}')`,
-                                backgroundRepeat: "no-repeat",
-                                backgroundSize: "contain",
-                                backgroundPosition: "left",
-                                marginBottom: "1rem",
-                                paddingLeft: "50px",
-                                height: "40px",
-                              }}
-                            >
-                              <p
-                                style={{
-                                  lineHeight: "15px",
-                                  fontSize: "14px",
-                                  marginBottom: "0px",
-                                }}
-                              >
-                                Defendant [Leader]
-                              </p>
-                              <strong>
-                                {this.props.proposal.asset.leader}
-                              </strong>
-                            </div>
-                          </div>
-                        </div>
-                        <div className="row">
-                          <div className="col-lg-4 details">
-                            <CompactContractCard
-                              icon={"comment-dollar"}
-                              name={"Defendant Fund Locked"}
-                              value={
-                                utils.convertBeddowsToLSK(
-                                  this.props.team.asset.potentialEarning
-                                ) + " CLNC"
-                              }
-                              tooltip={
-                                "Defendant Fund Locked, is amount that will be contested in this dispute. This fund will go to winning party"
-                              }
-                            />
-                          </div>
-                          <div className="col-lg-4 details">
-                            <CompactContractCard
-                              icon={"comment-dollar"}
-                              name={"Litigant Fee Locked"}
-                              value={
-                                utils.convertBeddowsToLSK(
-                                  this.props.proposal.asset.term.commitmentFee
-                                ) + " CLNC"
-                              }
-                              tooltip={
-                                "Litigant Fee Locked, is amount of fee that litigant have paid as bail in this project contract to defendant fee vault. This will go to winning party"
-                              }
-                            />
-                          </div>
-                          <div className="col-lg-4 details">
-                            <CompactContractCard
-                              icon={"comment-dollar"}
-                              name={"Defendant Fee Locked"}
-                              value={
-                                utils.convertBeddowsToLSK(
-                                  this.props.project.asset.commitmentFee
-                                ) + " CLNC"
-                              }
-                              tooltip={
-                                "Defendant Fee Locked, is amount of fee that defendant have paid as bail in this project contract, most likely this fee is located at defendant fee vault. This will go to winning party"
-                              }
-                            />
-                          </div>
-                        </div>
-                      </div>
-                      <div className="md-form mb-4 text-left">
-                        <p
-                          data-error="wrong"
-                          data-success="right"
-                          htmlFor="form-suit"
-                          style={{ fontWeight: "bold" }}
-                        >
-                          Suit:
-                        </p>
-                        <Editor
-                          init={{
-                            height: 500,
-                            menubar: false,
-                            plugins: [
-                              "advlist autolink lists link image charmap print preview anchor",
-                              "searchreplace visualblocks code fullscreen",
-                              "insertdatetime media table paste code help wordcount",
-                            ],
-                            toolbar:
-                              "undo redo | formatselect | bold italic backcolor | alignleft aligncenter alignright alignjustify | image bullist numlist outdent indent | removeformat | help",
+                      <div className="container">
+                        <img
+                          role="status"
+                          style={{
+                            width: "180px",
+                            marginLeft: "auto",
+                            marginRight: "auto",
+                            marginBottom: "16px",
+                            display: "block",
                           }}
-                          onEditorChange={this.handleEditorChange}
+                          alt="Solo Proposal"
+                          src={disputeLogo}
                         />
-                      </div>
-                      <div className="md-form mb-4">
-                        <label
-                          data-error="wrong"
-                          data-success="right"
-                          htmlFor="form-maxdays"
-                          style={{ fontWeight: "bold" }}
+                        <h3 className="modal-title w-100 dark-grey-text font-weight-bold my-1 text-center">
+                          <strong>
+                            Feel Aggrieved by the Leader Decision?
+                          </strong>
+                        </h3>
+                        <p
+                          style={{
+                            fontFamily: "Poppins, sans-serif",
+                            textAlign: "center",
+                          }}
                         >
-                          How Long (in days) this Dispute will Open?
-                        </label>
-                        <input
-                          type="number"
-                          step="any"
-                          placeholder={
-                            "Make sure it is not too short, or not too long, maximum is: " +
-                            Math.max(
-                              MISCELLANEOUS.DISPUTE_MINIMAL_OPEN_PERIOD,
-                              this.props.project.asset.maxTime
-                            ) +
-                            " days!"
-                          }
-                          id="form-maxdays"
-                          name="form-maxdays"
-                          value={this.state["form-maxdays"]}
-                          className="form-control validate"
-                          onChange={this.handleTeamDisputeFormChange}
-                          required
+                          Open 'Team vs Leader' dispute,
+                          <br />
+                          and seek 'immutable & transparent' justice with power
+                          of blockchain
+                        </p>
+                        <div
+                          className="border rounded-0"
+                          style={{
+                            marginTop: "10px",
+                            marginBottom: "20px",
+                            marginRight: "auto",
+                            marginLeft: "auto",
+                            width: "100px",
+                          }}
                         />
+                        <h6 style={{ marginBottom: "16px" }}>
+                          <strong>Dispute Details:</strong>
+                        </h6>
+                        <div
+                          style={{
+                            padding: "20px",
+                            borderWidth: 2,
+                            borderRadius: 2,
+                            borderColor: "#eeeeee",
+                            borderStyle: "dashed",
+                            marginBottom: "28px",
+                          }}
+                        >
+                          <div className="row" style={{ marginBottom: "16px" }}>
+                            <div className="col-lg-5">
+                              <div
+                                style={{
+                                  fontFamily: "Poppins, sans-serif",
+                                  backgroundImage: `url('data:image/svg+xml,${renderAvatar(
+                                    this.props.account.address,
+                                    250
+                                  )}')`,
+                                  backgroundRepeat: "no-repeat",
+                                  backgroundSize: "contain",
+                                  backgroundPosition: "left",
+                                  marginBottom: "1rem",
+                                  paddingLeft: "50px",
+                                  height: "40px",
+                                }}
+                              >
+                                <p
+                                  style={{
+                                    lineHeight: "15px",
+                                    fontSize: "14px",
+                                    marginBottom: "0px",
+                                  }}
+                                >
+                                  Litigant [YOU]
+                                </p>
+                                <strong>{this.props.account.address}</strong>
+                              </div>
+                            </div>
+                            <div className="col-lg-2">
+                              <h3 className="w-100 font-weight-bold text-center">
+                                VS
+                              </h3>
+                            </div>
+                            <div className="col-lg-5">
+                              <div
+                                style={{
+                                  fontFamily: "Poppins, sans-serif",
+                                  backgroundImage: `url('data:image/svg+xml,${renderAvatar(
+                                    this.props.proposal.asset.leader,
+                                    250
+                                  )}')`,
+                                  backgroundRepeat: "no-repeat",
+                                  backgroundSize: "contain",
+                                  backgroundPosition: "left",
+                                  marginBottom: "1rem",
+                                  paddingLeft: "50px",
+                                  height: "40px",
+                                }}
+                              >
+                                <p
+                                  style={{
+                                    lineHeight: "15px",
+                                    fontSize: "14px",
+                                    marginBottom: "0px",
+                                  }}
+                                >
+                                  Defendant [Leader]
+                                </p>
+                                <strong>
+                                  {this.props.proposal.asset.leader}
+                                </strong>
+                              </div>
+                            </div>
+                          </div>
+                          <div className="row">
+                            <div className="col-lg-4 details">
+                              <CompactContractCard
+                                icon={"comment-dollar"}
+                                name={"Defendant Fund Locked"}
+                                value={
+                                  utils.convertBeddowsToLSK(
+                                    this.props.team.asset.potentialEarning
+                                  ) + " CLNC"
+                                }
+                                tooltip={
+                                  "Defendant Fund Locked, is amount that will be contested in this dispute. This fund will go to winning party"
+                                }
+                              />
+                            </div>
+                            <div className="col-lg-4 details">
+                              <CompactContractCard
+                                icon={"comment-dollar"}
+                                name={"Litigant Fee Locked"}
+                                value={
+                                  utils.convertBeddowsToLSK(
+                                    this.props.proposal.asset.term.commitmentFee
+                                  ) + " CLNC"
+                                }
+                                tooltip={
+                                  "Litigant Fee Locked, is amount of fee that litigant have paid as bail in this project contract to defendant fee vault. This will go to winning party"
+                                }
+                              />
+                            </div>
+                            <div className="col-lg-4 details">
+                              <CompactContractCard
+                                icon={"comment-dollar"}
+                                name={"Defendant Fee Locked"}
+                                value={
+                                  utils.convertBeddowsToLSK(
+                                    this.props.project.asset.commitmentFee
+                                  ) + " CLNC"
+                                }
+                                tooltip={
+                                  "Defendant Fee Locked, is amount of fee that defendant have paid as bail in this project contract, most likely this fee is located at defendant fee vault. This will go to winning party"
+                                }
+                              />
+                            </div>
+                          </div>
+                        </div>
+                        <div className="md-form mb-4 text-left">
+                          <p
+                            data-error="wrong"
+                            data-success="right"
+                            htmlFor="form-suit"
+                            style={{ fontWeight: "bold" }}
+                          >
+                            Suit:
+                          </p>
+                          <Editor
+                            init={{
+                              height: 500,
+                              menubar: false,
+                              plugins: [
+                                "advlist autolink lists link image charmap print preview anchor",
+                                "searchreplace visualblocks code fullscreen",
+                                "insertdatetime media table paste code help wordcount",
+                              ],
+                              toolbar:
+                                "undo redo | formatselect | bold italic backcolor | alignleft aligncenter alignright alignjustify | image bullist numlist outdent indent | removeformat | help",
+                            }}
+                            onEditorChange={this.handleEditorChange}
+                          />
+                        </div>
+                        <div className="md-form mb-4">
+                          <label
+                            data-error="wrong"
+                            data-success="right"
+                            htmlFor="form-maxdays"
+                            style={{ fontWeight: "bold" }}
+                          >
+                            How Long (in days) this Dispute will Open?
+                          </label>
+                          <input
+                            type="number"
+                            step="any"
+                            placeholder={
+                              "Make sure it is not too short, or not too long, maximum is: " +
+                              Math.max(
+                                MISCELLANEOUS.DISPUTE_MINIMAL_OPEN_PERIOD,
+                                this.props.project.asset.maxTime
+                              ) +
+                              " days!"
+                            }
+                            id="form-maxdays"
+                            name="form-maxdays"
+                            value={this.state["form-maxdays"]}
+                            className="form-control validate"
+                            onChange={this.handleTeamDisputeFormChange}
+                            required
+                          />
+                        </div>
                       </div>
                     </div>
-                    <div
-                      className="modal-footer mx-5 pt-3 mb-1 form-footer"
-                      style={{ borderTop: "0 none" }}
-                    >
-                      <div className="row">
-                        <div
-                          className="col-auto form-fee"
-                          style={{
-                            marginRight: "5px",
-                            maxWidth: "400px",
-                            wordWrap: "break-word",
-                          }}
-                        >
+                    <div className="container">
+                      <div
+                        className="modal-footer pt-3 mb-1 form-footer"
+                        style={{ borderTop: "0 none" }}
+                      >
+                        <div className="row">
                           <div
+                            className="col-auto form-fee"
                             style={{
-                              textAlign: "right",
-                              color: "#8D99AE",
-                              fontSize: "12px",
-                              fontWeight: "bold",
+                              marginRight: "5px",
+                              maxWidth: "400px",
+                              wordWrap: "break-word",
                             }}
                           >
-                            {"Open Dispute Fee: FREE"}
+                            <div
+                              style={{
+                                textAlign: "right",
+                                color: "#8D99AE",
+                                fontSize: "12px",
+                                fontWeight: "bold",
+                              }}
+                            >
+                              {"Open Dispute Fee: FREE"}
+                            </div>
+                            <div
+                              style={{
+                                textAlign: "right",
+                                color: "#8D99AE",
+                                fontSize: "12px",
+                              }}
+                            >
+                              All Fund Vault and Fee Vault for Corresponding
+                              Case Account will be locked in Dispute Contract
+                            </div>
                           </div>
-                          <div
-                            style={{
-                              textAlign: "right",
-                              color: "#8D99AE",
-                              fontSize: "12px",
-                            }}
-                          >
-                            All Fund Vault and Fee Vault for Corresponding Case
-                            Account will be locked in Dispute Contract
+                          <div className="col">
+                            <input
+                              className="btn btn-primary border rounded-0 form-submit"
+                              type="submit"
+                              style={{
+                                backgroundColor: "#2B2D42",
+                                width: "200px",
+                              }}
+                              value="Open Dispute"
+                            />
                           </div>
-                        </div>
-                        <div className="col">
-                          <input
-                            className="btn btn-primary border rounded-0 form-submit"
-                            type="submit"
-                            style={{
-                              backgroundColor: "#2B2D42",
-                              width: "200px",
-                            }}
-                            value="Open Dispute"
-                          />
                         </div>
                       </div>
                     </div>

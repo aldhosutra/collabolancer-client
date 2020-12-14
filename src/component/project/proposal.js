@@ -349,7 +349,10 @@ class Proposal extends React.Component {
                                   fontSize: "14px",
                                 }}
                               >
-                                {days} d : {hours} h : {minutes} m : {seconds} s
+                                <strong>
+                                  {days} d : {hours} h : {minutes} m : {seconds}{" "}
+                                  s
+                                </strong>
                               </p>
                             );
                           }

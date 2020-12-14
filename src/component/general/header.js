@@ -202,6 +202,8 @@ class Header extends React.Component {
                       <Countdown
                         date={getSessionExpire("secret")}
                         onComplete={() => {
+                          window.$(".modal").modal("hide");
+                          window.$(".modal-backdrop").remove();
                           removeSession("secret");
                           toast.error("Session Expire, Please Login Again!");
                           this.setState({

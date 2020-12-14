@@ -99,11 +99,13 @@ class DescriptionCollapse extends React.Component {
                 });
               }}
             >
-              {this.state.collapsed
-                ? new DOMParser().parseFromString("&#11205;", "text/html").body
-                    .textContent + " Less"
-                : new DOMParser().parseFromString("&#11206;", "text/html").body
-                    .textContent + " Read More"}
+              <strong>
+                {this.state.collapsed
+                  ? new DOMParser().parseFromString("&#11205;", "text/html")
+                      .body.textContent + " Less"
+                  : new DOMParser().parseFromString("&#11206;", "text/html")
+                      .body.textContent + " Read More"}
+              </strong>
             </button>
           </div>
         ) : (
