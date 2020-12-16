@@ -21,15 +21,13 @@ class ProjectList extends React.Component {
   async load() {
     const limit = parseInt(this.props.limit) || 10;
     const offset = (this.state.page - 1) * limit;
-    if (this.props.mode === "available-project") {
-      await getAvailableProjects(offset, limit)
-        .then((response) => response.json())
-        .then((data) => {
-          this.setState((state) => {
-            return { ...state, projects: data.data, total: data.meta.count };
-          });
+    await getAvailableProjects(offset, limit)
+      .then((response) => response.json())
+      .then((data) => {
+        this.setState((state) => {
+          return { ...state, projects: data.data, total: data.meta.count };
         });
-    }
+      });
   }
 
   componentDidUpdate() {

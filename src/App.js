@@ -4,7 +4,8 @@ import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
 import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import Home from "./component/landing/home";
-import Browse from "./component/app/browse";
+import Browse from "./component/app/app";
+import BrowseProject from "./component/app/browseProject";
 import Project from "./component/project/project";
 
 function App() {
@@ -20,6 +21,9 @@ function App() {
         </Route>
         <Route exact={true} path="/app">
           <Browse />
+        </Route>
+        <Route exact={true} path="/app/project">
+          <BrowseProject />
         </Route>
         <Route exact={true} path="/app/project/:projectPublicKey">
           <Project />

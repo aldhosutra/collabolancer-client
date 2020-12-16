@@ -145,20 +145,45 @@ class Header extends React.Component {
               <ul className="nav navbar-nav d-md-flex ml-auto justify-content-md-end">
                 <li className="nav-item" role="presentation">
                   <a
-                    className="nav-link active"
+                    className={
+                      this.props.active === "Project"
+                        ? "nav-link active"
+                        : "nav-link"
+                    }
                     href="#"
                     style={
-                      this.props.active === "Browse"
+                      this.props.active === "Project"
                         ? activeMenuStyle
                         : notActiveMenuStyle
                     }
                   >
-                    Browse
+                    Project
                   </a>
                 </li>
                 <li className="nav-item" role="presentation">
                   <a
-                    className="nav-link"
+                    className={
+                      this.props.active === "Dispute"
+                        ? "nav-link active"
+                        : "nav-link"
+                    }
+                    href="#"
+                    style={
+                      this.props.active === "Dispute"
+                        ? activeMenuStyle
+                        : notActiveMenuStyle
+                    }
+                  >
+                    Dispute
+                  </a>
+                </li>
+                <li className="nav-item" role="presentation">
+                  <a
+                    className={
+                      this.props.active === "Profile"
+                        ? "nav-link active"
+                        : "nav-link"
+                    }
                     href="#"
                     style={
                       this.props.active === "Profile"

@@ -10,7 +10,7 @@ import { toast } from "react-toastify";
 import LeaderTerminateDialog from "../dialog/leaderTerminateDialog";
 import ClaimDialog from "../dialog/claimDialog";
 import DisputeList from "./disputeList";
-import EmployerRefuseDialog from "../dialog/employerFinishDialog";
+import ProceedRefusalDialog from "../dialog/proceedRefusalDialog";
 const dateFormat = require("dateformat");
 const { utils } = require("@liskhq/lisk-transactions");
 
@@ -52,7 +52,7 @@ class ProjectDetails extends React.Component {
           ) : [STATUS.PROJECT.REJECTED].includes(
               this.props.project.asset.status
             ) ? (
-            <EmployerRefuseDialog
+            <ProceedRefusalDialog
               id={this.props.id}
               account={this.props.account}
               project={this.props.project}
@@ -72,6 +72,14 @@ class ProjectDetails extends React.Component {
               account={this.props.account}
               project={this.props.project}
             />
+          ) : [STATUS.PROJECT.REJECTED].includes(
+              this.props.project.asset.status
+            ) ? (
+            <ProceedRefusalDialog
+              id={this.props.id}
+              account={this.props.account}
+              project={this.props.project}
+            />
           ) : (
             actionButton
           );
@@ -83,7 +91,19 @@ class ProjectDetails extends React.Component {
               .map((item) => item.asset.worker)
               .includes(this.props.account.address)
           ) {
-            actionButton = claimReady ? claimButton : actionButton;
+            actionButton = claimReady ? (
+              claimButton
+            ) : [STATUS.PROJECT.REJECTED].includes(
+                this.props.project.asset.status
+              ) ? (
+              <ProceedRefusalDialog
+                id={this.props.id}
+                account={this.props.account}
+                project={this.props.project}
+              />
+            ) : (
+              actionButton
+            );
           }
           break;
       }

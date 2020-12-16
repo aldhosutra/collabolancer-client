@@ -5,15 +5,18 @@ import { finishWork } from "../../utils/transaction";
 import refuseLogo from "../../asset/undraw_Notify_re_65on.svg";
 import config from "../../config/config.json";
 
-class EmployerRefuseDialog extends React.Component {
+class ProceedRefusalDialog extends React.Component {
   constructor() {
     super();
-    this.onEmployerRefuseFormSubmit = this.onEmployerRefuseFormSubmit.bind(
+    this.state = {
+      checked: false,
+    };
+    this.onProceedRefusalFormSubmit = this.onProceedRefusalFormSubmit.bind(
       this
     );
   }
 
-  onEmployerRefuseFormSubmit(e) {
+  onProceedRefusalFormSubmit() {
     try {
       finishWork(getSession("secret"), this.props.project.publicKey)
         .then((data) => {
@@ -34,7 +37,7 @@ class EmployerRefuseDialog extends React.Component {
             );
             window
               .$(
-                "#employer-refuse-modal-" +
+                "#proceed-refusal-modal-" +
                   this.props.project.publicKey +
                   "-" +
                   this.props.id
@@ -67,7 +70,7 @@ class EmployerRefuseDialog extends React.Component {
           type="button"
           data-toggle="modal"
           data-target={
-            "#employer-refuse-modal-" +
+            "#proceed-refusal-modal-" +
             this.props.project.publicKey +
             "-" +
             this.props.id
@@ -82,13 +85,13 @@ class EmployerRefuseDialog extends React.Component {
             minWidth: "200px",
           }}
         >
-          <strong>Refuse Project</strong>
+          <strong>Proceed Refusal</strong>
         </button>
         <div>
           <div
             className="modal fade"
             id={
-              "employer-refuse-modal-" +
+              "proceed-refusal-modal-" +
               this.props.project.publicKey +
               "-" +
               this.props.id
@@ -164,7 +167,7 @@ class EmployerRefuseDialog extends React.Component {
                       }
                     />
                     <label className="form-check-label" htmlFor="formCheck-1">
-                      I seriously decide to refuse the project!
+                      Lets continue to the next step!
                     </label>
                   </div>
                 </div>
@@ -186,7 +189,7 @@ class EmployerRefuseDialog extends React.Component {
                         onClick={() => {
                           window
                             .$(
-                              "#employer-refuse-modal-" +
+                              "#proceed-refusal-modal-" +
                                 this.props.project.publicKey +
                                 "-" +
                                 this.props.id
@@ -207,7 +210,7 @@ class EmployerRefuseDialog extends React.Component {
                         }}
                         disabled={!this.state.checked}
                         onClick={() => {
-                          this.onEmployerRefuseFormSubmit();
+                          this.onProceedRefusalFormSubmit();
                         }}
                       >
                         <strong>Yes</strong>
@@ -224,4 +227,4 @@ class EmployerRefuseDialog extends React.Component {
   }
 }
 
-export default EmployerRefuseDialog;
+export default ProceedRefusalDialog;

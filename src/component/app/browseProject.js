@@ -13,7 +13,7 @@ const {
   getAddressAndPublicKeyFromPassphrase,
 } = require("@liskhq/lisk-cryptography");
 
-class Browse extends React.Component {
+class BrowseProject extends React.Component {
   constructor() {
     super();
     this.state = {
@@ -55,13 +55,9 @@ class Browse extends React.Component {
   }
 
   render() {
-    const availableFor =
-      this.state.account && this.state.account.asset.type === ACCOUNT.SOLVER
-        ? "Disputes"
-        : "Projects";
     return getSession("secret") ? (
       <div>
-        <Header account={this.state.account} active="Browse" />
+        <Header account={this.state.account} active="Project" />
         <div
           className="container"
           style={{
@@ -80,9 +76,7 @@ class Browse extends React.Component {
                   marginBottom: "0px",
                 }}
               >
-                {this.state.account
-                  ? `Available ${availableFor}`
-                  : "Loading..."}
+                {this.state.account ? `Available Project` : "Loading..."}
               </p>
             </div>
             {this.state.account &&
@@ -94,7 +88,7 @@ class Browse extends React.Component {
           </div>
         </div>
         <div className="container mb-5">
-          <ProjectList mode="available-project" limit="5" />
+          <ProjectList limit="5" />
         </div>
         <Quote />
         <Footer />
@@ -105,4 +99,4 @@ class Browse extends React.Component {
   }
 }
 
-export default Browse;
+export default BrowseProject;
