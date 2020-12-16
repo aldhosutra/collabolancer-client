@@ -57,7 +57,7 @@ class Login extends React.Component {
 
   render() {
     if (this.state.redirect) {
-      return <Redirect to={this.state.redirect} />;
+      return <Redirect push to={this.state.redirect} />;
     }
     const query = new URLSearchParams(this.props.location.search);
     const tab = [
@@ -226,7 +226,7 @@ class Login extends React.Component {
       </div>,
     ];
     return getSession("secret") ? (
-      <Redirect to={{ pathname: "/app" }} />
+      <Redirect push to={{ pathname: "/app" }} />
     ) : (
       <div
         className="login-dark"

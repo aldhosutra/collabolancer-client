@@ -159,7 +159,7 @@ class Project extends React.Component {
         <Footer />
       </div>
     ) : (
-      <Redirect to={"/auth"} />
+      <Redirect push to={"/auth"} />
     );
   }
 }

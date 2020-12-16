@@ -3,21 +3,18 @@ import React from "react";
 import Footer from "../general/footer";
 import Header from "../general/header";
 import Quote from "../general/quote";
-import { getAccounts, getCategory, getSession } from "../../utils/tools";
+import { getAccounts, getSession } from "../../utils/tools";
 import { Redirect } from "react-router-dom";
-import AvailableProjectList from "../general/availableProjectList";
-import PostProjectDialog from "../dialog/postProjectDialog";
+import AvailableDisputeList from "../general/availableDisputeList";
 import "./browse.css";
-const { ACCOUNT } = require("../../transactions/constants");
 const {
   getAddressAndPublicKeyFromPassphrase,
 } = require("@liskhq/lisk-cryptography");
 
-class BrowseProject extends React.Component {
+class BrowseDispute extends React.Component {
   constructor() {
     super();
     this.state = {
-      category: null,
       account: null,
     };
     this.onLoad = this.onLoad.bind(this);
@@ -36,15 +33,6 @@ class BrowseProject extends React.Component {
           }, timeout);
         } else {
           this.setState({ account: res.data[0] });
-          if (res.data[0].asset.type === ACCOUNT.EMPLOYER) {
-            getCategory()
-              .then((response) => response.json())
-              .then((data) => {
-                this.setState((state) => {
-                  return { ...state, category: data.category.available };
-                });
-              });
-          }
         }
       });
     }
@@ -57,7 +45,7 @@ class BrowseProject extends React.Component {
   render() {
     return getSession("secret") ? (
       <div>
-        <Header account={this.state.account} active="Project" />
+        <Header account={this.state.account} active="Dispute" />
         <div
           className="container"
           style={{
@@ -76,19 +64,13 @@ class BrowseProject extends React.Component {
                   marginBottom: "0px",
                 }}
               >
-                {this.state.account ? `Available Project` : "Loading..."}
+                {this.state.account ? `Opened Disputes` : "Loading..."}
               </p>
             </div>
-            {this.state.account &&
-            this.state.account.asset.type === ACCOUNT.EMPLOYER ? (
-              <PostProjectDialog category={this.state.category} />
-            ) : (
-              <div></div>
-            )}
           </div>
         </div>
         <div className="container mb-5">
-          <AvailableProjectList limit="5" />
+          <AvailableDisputeList limit="5" />
         </div>
         <Quote />
         <Footer />
@@ -99,4 +81,4 @@ class BrowseProject extends React.Component {
   }
 }
 
-export default BrowseProject;
+export default BrowseDispute;

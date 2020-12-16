@@ -7,6 +7,7 @@ import Home from "./component/landing/home";
 import Browse from "./component/app/app";
 import BrowseProject from "./component/app/browseProject";
 import Project from "./component/project/project";
+import BrowseDispute from "./component/app/browseDispute";
 
 function App() {
   return (
@@ -24,6 +25,9 @@ function App() {
         </Route>
         <Route exact={true} path="/app/project">
           <BrowseProject />
+        </Route>
+        <Route exact={true} path="/app/dispute">
+          <BrowseDispute />
         </Route>
         <Route exact={true} path="/app/project/:projectPublicKey">
           <Project />

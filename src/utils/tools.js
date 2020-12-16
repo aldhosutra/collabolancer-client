@@ -69,6 +69,15 @@ export const getAvailableProjects = (offset, limit) =>
       limit.toString()
   );
 
+export const getOpenedDisputes = (offset, limit) =>
+  fetch(
+    config.extendedAPI +
+      "/api/disputes/open?offset=" +
+      offset.toString() +
+      "&limit=" +
+      limit.toString()
+  );
+
 export const getProject = (projectPublicKey, parsed, fullFileData) => {
   if (projectPublicKey === null) {
     return null;

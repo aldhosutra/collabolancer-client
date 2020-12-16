@@ -37,15 +37,21 @@ class Header extends React.Component {
 
   render() {
     if (this.state.redirect) {
-      return <Redirect to={this.state.redirect} />;
+      return <Redirect push to={this.state.redirect} />;
     }
     const activeMenuStyle = {
       color: "#d90429",
       fontWeight: "900",
       marginRight: "20px",
+      background: "none",
+      border: "none",
+      outline: "none",
     };
     const notActiveMenuStyle = {
       marginRight: "20px",
+      background: "none",
+      border: "none",
+      outline: "none",
     };
     const avatar = `url('data:image/svg+xml,${renderAvatar(
       this.props.account ? this.props.account.address : "",
@@ -54,58 +60,49 @@ class Header extends React.Component {
     return (
       <div style={{ fontFamily: "Poppins, sans-serif", height: "70px" }}>
         <nav
-          className="navbar navbar-light navbar-expand-md navigation-clean border rounded-0 fixed-top"
+          className="navbar navbar-light navbar-expand-md navigation-clean border-bottom rounded-0 fixed-top"
           style={{ height: "70px", backgroundColor: "white" }}
         >
           <div className="container">
-            <a
-              href="#"
-              onClick={() => {
-                if (this.props.location.pathname !== "/app") {
-                  this.setState({ redirect: "/app" });
-                }
+            <h1
+              className="navbar-brand"
+              style={{
+                color: "rgb(248,0,47)",
+                backgroundImage: "url(" + logoColor + ")",
+                backgroundSize: "contain",
+                backgroundRepeat: "no-repeat",
+                backgroundPosition: "left",
+                paddingLeft: "35px",
               }}
             >
-              <h1
-                className="navbar-brand"
+              +
+              <span
                 style={{
-                  color: "rgb(248,0,47)",
-                  backgroundImage: "url(" + logoColor + ")",
-                  backgroundSize: "contain",
-                  backgroundRepeat: "no-repeat",
-                  backgroundPosition: "left",
-                  paddingLeft: "35px",
+                  backgroundColor: "rgb(248,0,47)",
+                  color: "#ffffff",
+                  marginLeft: "10px",
+                  paddingLeft: "15px",
+                  paddingRight: "15px",
+                  fontWeight: "bold",
                 }}
               >
-                +
-                <span
-                  style={{
-                    backgroundColor: "rgb(248,0,47)",
-                    color: "#ffffff",
-                    marginLeft: "10px",
-                    paddingLeft: "15px",
-                    paddingRight: "15px",
-                    fontWeight: "bold",
-                  }}
-                >
-                  {this.props.account ? (
-                    this.props.account.asset.type.charAt(0).toUpperCase() +
-                    this.props.account.asset.type.slice(1)
-                  ) : (
-                    <div
-                      className="spinner-border text-light"
-                      role="status"
-                      style={{
-                        height: "25px",
-                        width: "25px",
-                      }}
-                    >
-                      <span className="sr-only">Loading...</span>
-                    </div>
-                  )}
-                </span>
-              </h1>
-            </a>
+                {this.props.account ? (
+                  this.props.account.asset.type.charAt(0).toUpperCase() +
+                  this.props.account.asset.type.slice(1)
+                ) : (
+                  <div
+                    className="spinner-border text-light"
+                    role="status"
+                    style={{
+                      height: "25px",
+                      width: "25px",
+                    }}
+                  >
+                    <span className="sr-only">Loading...</span>
+                  </div>
+                )}
+              </span>
+            </h1>
             <button
               className="navbar-toggler"
               onClick={() =>
@@ -144,13 +141,17 @@ class Header extends React.Component {
               </div>
               <ul className="nav navbar-nav d-md-flex ml-auto justify-content-md-end">
                 <li className="nav-item" role="presentation">
-                  <a
+                  <button
                     className={
                       this.props.active === "Project"
                         ? "nav-link active"
                         : "nav-link"
                     }
-                    href="#"
+                    onClick={() => {
+                      if (this.props.location.pathname !== "/app/project") {
+                        this.setState({ redirect: "/app/project" });
+                      }
+                    }}
                     style={
                       this.props.active === "Project"
                         ? activeMenuStyle
@@ -158,16 +159,20 @@ class Header extends React.Component {
                     }
                   >
                     Project
-                  </a>
+                  </button>
                 </li>
                 <li className="nav-item" role="presentation">
-                  <a
+                  <button
                     className={
                       this.props.active === "Dispute"
                         ? "nav-link active"
                         : "nav-link"
                     }
-                    href="#"
+                    onClick={() => {
+                      if (this.props.location.pathname !== "/app/dispute") {
+                        this.setState({ redirect: "/app/dispute" });
+                      }
+                    }}
                     style={
                       this.props.active === "Dispute"
                         ? activeMenuStyle
@@ -175,16 +180,15 @@ class Header extends React.Component {
                     }
                   >
                     Dispute
-                  </a>
+                  </button>
                 </li>
                 <li className="nav-item" role="presentation">
-                  <a
+                  <button
                     className={
                       this.props.active === "Profile"
                         ? "nav-link active"
                         : "nav-link"
                     }
-                    href="#"
                     style={
                       this.props.active === "Profile"
                         ? activeMenuStyle
@@ -192,7 +196,7 @@ class Header extends React.Component {
                     }
                   >
                     Profile
-                  </a>
+                  </button>
                 </li>
                 <div
                   className="navdivider"

@@ -1,18 +1,18 @@
 import React from "react";
-import { getAvailableProjects } from "../../utils/tools";
+import { getOpenedDisputes } from "../../utils/tools";
 import Loading from "./loading";
 import NoData from "./nodata";
 import Pagination from "./pagination";
-import ProjectCard from "./projectCard";
-import "./projectList.css";
+import DisputeCard from "./disputeCard";
+import "./availableItemList.css";
 
-class ProjectList extends React.Component {
+class AvailableDisputeList extends React.Component {
   constructor() {
     super();
     this.state = {
       page: 1,
       prevPage: 1,
-      projects: [],
+      disputes: [],
       total: 0,
     };
     this.load = this.load.bind(this);
@@ -21,11 +21,11 @@ class ProjectList extends React.Component {
   async load() {
     const limit = parseInt(this.props.limit) || 10;
     const offset = (this.state.page - 1) * limit;
-    await getAvailableProjects(offset, limit)
+    await getOpenedDisputes(offset, limit)
       .then((response) => response.json())
       .then((data) => {
         this.setState((state) => {
-          return { ...state, projects: data.data, total: data.meta.count };
+          return { ...state, disputes: data.data, total: data.meta.count };
         });
       });
   }
@@ -44,13 +44,14 @@ class ProjectList extends React.Component {
   }
 
   render() {
+    console.log(this.state.disputes);
     const limit = parseInt(this.props.limit) || 10;
     const pageCount = Math.ceil(this.state.total / limit);
-    return this.state.projects ? (
-      this.state.projects.length > 0 ? (
+    return this.state.disputes ? (
+      this.state.disputes.length > 0 ? (
         <div>
-          {this.state.projects.map((project) => (
-            <ProjectCard key={project.publicKey} project={project} />
+          {this.state.disputes.map((dispute) => (
+            <DisputeCard key={dispute.publicKey} dispute={dispute} />
           ))}
           <Pagination
             currentPage={this.state.page}
@@ -71,4 +72,4 @@ class ProjectList extends React.Component {
   }
 }
 
-export default ProjectList;
+export default AvailableDisputeList;

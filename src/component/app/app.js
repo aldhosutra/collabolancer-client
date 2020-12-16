@@ -35,6 +35,8 @@ class Browse extends React.Component {
             account.asset.type === ACCOUNT.WORKER
           ) {
             this.setState({ redirect: "/app/project" });
+          } else if (account.asset.type === ACCOUNT.SOLVER) {
+            this.setState({ redirect: "/app/dispute" });
           }
         }
       });
@@ -47,7 +49,7 @@ class Browse extends React.Component {
 
   render() {
     if (this.state.redirect) {
-      return <Redirect to={this.state.redirect} />;
+      return <Redirect push to={this.state.redirect} />;
     }
     return (
       <div className="d-flex" style={{ height: "100vh" }}>
