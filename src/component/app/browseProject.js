@@ -5,7 +5,7 @@ import Header from "../general/header";
 import Quote from "../general/quote";
 import { getAccounts, getCategory, getSession } from "../../utils/tools";
 import { Redirect } from "react-router-dom";
-import AvailableProjectList from "../general/availableProjectList";
+import AvailableProjectList from "./availableProjectList";
 import PostProjectDialog from "../dialog/postProjectDialog";
 import "./browse.css";
 const { ACCOUNT } = require("../../transactions/constants");

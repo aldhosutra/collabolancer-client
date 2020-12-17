@@ -175,14 +175,12 @@ class Team extends React.Component {
                   team={this.props.team}
                   account={this.props.account}
                 />
-                {
-                  <TeamDisputeDialog
-                    team={this.props.team}
-                    project={this.props.project}
-                    proposal={this.props.proposal}
-                    account={this.props.account}
-                  />
-                }
+                <TeamDisputeDialog
+                  team={this.props.team}
+                  project={this.props.project}
+                  proposal={this.props.proposal}
+                  account={this.props.account}
+                />
               </div>
               <p style={{ fontFamily: "Poppins, sans-serif" }}>
                 <strong>Team Contract:</strong>

@@ -3,7 +3,7 @@ import { renderAvatar } from "../avatar";
 import * as constants from "@liskhq/lisk-constants";
 import Pagination from "../general/pagination";
 import SoloProposal from "./soloProposal";
-import Team from "./team";
+import Team from "../team/team";
 import PitchingDialog from "../dialog/pitchingDialog";
 import CompactContractDetail from "../general/compactContractDetails";
 import { MISCELLANEOUS, STATUS } from "../../transactions/constants";

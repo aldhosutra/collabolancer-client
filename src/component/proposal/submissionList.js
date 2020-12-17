@@ -1,7 +1,7 @@
 import React from "react";
 import { STATUS } from "../../transactions/constants";
 import WorkingOnIt from "./workingOnIt";
-import WorkItem from "./workItem";
+import WorkItem from "../general/workItem";
 import Pagination from "../general/pagination";
 
 class SubmissionList extends React.Component {

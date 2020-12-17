@@ -2,6 +2,7 @@ import React from "react";
 import NoData from "../general/nodata";
 import Pagination from "../general/pagination";
 import Dispute from "./dispute";
+import { withRouter } from "react-router-dom";
 
 class VotedDisputeList extends React.Component {
   constructor() {
@@ -12,6 +13,21 @@ class VotedDisputeList extends React.Component {
       prevPage: 1,
       itemPerPage: 5,
     };
+  }
+
+  componentDidMount() {
+    if (
+      this.props.location.hash !== "" &&
+      window.$(this.props.location.hash).offset()
+    ) {
+      window.$(this.props.location.hash).collapse("show");
+      window.$("html, body").animate(
+        {
+          scrollTop: window.$(this.props.location.hash).offset().top - 150,
+        },
+        500
+      );
+    }
   }
 
   componentDidUpdate() {
@@ -26,8 +42,8 @@ class VotedDisputeList extends React.Component {
     if (!this.props.account || !this.props.project) return null;
     let votedDisputes = this.props.project.asset.openedDisputes.filter(
       (item) =>
-        item.asset.vote.litigant.indexOf(this.props.account.address) !== -1 ||
-        item.asset.vote.defendant.indexOf(this.props.account.address) !== -1
+        item.asset.vote.litigant.indexOf(this.props.account.publicKey) !== -1 ||
+        item.asset.vote.defendant.indexOf(this.props.account.publicKey) !== -1
     );
     const limit = this.state.itemPerPage;
     const pageCount = Math.ceil(votedDisputes.length / limit);
@@ -91,4 +107,4 @@ class VotedDisputeList extends React.Component {
   }
 }
 
-export default VotedDisputeList;
+export default withRouter(VotedDisputeList);

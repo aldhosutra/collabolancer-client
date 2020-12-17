@@ -6,6 +6,7 @@ import CloseDisputeDialog from "../dialog/closeDisputeDialog";
 import DescriptionCollapse from "../general/descriptionCollapse";
 import { STATUS } from "../../transactions/constants";
 import CompactDisputeContractDetail from "../general/compactDisputeContractDetails";
+import SolverVoteDialog from "../dialog/solverVoteDialog";
 
 class Dispute extends React.Component {
   constructor() {
@@ -233,6 +234,16 @@ class Dispute extends React.Component {
               id={"dispute-suit-" + this.props.dispute.publicKey}
               fontSize={14}
             />
+            <div
+              className="d-flex justify-content-end"
+              style={{ marginBottom: "16px" }}
+            >
+              <SolverVoteDialog
+                id={this.props.id}
+                account={this.props.account}
+                dispute={this.props.dispute}
+              />
+            </div>
           </div>
         </div>
       </div>

@@ -1,9 +1,9 @@
 import React from "react";
 import { STATUS } from "../../transactions/constants";
-import WaitingToWork from "./waitingToWork";
+import WaitingToWork from "../proposal/waitingToWork";
 import TeamNotSelected from "./teamNotSelected";
-import WorkingOnIt from "./workingOnIt";
-import WorkItem from "./workItem";
+import WorkingOnIt from "../proposal/workingOnIt";
+import WorkItem from "../general/workItem";
 import Pagination from "../general/pagination";
 
 class ContributionList extends React.Component {

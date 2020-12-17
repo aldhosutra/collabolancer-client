@@ -1,9 +1,9 @@
 import React from "react";
 import { getAvailableProjects } from "../../utils/tools";
-import Loading from "./loading";
-import NoData from "./nodata";
-import Pagination from "./pagination";
-import ProjectCard from "./projectCard";
+import Loading from "../general/loading";
+import NoData from "../general/nodata";
+import Pagination from "../general/pagination";
+import ProjectCard from "../project/projectCard";
 import "./availableItemList.css";
 
 class AvailableProjectList extends React.Component {

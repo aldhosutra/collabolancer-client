@@ -3,6 +3,7 @@ import { ACCOUNT, STATUS } from "../../transactions/constants";
 import ClosedDisputeList from "./closedDisputeList";
 import OpenedDisputeList from "./openedDisputeList";
 import VotedDisputeList from "./votedDisputeList";
+import { withRouter } from "react-router-dom";
 
 class DisputeList extends React.Component {
   constructor() {
@@ -11,6 +12,29 @@ class DisputeList extends React.Component {
       collapsed: true,
       index: 0,
     };
+  }
+
+  componentDidMount() {
+    if (
+      this.props.account.asset.type === ACCOUNT.SOLVER &&
+      this.props.project.asset.openedDisputes
+        .filter(
+          (item) =>
+            item.asset.vote.litigant.indexOf(this.props.account.publicKey) !==
+              -1 ||
+            item.asset.vote.defendant.indexOf(this.props.account.publicKey) !==
+              -1
+        )
+        .map((item) => item.publicKey)
+        .indexOf(this.props.location.hash.split("#dispute-")[1]) !== -1
+    ) {
+      this.setState((state) => {
+        return {
+          ...state,
+          index: 1,
+        };
+      });
+    }
   }
 
   render() {
@@ -92,6 +116,7 @@ class DisputeList extends React.Component {
             <div className="text-center" style={{ marginBottom: "30px" }}>
               <button
                 className="btn btn-primary border rounded-0"
+                id="opened-dispute-tab"
                 type="button"
                 style={{
                   width: "150px",
@@ -112,6 +137,7 @@ class DisputeList extends React.Component {
               this.props.account.asset.type === ACCOUNT.SOLVER ? (
                 <button
                   className="btn btn-primary border rounded-0"
+                  id="voted-dispute-tab"
                   type="button"
                   style={{
                     width: "150px",
@@ -133,6 +159,7 @@ class DisputeList extends React.Component {
               ) : null}
               <button
                 className="btn btn-secondary border rounded-0"
+                id="closed-dispute-tab"
                 type="button"
                 style={{
                   width: "150px",
@@ -159,4 +186,4 @@ class DisputeList extends React.Component {
   }
 }
 
-export default DisputeList;
+export default withRouter(DisputeList);

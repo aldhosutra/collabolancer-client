@@ -9,7 +9,7 @@ import NoData from "../general/nodata";
 import Loading from "../general/loading";
 import * as constants from "@liskhq/lisk-constants";
 import ProjectDetails from "./projectDetails";
-import ProposalList from "./proposalList";
+import ProposalList from "../proposal/proposalList";
 import DescriptionCollapse from "../general/descriptionCollapse";
 const dateFormat = require("dateformat");
 const {

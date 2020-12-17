@@ -2,7 +2,7 @@ import React from "react";
 import { ACCOUNT } from "../../transactions/constants";
 import NoData from "../general/nodata";
 import Pagination from "../general/pagination";
-import Dispute from "./dispute";
+import Dispute from "../dispute/dispute";
 import { withRouter } from "react-router-dom";
 
 class OpenedDisputeList extends React.Component {
@@ -25,7 +25,10 @@ class OpenedDisputeList extends React.Component {
   }
 
   componentDidMount() {
-    if (this.props.location.hash !== "") {
+    if (
+      this.props.location.hash !== "" &&
+      window.$(this.props.location.hash).offset()
+    ) {
       window.$(this.props.location.hash).collapse("show");
       window.$("html, body").animate(
         {
@@ -42,8 +45,9 @@ class OpenedDisputeList extends React.Component {
     if (this.props.account.asset.type === ACCOUNT.SOLVER) {
       openedDisputes = this.props.project.asset.openedDisputes.filter(
         (item) =>
-          item.asset.vote.litigant.indexOf(this.props.account.address) === -1 ||
-          item.asset.vote.defendant.indexOf(this.props.account.address) === -1
+          item.asset.vote.litigant.indexOf(this.props.account.publicKey) ===
+            -1 &&
+          item.asset.vote.defendant.indexOf(this.props.account.publicKey) === -1
       );
     } else {
       openedDisputes = this.props.project.asset.openedDisputes;

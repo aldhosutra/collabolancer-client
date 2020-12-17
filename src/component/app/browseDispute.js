@@ -5,7 +5,7 @@ import Header from "../general/header";
 import Quote from "../general/quote";
 import { getAccounts, getSession } from "../../utils/tools";
 import { Redirect } from "react-router-dom";
-import AvailableDisputeList from "../general/availableDisputeList";
+import AvailableDisputeList from "./availableDisputeList";
 import "./browse.css";
 const {
   getAddressAndPublicKeyFromPassphrase,

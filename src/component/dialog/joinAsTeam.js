@@ -138,7 +138,7 @@ class JoinAsTeamDialog extends React.Component {
                 className="modal-header text-center"
                 style={{ borderBottom: "0 none" }}
               >
-                <div>
+                <div className="container">
                   <button
                     type="button"
                     className="close"

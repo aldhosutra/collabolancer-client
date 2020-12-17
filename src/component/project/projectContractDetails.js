@@ -1,9 +1,9 @@
 import React from "react";
-import ContractCard from "./contractCard";
+import ContractCard from "../general/contractCard";
 import fundLogo from "../../asset/undraw_Savings_re_eq4w.svg";
 import feeLogo from "../../asset/undraw_printing_invoices_5r4r.svg";
 import bonusLogo from "../../asset/undraw_happy_birthday_s72n.svg";
-import StatusCard from "./statusCard";
+import StatusCard from "../general/statusCard";
 import { ACCOUNT, MISCELLANEOUS } from "../../transactions/constants";
 import ProjectStatusJourneyDialog from "../dialog/projectStatusJourney";
 

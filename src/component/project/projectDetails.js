@@ -1,15 +1,15 @@
 import React from "react";
-import SubmittedWork from "./submittedWork";
+import SubmittedWork from "../proposal/submittedWork";
 import * as constants from "@liskhq/lisk-constants";
 import { STATUS } from "../../transactions/constants";
 import Winner from "./winner";
-import ProjectContractDetail from "../general/projectContractDetails";
+import ProjectContractDetail from "./projectContractDetails";
 import EmployerCancelDialog from "../dialog/employerCancelDialog";
 import Countdown from "react-countdown";
 import { toast } from "react-toastify";
 import LeaderTerminateDialog from "../dialog/leaderTerminateDialog";
 import ClaimDialog from "../dialog/claimDialog";
-import DisputeList from "./disputeList";
+import DisputeList from "../dispute/disputeList";
 import ProceedRefusalDialog from "../dialog/proceedRefusalDialog";
 const dateFormat = require("dateformat");
 const { utils } = require("@liskhq/lisk-transactions");

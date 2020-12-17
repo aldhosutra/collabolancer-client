@@ -1,6 +1,6 @@
 import React from "react";
 import NoData from "../general/nodata";
-import Proposal from "./proposal";
+import Proposal from "../proposal/proposal";
 
 class Winner extends React.Component {
   constructor() {
