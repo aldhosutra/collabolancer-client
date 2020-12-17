@@ -48,39 +48,40 @@ class SubmittedWork extends React.Component {
             </strong>
           </h5>
         </div>
-        <div
-          id="submitted-work"
-          className="border rounded-0 collapse show"
-          style={{
-            marginTop: 0,
-            paddingTop: "8px",
-            paddingRight: "16px",
-            paddingBottom: "8px",
-            paddingLeft: "16px",
-          }}
-        >
+        <div id="submitted-work" className="collapse show">
           <div
-            className="d-flex justify-content-end"
-            style={{ marginTop: "16px" }}
+            className="border rounded-0"
+            style={{
+              marginTop: 0,
+              paddingTop: "8px",
+              paddingRight: "16px",
+              paddingBottom: "8px",
+              paddingLeft: "16px",
+            }}
           >
-            <SubmitSubmissionDialog
-              id={this.props.id}
-              prefix={this.props.prefix}
-              project={this.props.project}
-              proposal={this.props.proposal}
-              account={this.props.account}
-            />
-            <LeaderDisputeDialog
+            <div
+              className="d-flex justify-content-end"
+              style={{ marginTop: "16px" }}
+            >
+              <SubmitSubmissionDialog
+                id={this.props.id}
+                prefix={this.props.prefix}
+                project={this.props.project}
+                proposal={this.props.proposal}
+                account={this.props.account}
+              />
+              <LeaderDisputeDialog
+                project={this.props.project}
+                proposal={this.props.proposal}
+                account={this.props.account}
+              />
+            </div>
+            <SubmissionList
               project={this.props.project}
               proposal={this.props.proposal}
               account={this.props.account}
             />
           </div>
-          <SubmissionList
-            project={this.props.project}
-            proposal={this.props.proposal}
-            account={this.props.account}
-          />
         </div>
       </div>
     );

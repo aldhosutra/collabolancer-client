@@ -23,6 +23,7 @@ class ClosedDisputeList extends React.Component {
   }
 
   render() {
+    if (!this.props.account || !this.props.project) return null;
     let closedDisputes = this.props.project.asset.closedDisputes;
     const limit = this.state.itemPerPage;
     const pageCount = Math.ceil(closedDisputes.length / limit);
@@ -39,7 +40,7 @@ class ClosedDisputeList extends React.Component {
           key={i}
           account={this.props.account}
           project={this.props.project}
-          proposal={closedDisputes[i]}
+          dispute={closedDisputes[i]}
         />
       );
     }

@@ -491,9 +491,50 @@ const openDispute = async (
   return ret;
 };
 
-const voteDispute = () => {};
+const voteDispute = async (senderPassphrase, disputePublicKey, voteFor) => {
+  let ret;
+  const tx = new VoteDisputeTransaction({
+    asset: {
+      disputePublicKey: disputePublicKey,
+      voteFor: voteFor,
+    },
+    networkIdentifier: networkIdentifier,
+    timestamp: utils.getTimeFromBlockchainEpoch(),
+  });
+  tx.sign(senderPassphrase);
+  await api.transactions
+    .broadcast(tx.toJSON())
+    .then((res) => {
+      ret = res;
+    })
+    .catch((err) => {
+      console.log(err);
+      ret = err;
+    });
+  return ret;
+};
 
-const closeDispute = () => {};
+const closeDispute = async (senderPassphrase, disputePublicKey) => {
+  let ret;
+  const tx = new CloseDisputeTransaction({
+    asset: {
+      disputePublicKey: disputePublicKey,
+    },
+    networkIdentifier: networkIdentifier,
+    timestamp: utils.getTimeFromBlockchainEpoch(),
+  });
+  tx.sign(senderPassphrase);
+  await api.transactions
+    .broadcast(tx.toJSON())
+    .then((res) => {
+      ret = res;
+    })
+    .catch((err) => {
+      console.log(err);
+      ret = err;
+    });
+  return ret;
+};
 
 module.exports = {
   transfer,

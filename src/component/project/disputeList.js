@@ -1,7 +1,8 @@
 import React from "react";
-import { STATUS } from "../../transactions/constants";
+import { ACCOUNT, STATUS } from "../../transactions/constants";
 import ClosedDisputeList from "./closedDisputeList";
 import OpenedDisputeList from "./openedDisputeList";
+import VotedDisputeList from "./votedDisputeList";
 
 class DisputeList extends React.Component {
   constructor() {
@@ -27,6 +28,10 @@ class DisputeList extends React.Component {
     }
     const tab = [
       <OpenedDisputeList
+        project={this.props.project}
+        account={this.props.account}
+      />,
+      <VotedDisputeList
         project={this.props.project}
         account={this.props.account}
       />,
@@ -98,26 +103,48 @@ class DisputeList extends React.Component {
                 onClick={() =>
                   this.setState({
                     index: 0,
-                    regIndex: -1,
                   })
                 }
               >
                 Open
               </button>
+              {this.props.account &&
+              this.props.account.asset.type === ACCOUNT.SOLVER ? (
+                <button
+                  className="btn btn-primary border rounded-0"
+                  type="button"
+                  style={{
+                    width: "150px",
+                    color:
+                      this.state.index === 1
+                        ? "rgb(255,255,255)"
+                        : "rgb(0,0,0)",
+                    backgroundColor:
+                      this.state.index === 1 ? "#2b2d42" : "rgb(255,255,255)",
+                  }}
+                  onClick={() =>
+                    this.setState({
+                      index: 1,
+                    })
+                  }
+                >
+                  Voted By You
+                </button>
+              ) : null}
               <button
                 className="btn btn-secondary border rounded-0"
                 type="button"
                 style={{
                   width: "150px",
                   color:
-                    this.state.index === 1 ? "rgb(255,255,255)" : "rgb(0,0,0)",
+                    this.state.index === 2 ? "rgb(255,255,255)" : "rgb(0,0,0)",
                   backgroundColor:
-                    this.state.index === 1 ? "#2b2d42" : "rgb(255,255,255)",
+                    this.state.index === 2 ? "#2b2d42" : "rgb(255,255,255)",
                 }}
                 onClick={() =>
                   this.setState((state) => ({
                     ...state,
-                    index: 1,
+                    index: 2,
                   }))
                 }
               >

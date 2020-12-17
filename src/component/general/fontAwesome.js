@@ -10,6 +10,12 @@ import {
   faExternalLinkAlt,
   faEye,
   faEyeSlash,
+  faTrophy,
+  faVoteYea,
+  faReceipt,
+  faBalanceScaleRight,
+  faSuitcase,
+  faBriefcase,
 } from "@fortawesome/free-solid-svg-icons";
 
 library.add(
@@ -22,5 +28,11 @@ library.add(
   faComments,
   faExternalLinkAlt,
   faEye,
-  faEyeSlash
+  faEyeSlash,
+  faTrophy,
+  faVoteYea,
+  faReceipt,
+  faBalanceScaleRight,
+  faSuitcase,
+  faBriefcase
 );

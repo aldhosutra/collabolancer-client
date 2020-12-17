@@ -1,11 +1,9 @@
 import React from "react";
-import { ACCOUNT } from "../../transactions/constants";
 import NoData from "../general/nodata";
 import Pagination from "../general/pagination";
 import Dispute from "./dispute";
-import { withRouter } from "react-router-dom";
 
-class OpenedDisputeList extends React.Component {
+class VotedDisputeList extends React.Component {
   constructor() {
     super();
     this.state = {
@@ -24,55 +22,38 @@ class OpenedDisputeList extends React.Component {
     }
   }
 
-  componentDidMount() {
-    if (this.props.location.hash !== "") {
-      window.$(this.props.location.hash).collapse("show");
-      window.$("html, body").animate(
-        {
-          scrollTop: window.$(this.props.location.hash).offset().top - 150,
-        },
-        500
-      );
-    }
-  }
-
   render() {
     if (!this.props.account || !this.props.project) return null;
-    let openedDisputes;
-    if (this.props.account.asset.type === ACCOUNT.SOLVER) {
-      openedDisputes = this.props.project.asset.openedDisputes.filter(
-        (item) =>
-          item.asset.vote.litigant.indexOf(this.props.account.address) === -1 ||
-          item.asset.vote.defendant.indexOf(this.props.account.address) === -1
-      );
-    } else {
-      openedDisputes = this.props.project.asset.openedDisputes;
-    }
+    let votedDisputes = this.props.project.asset.openedDisputes.filter(
+      (item) =>
+        item.asset.vote.litigant.indexOf(this.props.account.address) !== -1 ||
+        item.asset.vote.defendant.indexOf(this.props.account.address) !== -1
+    );
     const limit = this.state.itemPerPage;
-    const pageCount = Math.ceil(openedDisputes.length / limit);
-    const openedDisputesList = [];
+    const pageCount = Math.ceil(votedDisputes.length / limit);
+    const votedDisputesList = [];
     for (
       let i = (this.state.page - 1) * limit;
       i < (this.state.page - 1) * limit + limit;
       i++
     ) {
-      if (i >= openedDisputes.length) break;
-      openedDisputesList.push(
+      if (i >= votedDisputes.length) break;
+      votedDisputesList.push(
         <Dispute
           id={i}
           key={i}
           account={this.props.account}
           project={this.props.project}
-          dispute={openedDisputes[i]}
+          dispute={votedDisputes[i]}
         />
       );
     }
     return (
       <div>
-        {openedDisputes.length > 0 ? (
+        {votedDisputes.length > 0 ? (
           <div>
-            {openedDisputesList}
-            {openedDisputes.length > this.state.itemPerPage ? (
+            {votedDisputesList}
+            {votedDisputes.length > this.state.itemPerPage ? (
               <div style={{ marginTop: "16px" }}>
                 <Pagination
                   currentPage={this.state.page}
@@ -99,7 +80,10 @@ class OpenedDisputeList extends React.Component {
               marginBottom: "28px",
             }}
           >
-            <NoData message="No Dispute Opened!" reload={"false"} />
+            <NoData
+              message="No Dispute That You Have Voted!"
+              reload={"false"}
+            />
           </div>
         )}
       </div>
@@ -107,4 +91,4 @@ class OpenedDisputeList extends React.Component {
   }
 }
 
-export default withRouter(OpenedDisputeList);
+export default VotedDisputeList;
