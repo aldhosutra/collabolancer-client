@@ -7,6 +7,7 @@ import DescriptionCollapse from "../general/descriptionCollapse";
 import { STATUS } from "../../transactions/constants";
 import CompactDisputeContractDetail from "../general/compactDisputeContractDetails";
 import SolverVoteDialog from "../dialog/solverVoteDialog";
+import DisputeReportDialog from "../dialog/disputeReportDialog";
 
 class Dispute extends React.Component {
   constructor() {
@@ -158,18 +159,11 @@ class Dispute extends React.Component {
                 }}
               />
             ) : (
-              <div
-                className="btn btn-primary border rounded-0 top-button"
-                style={{
-                  marginRight: "8px",
-                  backgroundColor: "#2B2D42",
-                  margin: "auto",
-                  fontFamily: "Poppins, sans-serif",
-                  cursor: "unset",
-                }}
-              >
-                <strong>Closed</strong>
-              </div>
+              <DisputeReportDialog
+                id={this.props.id}
+                account={this.props.account}
+                dispute={this.props.dispute}
+              />
             )}
             <a
               className="btn btn-primary border rounded-0 top-button"

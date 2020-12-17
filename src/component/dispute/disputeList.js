@@ -16,6 +16,7 @@ class DisputeList extends React.Component {
 
   componentDidMount() {
     if (
+      this.props.account &&
       this.props.account.asset.type === ACCOUNT.SOLVER &&
       this.props.project.asset.openedDisputes
         .filter(
