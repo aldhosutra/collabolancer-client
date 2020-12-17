@@ -42,7 +42,7 @@ class DescriptionCollapse extends React.Component {
           id={this.props.id}
           style={{ height: this.state.height > 120 ? "7.5rem" : "auto" }}
         >
-          <p
+          <div
             className="text-justify"
             style={{
               fontFamily: "Poppins, sans-serif",
@@ -53,7 +53,7 @@ class DescriptionCollapse extends React.Component {
             }}
           >
             {parse(this.props.description)}
-          </p>
+          </div>
         </div>
         {this.state.height > 120 ? (
           <div>

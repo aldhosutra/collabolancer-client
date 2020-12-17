@@ -140,9 +140,9 @@ class PitchingDialog extends React.PureComponent {
                   >
                     <strong>{this.props.proposal.asset.leader}</strong>
                   </p>
-                  <p className="text-justify">
+                  <div className="text-justify">
                     {parse(this.props.proposal.asset.pitching)}
-                  </p>
+                  </div>
                   {hireCheckbox}
                 </div>
               </div>

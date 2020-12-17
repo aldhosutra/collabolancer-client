@@ -61,9 +61,16 @@ class Project extends React.Component {
     }
   }
 
+  expandCollapse() {
+    if (this.props.location.hash !== "") {
+      window.$(this.props.location.hash).collapse("show");
+    }
+  }
+
   componentDidMount() {
     this.fetchProject(this.props.match.params.projectPublicKey);
     this.onLoad();
+    this.expandCollapse();
   }
 
   render() {

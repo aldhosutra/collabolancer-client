@@ -37,7 +37,7 @@ class DisputeCard extends React.PureComponent {
     return (
       <Link
         style={{ textDecoration: "none" }}
-        to={`/app/project/${this.props.dispute.asset.project}`}
+        to={`/app/project/${this.props.dispute.asset.project}#dispute-${this.props.dispute.publicKey}`}
       >
         <div
           className="card"

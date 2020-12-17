@@ -216,9 +216,9 @@ class SendCLNCDialog extends React.PureComponent {
                           value={this.state["passphrase"]}
                           required
                         />
-                        <div class="input-group-append">
+                        <div className="input-group-append">
                           <button
-                            class="btn border"
+                            className="btn border"
                             type="button"
                             onClick={() =>
                               this.setState((state) => {

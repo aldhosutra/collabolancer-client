@@ -100,14 +100,14 @@ class StatusNoteDialog extends React.Component {
                           "mmmm dS, yyyy - h:MM:ss TT"
                         )}
                       </p>
-                      <p
+                      <div
                         className="text-justify"
                         style={{
                           margin: "0px",
                         }}
                       >
                         {parse(this.props.note.reason)}
-                      </p>
+                      </div>
                     </div>
                   </div>
                 </div>
