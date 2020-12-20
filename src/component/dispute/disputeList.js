@@ -52,18 +52,24 @@ class DisputeList extends React.Component {
       return <div></div>;
     }
     const tab = [
-      <OpenedDisputeList
-        project={this.props.project}
-        account={this.props.account}
-      />,
-      <VotedDisputeList
-        project={this.props.project}
-        account={this.props.account}
-      />,
-      <ClosedDisputeList
-        project={this.props.project}
-        account={this.props.account}
-      />,
+      <div style={{ display: this.state.index === 0 ? "block" : "none" }}>
+        <OpenedDisputeList
+          project={this.props.project}
+          account={this.props.account}
+        />
+      </div>,
+      <div style={{ display: this.state.index === 1 ? "block" : "none" }}>
+        <VotedDisputeList
+          project={this.props.project}
+          account={this.props.account}
+        />
+      </div>,
+      <div style={{ display: this.state.index === 2 ? "block" : "none" }}>
+        <ClosedDisputeList
+          project={this.props.project}
+          account={this.props.account}
+        />
+      </div>,
     ];
     return (
       <div>
@@ -179,7 +185,7 @@ class DisputeList extends React.Component {
                 Closed
               </button>
             </div>
-            {tab[this.state.index]}
+            {tab}
           </div>
         </div>
       </div>

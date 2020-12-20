@@ -16,6 +16,7 @@ import {
   faBalanceScaleRight,
   faSuitcase,
   faBriefcase,
+  faFileSignature,
 } from "@fortawesome/free-solid-svg-icons";
 
 library.add(
@@ -34,5 +35,6 @@ library.add(
   faReceipt,
   faBalanceScaleRight,
   faSuitcase,
-  faBriefcase
+  faBriefcase,
+  faFileSignature
 );

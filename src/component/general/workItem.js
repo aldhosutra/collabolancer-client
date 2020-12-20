@@ -31,7 +31,6 @@ class WorkItem extends React.Component {
     this.openHoverTrue = this.openHoverTrue.bind(this);
     this.openHoverFalse = this.openHoverFalse.bind(this);
     this.handleDownload = this.handleDownload.bind(this);
-    this.handleOpen = this.handleOpen.bind(this);
   }
 
   hoverTrue() {
@@ -85,8 +84,6 @@ class WorkItem extends React.Component {
   handleDownload() {
     saveFile(this.props.file.publicKey);
   }
-
-  handleOpen() {}
 
   render() {
     if (!this.props.file) {

@@ -94,9 +94,9 @@ class Login extends React.Component {
               }));
             }}
           />
-          <div class="input-group-append">
+          <div className="input-group-append">
             <button
-              class="btn border"
+              className="btn border"
               type="button"
               style={{
                 height: "40px",

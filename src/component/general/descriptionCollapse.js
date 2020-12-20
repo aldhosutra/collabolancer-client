@@ -58,7 +58,7 @@ class DescriptionCollapse extends React.Component {
         {this.state.height > 120 ? (
           <div>
             <button
-              class="collapsed"
+              className="collapsed"
               data-toggle="collapse"
               data-target={"#" + this.props.id}
               aria-expanded="false"

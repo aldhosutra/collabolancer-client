@@ -1,7 +1,7 @@
 /* eslint-disable jsx-a11y/anchor-is-valid */
 import React from "react";
 import logoColor from "../../asset/collabolancer.svg";
-import { Redirect, withRouter } from "react-router-dom";
+import { Link, Redirect, withRouter } from "react-router-dom";
 import { toast } from "react-toastify";
 import "./header.css";
 import { renderAvatar } from "../avatar";
@@ -141,62 +141,40 @@ class Header extends React.Component {
               </div>
               <ul className="nav navbar-nav d-md-flex ml-auto justify-content-md-end">
                 <li className="nav-item" role="presentation">
-                  <button
-                    className={
-                      this.props.active === "Project"
-                        ? "nav-link active"
-                        : "nav-link"
-                    }
-                    onClick={() => {
-                      if (this.props.location.pathname !== "/app/project") {
-                        this.setState({ redirect: "/app/project" });
+                  <Link style={{ textDecoration: "none" }} to={`/app/project/`}>
+                    <button
+                      className={
+                        this.props.active === "Project"
+                          ? "nav-link active"
+                          : "nav-link"
                       }
-                    }}
-                    style={
-                      this.props.active === "Project"
-                        ? activeMenuStyle
-                        : notActiveMenuStyle
-                    }
-                  >
-                    Project
-                  </button>
+                      style={
+                        this.props.active === "Project"
+                          ? activeMenuStyle
+                          : notActiveMenuStyle
+                      }
+                    >
+                      Project
+                    </button>
+                  </Link>
                 </li>
                 <li className="nav-item" role="presentation">
-                  <button
-                    className={
-                      this.props.active === "Dispute"
-                        ? "nav-link active"
-                        : "nav-link"
-                    }
-                    onClick={() => {
-                      if (this.props.location.pathname !== "/app/dispute") {
-                        this.setState({ redirect: "/app/dispute" });
+                  <Link style={{ textDecoration: "none" }} to={`/app/dispute/`}>
+                    <button
+                      className={
+                        this.props.active === "Dispute"
+                          ? "nav-link active"
+                          : "nav-link"
                       }
-                    }}
-                    style={
-                      this.props.active === "Dispute"
-                        ? activeMenuStyle
-                        : notActiveMenuStyle
-                    }
-                  >
-                    Dispute
-                  </button>
-                </li>
-                <li className="nav-item" role="presentation">
-                  <button
-                    className={
-                      this.props.active === "Profile"
-                        ? "nav-link active"
-                        : "nav-link"
-                    }
-                    style={
-                      this.props.active === "Profile"
-                        ? activeMenuStyle
-                        : notActiveMenuStyle
-                    }
-                  >
-                    Profile
-                  </button>
+                      style={
+                        this.props.active === "Dispute"
+                          ? activeMenuStyle
+                          : notActiveMenuStyle
+                      }
+                    >
+                      Dispute
+                    </button>
+                  </Link>
                 </li>
                 <div
                   className="navdivider"
@@ -210,75 +188,124 @@ class Header extends React.Component {
                   }}
                 >
                   {this.props.account ? (
-                    <div
-                      className="dropdown-toggle nav-link"
-                      data-toggle="dropdown"
-                      aria-expanded="true"
-                      style={{
-                        backgroundImage: avatar,
-                        backgroundPosition: "left",
-                        backgroundSize: "contain",
-                        backgroundRepeat: "no-repeat",
-                        paddingLeft: "50px",
-                      }}
-                    >
-                      <a
-                        href="#"
-                        style={{ color: "#000000", textDecoration: "none" }}
+                    <div>
+                      <div
+                        className="dropdown-toggle nav-link"
+                        data-toggle="dropdown"
+                        aria-expanded="true"
+                        style={{
+                          backgroundImage: avatar,
+                          backgroundPosition: "left",
+                          backgroundSize: "contain",
+                          backgroundRepeat: "no-repeat",
+                          paddingLeft: "50px",
+                        }}
                       >
-                        {this.props.account.address}
-                      </a>
-                      <Countdown
-                        date={getSessionExpire("secret")}
-                        onComplete={() => {
-                          window.$(".modal").modal("hide");
-                          window.$(".modal-backdrop").remove();
-                          removeSession("secret");
-                          toast.error("Session Expire, Please Login Again!");
-                          this.setState({
-                            redirect:
-                              "/auth?target=" + this.props.location.pathname,
-                          });
+                        <a
+                          href="#"
+                          style={{ color: "#000000", textDecoration: "none" }}
+                        >
+                          {this.props.account.address}
+                        </a>
+                        <Countdown
+                          date={getSessionExpire("secret")}
+                          onComplete={() => {
+                            window.$(".modal").modal("hide");
+                            window.$(".modal-backdrop").remove();
+                            removeSession("secret");
+                            toast.error("Session Expire, Please Login Again!");
+                            this.setState({
+                              redirect:
+                                "/auth?target=" + this.props.location.pathname,
+                            });
+                          }}
+                          renderer={({ minutes, seconds, completed }) => {
+                            if (completed) {
+                              return (
+                                <span
+                                  style={{
+                                    backgroundColor: "rgb(248,0,47)",
+                                    display: "inline-block",
+                                    minWidth: "80px",
+                                    color: "#ffffff",
+                                    marginLeft: "10px",
+                                    paddingLeft: "15px",
+                                    paddingRight: "15px",
+                                    fontWeight: "bold",
+                                  }}
+                                >
+                                  Expired!
+                                </span>
+                              );
+                            } else {
+                              return (
+                                <span
+                                  style={{
+                                    backgroundColor: "rgb(248,0,47)",
+                                    display: "inline-block",
+                                    minWidth: "80px",
+                                    color: "#ffffff",
+                                    marginLeft: "10px",
+                                    paddingLeft: "15px",
+                                    paddingRight: "15px",
+                                    fontWeight: "bold",
+                                    textAlign: "center",
+                                  }}
+                                >
+                                  {minutes}:{seconds}
+                                </span>
+                              );
+                            }
+                          }}
+                        />
+                      </div>
+                      <div
+                        className="dropdown-menu"
+                        role="menu"
+                        style={{
+                          animationName: "slideIn",
+                          animationDuration: "0.3s",
                         }}
-                        renderer={({ minutes, seconds, completed }) => {
-                          if (completed) {
-                            return (
-                              <span
-                                style={{
-                                  backgroundColor: "rgb(248,0,47)",
-                                  display: "inline-block",
-                                  minWidth: "80px",
-                                  color: "#ffffff",
-                                  marginLeft: "10px",
-                                  paddingLeft: "15px",
-                                  paddingRight: "15px",
-                                  fontWeight: "bold",
-                                }}
-                              >
-                                Expired!
-                              </span>
-                            );
-                          } else {
-                            return (
-                              <span
-                                style={{
-                                  backgroundColor: "rgb(248,0,47)",
-                                  display: "inline-block",
-                                  minWidth: "80px",
-                                  color: "#ffffff",
-                                  marginLeft: "10px",
-                                  paddingLeft: "15px",
-                                  paddingRight: "15px",
-                                  fontWeight: "bold",
-                                  textAlign: "center",
-                                }}
-                              >
-                                {minutes}:{seconds}
-                              </span>
-                            );
-                          }
-                        }}
-                      />
+                      >
+                        <Link
+                          className="dropdown-item"
+                          style={{ textDecoration: "none" }}
+                          to={`/app/profile/${this.props.account.address}`}
+                        >
+                          Profile
+                        </Link>
+                        <div className="dropdown-divider" role="presentation" />
+                        <a
+                          className="dropdown-item disabled"
+                          role="presentation"
+                          href="#"
+                          style={{ color: "#ef233c" }}
+                        >
+                          Balance:{" "}
+                          {this.props.account
+                            ? utils
+                                .convertBeddowsToLSK(this.props.account.balance)
+                                .toString() + " CLNC"
+                            : "(Loading...)"}
+                        </a>
+                        <button
+                          className="btn btn-primary rounded-0 top-button dropdown-item"
+                          type="button"
+                          data-toggle="modal"
+                          data-target={"#sendModal"}
+                        >
+                          Send CLNC
+                        </button>
+                        <div className="dropdown-divider" role="presentation" />
+                        <a
+                          className="dropdown-item"
+                          role="presentation"
+                          href="#"
+                          onClick={this.logout}
+                        >
+                          Log Out
+                        </a>
+                      </div>
                     </div>
                   ) : (
                     <div
@@ -292,45 +319,6 @@ class Header extends React.Component {
                       </div>
                     </div>
                   )}
-                  <div
-                    className="dropdown-menu"
-                    role="menu"
-                    style={{
-                      animationName: "slideIn",
-                      animationDuration: "0.3s",
-                    }}
-                  >
-                    <a
-                      className="dropdown-item disabled"
-                      role="presentation"
-                      href="#"
-                      style={{ color: "#ef233c" }}
-                    >
-                      Balance:{" "}
-                      {this.props.account
-                        ? utils
-                            .convertBeddowsToLSK(this.props.account.balance)
-                            .toString() + " CLNC"
-                        : "(Loading...)"}
-                    </a>
-                    <button
-                      className="btn btn-primary rounded-0 top-button dropdown-item"
-                      type="button"
-                      data-toggle="modal"
-                      data-target={"#sendModal"}
-                    >
-                      Send CLNC
-                    </button>
-                    <div className="dropdown-divider" role="presentation" />
-                    <a
-                      className="dropdown-item"
-                      role="presentation"
-                      href="#"
-                      onClick={this.logout}
-                    >
-                      Log Out
-                    </a>
-                  </div>
                 </li>
               </ul>
             </div>

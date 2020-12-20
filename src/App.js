@@ -8,6 +8,7 @@ import Browse from "./component/app/app";
 import BrowseProject from "./component/app/browseProject";
 import Project from "./component/project/project";
 import BrowseDispute from "./component/app/browseDispute";
+import Profile from "./component/profile/profile";
 
 function App() {
   return (
@@ -31,6 +32,9 @@ function App() {
         </Route>
         <Route exact={true} path="/app/project/:projectPublicKey">
           <Project />
+        </Route>
+        <Route exact={true} path="/app/profile/:address">
+          <Profile />
         </Route>
       </Switch>
     </Router>

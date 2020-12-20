@@ -53,8 +53,13 @@ class ProjectStatusJourneyDialog extends React.PureComponent {
         status: STATUS.PROJECT.TERMINATED,
         description:
           "Workers have submitted submissions or revisions, but after: " +
-          MISCELLANEOUS.SUBMIT_TO_TERMINATE_MIN_PERIOD +
-          " day(s) or after the deadline specified in the project contract, the employer does accept the submission. Therefore, workers decide to terminate the project, and funds from the employer are sent to workers according to the portion and the provisions",
+          (
+            MISCELLANEOUS.SUBMIT_TO_TERMINATE_MIN_PERIOD /
+            60 /
+            60 /
+            24
+          ).toString() +
+          " day(s) or after the deadline specified in the project contract, the employer does accept the submission. Therefore, workers decide to terminate the project, and funds from the employer are sent to workers according to the portion and the provisions. This status is final, so dispute can't be opened after termination",
       },
       {
         status: STATUS.PROJECT.DISPUTED,

@@ -81,7 +81,7 @@ class EmployerAcceptFinishDialog extends React.Component {
           style={{
             paddingRight: "24px",
             paddingLeft: "24px",
-            backgroundColor: "#3ad29f",
+            backgroundColor: "#00b679",
             marginRight: "10px",
             fontFamily: "Poppins, sans-serif",
             marginBottom: "10px",

@@ -7,6 +7,31 @@ const { getAddressFromPublicKey } = require("@liskhq/lisk-cryptography");
 
 const client = new APIClient(config.nodes);
 
+export const getTransactionName = (type) => {
+  const transactionRegistry = {
+    8: "Transfer Transaction",
+    101: "Register Employer Transaction",
+    102: "Register Worker Transaction",
+    103: "Register Solver Transaction",
+    104: "Post Project Transaction",
+    105: "Post Proposal Transaction",
+    106: "Join Team Transaction",
+    107: "Start Work Transaction",
+    108: "Submit Contribution Transaction",
+    109: "Leader Request Revision Transaction",
+    110: "Submit Work Transaction",
+    111: "Employer Request Revision Transaction",
+    112: "Finish Work Transaction",
+    113: "Claim Prize Transaction",
+    114: "Terminate Work Transaction",
+    115: "Cancel Work Transaction",
+    116: "Open Dispute Transaction",
+    117: "Vote Dispute Transaction",
+    118: "Close Dispute Transaction",
+  };
+  return transactionRegistry[type];
+};
+
 export const saveFile = async (filePublicKey) => {
   let fileData = null;
   let title = "";
@@ -59,6 +84,9 @@ export const getAccounts = (options) => client.accounts.get(options);
 
 export const getCategory = () =>
   fetch(config.extendedAPI + "/api/constant/category");
+
+export const getBatch = (publicKeyList) =>
+  fetch(config.extendedAPI + "/api/batch?q=" + publicKeyList.toString());
 
 export const getAvailableProjects = (offset, limit) =>
   fetch(

@@ -70,7 +70,7 @@ class Project extends React.Component {
     return getSession("secret") ? (
       <div>
         <Header account={this.state.account} active="Browse" />
-        {Object.keys(this.state.project).length > 0 ? (
+        {Object.keys(this.state.project).length > 0 && this.state.account ? (
           this.state.project !== undefined ? (
             <div
               className="container"

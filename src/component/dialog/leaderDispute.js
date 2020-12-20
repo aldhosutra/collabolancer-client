@@ -402,7 +402,7 @@ class LeaderDisputeDialog extends React.Component {
                             placeholder={
                               "Make sure it is not too short, or not too long, maximum is: " +
                               Math.max(
-                                MISCELLANEOUS.DISPUTE_MINIMAL_OPEN_PERIOD,
+                                MISCELLANEOUS.DISPUTE_MAXIMAL_OPEN_PERIOD,
                                 this.props.project.asset.maxTime
                               ) +
                               " days!"

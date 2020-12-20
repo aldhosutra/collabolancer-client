@@ -27,6 +27,17 @@ class NoData extends React.PureComponent {
               alt="No Data"
               src={NoDataLogo}
             />
+            {this.props.code ? (
+              <h4
+                style={{
+                  fontFamily: "Poppins, sans-serif",
+                  textAlign: "center",
+                  marginTop: ".5rem",
+                }}
+              >
+                <strong>{this.props.code}</strong>
+              </h4>
+            ) : null}
             <p
               style={{
                 fontFamily: "Poppins, sans-serif",

@@ -8,6 +8,7 @@ import { Redirect } from "react-router-dom";
 import AvailableProjectList from "./availableProjectList";
 import PostProjectDialog from "../dialog/postProjectDialog";
 import "./browse.css";
+import Loading from "../general/loading";
 const { ACCOUNT } = require("../../transactions/constants");
 const {
   getAddressAndPublicKeyFromPassphrase,
@@ -58,38 +59,44 @@ class BrowseProject extends React.Component {
     return getSession("secret") ? (
       <div>
         <Header account={this.state.account} active="Project" />
-        <div
-          className="container"
-          style={{
-            marginTop: "30px",
-            marginBottom: "30px",
-          }}
-        >
-          <div className="row">
-            <div className="col" style={{ marginBottom: "16px" }}>
-              <p
-                className="d-xl-flex align-items-xl-center top-available"
-                style={{
-                  fontFamily: "Poppins, sans-serif",
-                  fontSize: "24px",
-                  fontWeight: "bold",
-                  marginBottom: "0px",
-                }}
-              >
-                {this.state.account ? `Available Project` : "Loading..."}
-              </p>
+        {this.state.account ? (
+          <div>
+            <div
+              className="container"
+              style={{
+                marginTop: "30px",
+                marginBottom: "30px",
+              }}
+            >
+              <div className="row">
+                <div className="col" style={{ marginBottom: "16px" }}>
+                  <p
+                    className="d-xl-flex align-items-xl-center top-available"
+                    style={{
+                      fontFamily: "Poppins, sans-serif",
+                      fontSize: "24px",
+                      fontWeight: "bold",
+                      marginBottom: "0px",
+                    }}
+                  >
+                    {this.state.account ? `Available Project` : "Loading..."}
+                  </p>
+                </div>
+                {this.state.account &&
+                this.state.account.asset.type === ACCOUNT.EMPLOYER ? (
+                  <PostProjectDialog category={this.state.category} />
+                ) : (
+                  <div></div>
+                )}
+              </div>
             </div>
-            {this.state.account &&
-            this.state.account.asset.type === ACCOUNT.EMPLOYER ? (
-              <PostProjectDialog category={this.state.category} />
-            ) : (
-              <div></div>
-            )}
+            <div className="container mb-5">
+              <AvailableProjectList limit="5" />
+            </div>
           </div>
-        </div>
-        <div className="container mb-5">
-          <AvailableProjectList limit="5" />
-        </div>
+        ) : (
+          <Loading />
+        )}
         <Quote />
         <Footer />
       </div>
