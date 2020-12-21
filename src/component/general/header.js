@@ -180,7 +180,6 @@ class Header extends React.Component {
                   className="navdivider"
                   style={{ borderLeft: "1px solid #dee2e6" }}
                 />
-
                 {this.props.account && this.props.account !== guestProfile ? (
                   <li
                     className="dropdown nav-item"
@@ -219,11 +218,10 @@ class Header extends React.Component {
                             window.$(".modal").modal("hide");
                             window.$(".modal-backdrop").remove();
                             removeSession("secret");
-                            toast.error("Session Expire, Please Login Again!");
-                            this.setState({
-                              redirect:
-                                "/auth?target=" + this.props.location.pathname,
-                            });
+                            window.location.reload();
+                            toast.error(
+                              "Session Expire, Please Authenticate Again!"
+                            );
                           }}
                           renderer={({ minutes, seconds, completed }) => {
                             if (completed) {
@@ -327,7 +325,7 @@ class Header extends React.Component {
                         width: "250px",
                       }}
                     >
-                      <Link to="/auth">
+                      <Link to={"/auth?target=" + this.props.location.pathname}>
                         <div
                           className="btn btn-light border rounded-0 action-button"
                           role="button"

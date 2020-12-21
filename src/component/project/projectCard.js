@@ -1,6 +1,5 @@
 import React from "react";
 import { Link } from "react-router-dom";
-import { profileParser } from "../../utils/tools";
 import { renderAvatar } from "../avatar";
 const { htmlToText } = require("html-to-text");
 const { utils } = require("@liskhq/lisk-transactions");
@@ -84,9 +83,7 @@ class ProjectCard extends React.PureComponent {
                   color: "black",
                 }}
               >
-                <strong>
-                  {profileParser(this.props.project.asset.employer)}
-                </strong>
+                <strong>{this.props.project.asset.employer}</strong>
               </h6>
             </div>
             <p
