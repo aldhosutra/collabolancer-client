@@ -148,7 +148,7 @@ class EmployerCancelDialog extends React.Component {
                         marginBottom: "16px",
                         display: "block",
                       }}
-                      alt="Solo Proposal"
+                      alt="Cancel Project"
                       src={cancelLogo}
                     />
                     <h3 className="modal-title w-100 dark-grey-text font-weight-bold my-1 text-center">
@@ -287,7 +287,7 @@ class EmployerCancelDialog extends React.Component {
                         marginBottom: "16px",
                         display: "block",
                       }}
-                      alt="Solo Proposal"
+                      alt="Cancel Project"
                       src={EmployerCancelLogo}
                     />
                     <h3 className="modal-title w-100 dark-grey-text font-weight-bold my-1 text-center">

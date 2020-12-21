@@ -3,6 +3,7 @@ import ProjectActivityLogo from "../../asset/undraw_Activity_tracker_re_2lvv.svg
 import "./modal.css";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import ActivityCard from "../profile/activityCard";
+import NoData from "../general/nodata";
 
 class ProjectActivityDialog extends React.Component {
   constructor() {
@@ -68,7 +69,7 @@ class ProjectActivityDialog extends React.Component {
                       marginBottom: "16px",
                       display: "block",
                     }}
-                    alt="Solo Proposal"
+                    alt="Project Activity"
                     src={ProjectActivityLogo}
                   />
                   <h3 className="modal-title w-100 dark-grey-text font-weight-bold my-1 text-center">
@@ -106,13 +107,32 @@ class ProjectActivityDialog extends React.Component {
                       marginBottom: "16px",
                     }}
                   >
-                    {this.props.project.asset.activity.map((activity) => (
-                      <ActivityCard
-                        key={activity.id}
-                        activity={activity}
-                        noBalance={true}
-                      />
-                    ))}
+                    {this.props.project.asset.activity.length > 0 ? (
+                      this.props.project.asset.activity.map((activity) => (
+                        <ActivityCard
+                          key={activity.id}
+                          activity={activity}
+                          noBalance={true}
+                        />
+                      ))
+                    ) : (
+                      <div
+                        style={{
+                          padding: "20px",
+                          borderWidth: 2,
+                          borderRadius: 2,
+                          borderColor: "#eeeeee",
+                          borderStyle: "dashed",
+                          marginBottom: "28px",
+                        }}
+                      >
+                        <NoData
+                          height={1}
+                          message="No Activity Yet"
+                          reload={"false"}
+                        />
+                      </div>
+                    )}
                   </div>
                 </div>
               </div>

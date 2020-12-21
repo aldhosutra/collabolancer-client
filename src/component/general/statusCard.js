@@ -173,7 +173,7 @@ class StatusCard extends React.PureComponent {
                 marginBottom: "16px",
                 display: "block",
               }}
-              alt="Solo Proposal"
+              alt="Status"
               src={imgLogo}
             />
             <h6 className="w-100 dark-grey-text font-weight-bold my-1 text-center">

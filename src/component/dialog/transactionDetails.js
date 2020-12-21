@@ -127,7 +127,7 @@ class TransactionDetailsDialog extends React.Component {
                       marginBottom: "16px",
                       display: "block",
                     }}
-                    alt="Solo Proposal"
+                    alt="Transaction Details"
                     src={TransactionDetailsLogo}
                   />
                   <h3 className="modal-title w-100 dark-grey-text font-weight-bold my-1 text-center">

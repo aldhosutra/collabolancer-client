@@ -4,9 +4,10 @@ import {
   getAccounts,
   getProject,
   getSession,
+  guestProfile,
   profileParser,
 } from "../../utils/tools";
-import { Redirect, withRouter } from "react-router-dom";
+import { withRouter } from "react-router-dom";
 import Quote from "../general/quote";
 import Footer from "../general/footer";
 import { renderAvatar } from "../avatar";
@@ -63,6 +64,8 @@ class Project extends React.Component {
           this.setState({ account: res.data[0] });
         }
       });
+    } else {
+      this.setState({ account: guestProfile });
     }
   }
 
@@ -72,7 +75,7 @@ class Project extends React.Component {
   }
 
   render() {
-    return getSession("secret") ? (
+    return (
       <div>
         <Header account={this.state.account} active="Browse" />
         {Object.keys(this.state.project).length > 0 && this.state.account ? (
@@ -165,8 +168,6 @@ class Project extends React.Component {
         <Quote />
         <Footer />
       </div>
-    ) : (
-      <Redirect push to={"/auth"} />
     );
   }
 }

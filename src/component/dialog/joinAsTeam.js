@@ -164,7 +164,7 @@ class JoinAsTeamDialog extends React.Component {
                         marginBottom: "16px",
                         display: "block",
                       }}
-                      alt="Solo Proposal"
+                      alt="Join as Team"
                       src={JoinAsTeamLogo}
                     />
                     <h3

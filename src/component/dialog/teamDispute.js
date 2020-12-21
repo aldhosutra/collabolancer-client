@@ -208,7 +208,7 @@ class TeamDisputeDialog extends React.Component {
                             marginBottom: "16px",
                             display: "block",
                           }}
-                          alt="Solo Proposal"
+                          alt="Open Team vs Leader Dispute"
                           src={disputeLogo}
                         />
                         <h3 className="modal-title w-100 dark-grey-text font-weight-bold my-1 text-center">
@@ -520,7 +520,7 @@ class TeamDisputeDialog extends React.Component {
                         marginBottom: "16px",
                         display: "block",
                       }}
-                      alt="Solo Proposal"
+                      alt="Hold On"
                       src={holdOnLogo}
                     />
                     <h3 className="modal-title w-100 dark-grey-text font-weight-bold my-1 text-center">

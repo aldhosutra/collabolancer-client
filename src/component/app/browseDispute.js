@@ -3,8 +3,7 @@ import React from "react";
 import Footer from "../general/footer";
 import Header from "../general/header";
 import Quote from "../general/quote";
-import { getAccounts, getSession } from "../../utils/tools";
-import { Redirect } from "react-router-dom";
+import { getAccounts, getSession, guestProfile } from "../../utils/tools";
 import AvailableDisputeList from "./availableDisputeList";
 import "./browse.css";
 import Loading from "../general/loading";
@@ -36,6 +35,8 @@ class BrowseDispute extends React.Component {
           this.setState({ account: res.data[0] });
         }
       });
+    } else {
+      this.setState({ account: guestProfile });
     }
   }
 
@@ -44,7 +45,7 @@ class BrowseDispute extends React.Component {
   }
 
   render() {
-    return getSession("secret") ? (
+    return (
       <div>
         <Header account={this.state.account} active="Dispute" />
         {this.state.account ? (
@@ -82,8 +83,6 @@ class BrowseDispute extends React.Component {
         <Quote />
         <Footer />
       </div>
-    ) : (
-      <Redirect push to={"/auth"} />
     );
   }
 }

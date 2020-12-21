@@ -40,6 +40,8 @@ class Browse extends React.Component {
           }
         }
       });
+    } else {
+      this.setState({ redirect: "/app/project" });
     }
   }
 
@@ -64,7 +66,7 @@ class Browse extends React.Component {
               display: "block",
               marginBottom: "16px",
             }}
-            alt="Solo Proposal"
+            alt="Collabolancer"
             src={logoColor}
           />
           <img
@@ -76,7 +78,7 @@ class Browse extends React.Component {
               marginBottom: "32px",
               display: "block",
             }}
-            alt="Solo Proposal"
+            alt="Loading"
             src={loadingLogo}
           />
           <h3

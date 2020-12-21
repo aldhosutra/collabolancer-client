@@ -3,8 +3,12 @@ import React from "react";
 import Footer from "../general/footer";
 import Header from "../general/header";
 import Quote from "../general/quote";
-import { getAccounts, getCategory, getSession } from "../../utils/tools";
-import { Redirect } from "react-router-dom";
+import {
+  getAccounts,
+  getCategory,
+  getSession,
+  guestProfile,
+} from "../../utils/tools";
 import AvailableProjectList from "./availableProjectList";
 import PostProjectDialog from "../dialog/postProjectDialog";
 import "./browse.css";
@@ -48,6 +52,8 @@ class BrowseProject extends React.Component {
           }
         }
       });
+    } else {
+      this.setState({ account: guestProfile });
     }
   }
 
@@ -56,7 +62,7 @@ class BrowseProject extends React.Component {
   }
 
   render() {
-    return getSession("secret") ? (
+    return (
       <div>
         <Header account={this.state.account} active="Project" />
         {this.state.account ? (
@@ -100,8 +106,6 @@ class BrowseProject extends React.Component {
         <Quote />
         <Footer />
       </div>
-    ) : (
-      <Redirect push to={"/auth"} />
     );
   }
 }

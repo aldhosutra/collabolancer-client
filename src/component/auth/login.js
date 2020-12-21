@@ -117,6 +117,18 @@ class Login extends React.Component {
           </div>
         </div>
         <div className="d-flex justify-content-xl-center">
+          <Link
+            className="link"
+            style={{ textDecoration: "none", marginRight: "8px" }}
+            to={`/app/project/`}
+          >
+            <div
+              className="text-center border"
+              style={{ width: "200px", padding: ".375rem .75rem" }}
+            >
+              Explore as Guest
+            </div>
+          </Link>
           <button
             className="btn btn-primary text-center border rounded-0"
             type="button"
@@ -131,7 +143,7 @@ class Login extends React.Component {
               }
             }}
           >
-            Sign In
+            <strong>Sign In</strong>
           </button>
         </div>
       </div>,

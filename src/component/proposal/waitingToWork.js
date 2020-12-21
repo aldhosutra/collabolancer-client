@@ -24,7 +24,7 @@ class WaitingToWork extends React.PureComponent {
                 marginBottom: "16px",
                 display: "block",
               }}
-              alt="Solo Proposal"
+              alt="Waiting to Work"
               src={WaitingToWorkLogo}
             />
             <p

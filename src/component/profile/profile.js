@@ -3,8 +3,8 @@ import React from "react";
 import Footer from "../general/footer";
 import Header from "../general/header";
 import Quote from "../general/quote";
-import { getAccounts, getSession } from "../../utils/tools";
-import { Redirect, withRouter } from "react-router-dom";
+import { getAccounts, getSession, guestProfile } from "../../utils/tools";
+import { withRouter } from "react-router-dom";
 import Loading from "../general/loading";
 import { toast } from "react-toastify";
 import { ACCOUNT } from "../../transactions/constants";
@@ -78,6 +78,8 @@ class Profile extends React.Component {
           this.setState({ account: res.data[0] });
         }
       });
+    } else {
+      this.setState({ account: guestProfile });
     }
   }
 
@@ -114,7 +116,7 @@ class Profile extends React.Component {
           break;
       }
     }
-    return getSession("secret") ? (
+    return (
       <div>
         <Header account={this.state.account} />
         {this.state.profile ? (
@@ -143,8 +145,6 @@ class Profile extends React.Component {
         <Quote />
         <Footer />
       </div>
-    ) : (
-      <Redirect push to={"/auth"} />
     );
   }
 }

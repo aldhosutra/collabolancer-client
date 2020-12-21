@@ -174,7 +174,7 @@ class LeaderRejectDialog extends React.Component {
                         marginBottom: "16px",
                         display: "block",
                       }}
-                      alt="Solo Proposal"
+                      alt="Leader Reject Contribution"
                       src={LeaderRejectLogo}
                     />
                     <h3 className="modal-title w-100 dark-grey-text font-weight-bold my-1 text-center">

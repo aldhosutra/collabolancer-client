@@ -5,7 +5,11 @@ import { Link, Redirect, withRouter } from "react-router-dom";
 import { toast } from "react-toastify";
 import "./header.css";
 import { renderAvatar } from "../avatar";
-import { getSessionExpire, removeSession } from "../../utils/tools";
+import {
+  getSessionExpire,
+  guestProfile,
+  removeSession,
+} from "../../utils/tools";
 import Countdown from "react-countdown";
 import SendCLNCDialog from "../dialog/sendCLNC";
 const { utils } = require("@liskhq/lisk-transactions");
@@ -53,10 +57,6 @@ class Header extends React.Component {
       border: "none",
       outline: "none",
     };
-    const avatar = `url('data:image/svg+xml,${renderAvatar(
-      this.props.account ? this.props.account.address : "",
-      250
-    )}')`;
     return (
       <div style={{ fontFamily: "Poppins, sans-serif", height: "70px" }}>
         <nav
@@ -180,21 +180,27 @@ class Header extends React.Component {
                   className="navdivider"
                   style={{ borderLeft: "1px solid #dee2e6" }}
                 />
-                <li
-                  className="dropdown nav-item"
-                  style={{
-                    marginLeft: "20px",
-                    marginRight: "20px",
-                  }}
-                >
-                  {this.props.account ? (
+
+                {this.props.account && this.props.account !== guestProfile ? (
+                  <li
+                    className="dropdown nav-item"
+                    style={{
+                      marginLeft: "20px",
+                      marginRight: "20px",
+                    }}
+                  >
                     <div>
                       <div
                         className="dropdown-toggle nav-link"
                         data-toggle="dropdown"
                         aria-expanded="true"
                         style={{
-                          backgroundImage: avatar,
+                          backgroundImage: `url('data:image/svg+xml,${renderAvatar(
+                            this.props.account
+                              ? this.props.account.address
+                              : "",
+                            250
+                          )}')`,
                           backgroundPosition: "left",
                           backgroundSize: "contain",
                           backgroundRepeat: "no-repeat",
@@ -307,19 +313,38 @@ class Header extends React.Component {
                         </a>
                       </div>
                     </div>
-                  ) : (
+                  </li>
+                ) : (
+                  <li
+                    className="dropdown nav-item"
+                    style={{
+                      margin: "auto",
+                    }}
+                  >
                     <div
                       className="d-flex justify-content-center"
                       style={{
                         width: "250px",
                       }}
                     >
-                      <div className="spinner-border text-danger" role="status">
-                        <span className="sr-only">Loading...</span>
-                      </div>
+                      <Link to="/auth">
+                        <div
+                          className="btn btn-light border rounded-0 action-button"
+                          role="button"
+                          style={{
+                            backgroundColor: "#ef233c",
+                            width: "200px",
+                            fontFamily: "Poppins, sans-serif",
+                            fontSize: "14px",
+                            color: "white",
+                          }}
+                        >
+                          <strong>Authenticate</strong>
+                        </div>
+                      </Link>
                     </div>
-                  )}
-                </li>
+                  </li>
+                )}
               </ul>
             </div>
           </div>

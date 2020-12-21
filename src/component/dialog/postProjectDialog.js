@@ -194,7 +194,7 @@ class PostProjectDialog extends React.Component {
                           marginBottom: "16px",
                           display: "block",
                         }}
-                        alt="Solo Proposal"
+                        alt="Post Project Logo"
                         src={PostProjectDialogLogo}
                       />
                       <h3

@@ -165,7 +165,7 @@ class LeaderTerminateDialog extends React.Component {
                         marginBottom: "16px",
                         display: "block",
                       }}
-                      alt="Solo Proposal"
+                      alt="Terminate Project"
                       src={terminatedLogo}
                     />
                     <h3 className="modal-title w-100 dark-grey-text font-weight-bold my-1 text-center">
@@ -306,7 +306,7 @@ class LeaderTerminateDialog extends React.Component {
                         marginBottom: "16px",
                         display: "block",
                       }}
-                      alt="Solo Proposal"
+                      alt="Terminate Project"
                       src={LeaderTerminateLogo}
                     />
                     <h3 className="modal-title w-100 dark-grey-text font-weight-bold my-1 text-center">

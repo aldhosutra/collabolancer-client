@@ -137,28 +137,37 @@ export const getProject = (projectPublicKey, parsed, fullFileData) => {
   );
 };
 
+export const guestProfile = {
+  address: "guest",
+  publicKey: "guest",
+  balance: "0",
+  asset: {
+    type: "guest",
+  },
+};
+
 export const getSession = (key) => {
-  if (sessionStorage.getItem(key) === null) {
+  if (localStorage.getItem(key) === null) {
     return null;
   }
-  if (Date.now() > JSON.parse(sessionStorage.getItem(key)).expireAt) {
+  if (Date.now() > JSON.parse(localStorage.getItem(key)).expireAt) {
     toast.error("Session Expire, Please Login Again!");
     removeSession(key);
     return null;
   } else {
-    return JSON.parse(sessionStorage.getItem(key)).data;
+    return JSON.parse(localStorage.getItem(key)).data;
   }
 };
 
 export const getSessionExpire = (key) => {
-  if (sessionStorage.getItem(key) === null) {
+  if (localStorage.getItem(key) === null) {
     return null;
   }
-  return JSON.parse(sessionStorage.getItem(key)).expireAt;
+  return JSON.parse(localStorage.getItem(key)).expireAt;
 };
 
 export const setSession = (key, data) => {
-  sessionStorage.setItem(
+  localStorage.setItem(
     key,
     JSON.stringify({
       expireAt: Date.now() + config.sessionExpireMilliseconds,
@@ -168,5 +177,5 @@ export const setSession = (key, data) => {
 };
 
 export const removeSession = (key) => {
-  sessionStorage.removeItem(key);
+  localStorage.removeItem(key);
 };

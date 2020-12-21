@@ -28,18 +28,6 @@ class DisputeCard extends React.PureComponent {
 
   render() {
     const bgColor = this.state.isHover ? "#EDF2F4" : "white";
-    const litigantAvatar = `url('data:image/svg+xml,${renderAvatar(
-      this.props.dispute.asset.litigant
-        ? this.props.dispute.asset.litigant
-        : "",
-      250
-    )}')`;
-    const defendantAvatar = `url('data:image/svg+xml,${renderAvatar(
-      this.props.dispute.asset.defendant
-        ? this.props.dispute.asset.defendant
-        : "",
-      250
-    )}')`;
     return (
       <Link
         style={{ textDecoration: "none" }}
@@ -94,7 +82,12 @@ class DisputeCard extends React.PureComponent {
               </h6>
               <h6
                 style={{
-                  backgroundImage: litigantAvatar,
+                  backgroundImage: `url('data:image/svg+xml,${renderAvatar(
+                    this.props.dispute.asset.litigant
+                      ? this.props.dispute.asset.litigant
+                      : "",
+                    250
+                  )}')`,
                   backgroundPosition: "left",
                   backgroundRepeat: "no-repeat",
                   backgroundSize: "contain",
@@ -121,7 +114,12 @@ class DisputeCard extends React.PureComponent {
               </h6>
               <h6
                 style={{
-                  backgroundImage: defendantAvatar,
+                  backgroundImage: `url('data:image/svg+xml,${renderAvatar(
+                    this.props.dispute.asset.defendant
+                      ? this.props.dispute.asset.defendant
+                      : "",
+                    250
+                  )}')`,
                   backgroundPosition: "left",
                   backgroundRepeat: "no-repeat",
                   backgroundSize: "contain",

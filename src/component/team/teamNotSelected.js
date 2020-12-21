@@ -24,7 +24,7 @@ class TeamNotSelected extends React.PureComponent {
                 marginBottom: "16px",
                 display: "block",
               }}
-              alt="Solo Proposal"
+              alt="Team not Selected"
               src={TeamNotSelectedLogo}
             />
             <p

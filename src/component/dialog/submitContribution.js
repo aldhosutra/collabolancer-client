@@ -161,7 +161,7 @@ class SubmitContributionDialog extends React.Component {
                       marginBottom: "16px",
                       display: "block",
                     }}
-                    alt="Solo Proposal"
+                    alt="Submit Contribution"
                     src={SubmitContributionLogo}
                   />
                   <h3

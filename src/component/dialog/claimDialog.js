@@ -146,7 +146,7 @@ class ClaimDialog extends React.Component {
                         marginBottom: "16px",
                         display: "block",
                       }}
-                      alt="Solo Proposal"
+                      alt="Claim Prize"
                       src={claimedLogo}
                     />
                     <h3 className="modal-title w-100 dark-grey-text font-weight-bold my-1 text-center">
@@ -245,7 +245,7 @@ class ClaimDialog extends React.Component {
                         marginBottom: "16px",
                         display: "block",
                       }}
-                      alt="Solo Proposal"
+                      alt="Claim Prize"
                       src={ClaimLogo}
                     />
                     <h3 className="modal-title w-100 dark-grey-text font-weight-bold my-1 text-center">

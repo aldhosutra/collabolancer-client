@@ -106,7 +106,7 @@ class CloseDisputeDialog extends React.Component {
                     marginBottom: "16px",
                     display: "block",
                   }}
-                  alt="Solo Proposal"
+                  alt="Close Dispute"
                   src={CloseDisputeLogo}
                 />
                 <h3 className="modal-title w-100 dark-grey-text font-weight-bold my-1 text-center">

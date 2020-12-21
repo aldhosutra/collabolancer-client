@@ -97,7 +97,7 @@ class PitchingDialog extends React.PureComponent {
                       marginBottom: "16px",
                       display: "block",
                     }}
-                    alt="Solo Proposal"
+                    alt="Pitching Logo"
                     src={PitchingLogo}
                   />
                   <h3

@@ -67,7 +67,7 @@ class DisputeReportDialog extends React.Component {
                       marginBottom: "16px",
                       display: "block",
                     }}
-                    alt="Solo Proposal"
+                    alt="Dispute Report"
                     src={DisputeReportLogo}
                   />
                   <h3 className="modal-title w-100 dark-grey-text font-weight-bold my-1 text-center">

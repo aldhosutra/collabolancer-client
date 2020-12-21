@@ -24,7 +24,7 @@ class WorkinggOnIt extends React.PureComponent {
                 marginBottom: "16px",
                 display: "block",
               }}
-              alt="Solo Proposal"
+              alt="Working on It"
               src={WorkinggOnItLogo}
             />
             <p
