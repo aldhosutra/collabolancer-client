@@ -6,6 +6,7 @@ import SubmitContributionDialog from "../dialog/submitContribution";
 import CompactContractDetail from "../general/compactContractDetails";
 import TeamDisputeDialog from "../dialog/teamDispute";
 import StatusNoteDialog from "../dialog/statusNoteDialog";
+import { profileParser } from "../../utils/tools";
 
 class Team extends React.Component {
   constructor() {
@@ -94,7 +95,7 @@ class Team extends React.Component {
               >
                 {teamPublicKey === 0
                   ? "No Team Applied"
-                  : this.props.team.asset.worker}
+                  : profileParser(this.props.team.asset.worker)}
               </p>
             </div>
             <div className="col d-flex justify-content-lg-end details">

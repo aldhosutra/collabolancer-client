@@ -5,7 +5,7 @@ import disputeLogo from "../../asset/undraw_judge_katerina_limpitsouni_ny1q.svg"
 import holdOnLogo from "../../asset/undraw_loading_frh4.svg";
 import { renderAvatar } from "../avatar";
 import { openDispute } from "../../utils/transaction";
-import { getSession } from "../../utils/tools";
+import { getSession, profileParser } from "../../utils/tools";
 import config from "../../config/config.json";
 import { toast } from "react-toastify";
 import CompactContractCard from "../general/compactContractCard";
@@ -273,7 +273,15 @@ class LeaderDisputeDialog extends React.Component {
                                 >
                                   Litigant [YOU]
                                 </p>
-                                <strong>{this.props.account.address}</strong>
+                                <strong>
+                                  {profileParser(
+                                    this.props.account.address,
+                                    () => {
+                                      window.$(".modal").modal("hide");
+                                      window.$(".modal-backdrop").remove();
+                                    }
+                                  )}
+                                </strong>
                               </div>
                             </div>
                             <div className="col-lg-2">
@@ -307,7 +315,13 @@ class LeaderDisputeDialog extends React.Component {
                                   Defendant [Employer]
                                 </p>
                                 <strong>
-                                  {this.props.project.asset.employer}
+                                  {profileParser(
+                                    this.props.project.asset.employer,
+                                    () => {
+                                      window.$(".modal").modal("hide");
+                                      window.$(".modal-backdrop").remove();
+                                    }
+                                  )}
                                 </strong>
                               </div>
                             </div>

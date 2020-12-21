@@ -15,15 +15,76 @@ class TransactionDetailsDialog extends React.Component {
     };
   }
 
-  async componentDidMount() {
-    await getTransactions({ id: this.props.transactionId }).then((data) => {
-      this.setState((state) => {
-        return {
-          ...state,
-          transaction: data.data[0],
-        };
+  async componentDidUpdate() {
+    if (
+      (window.$("#" + this.props.id).data("bs.modal") || {})._isShown &&
+      this.state.transaction === null
+    ) {
+      await getTransactions({ id: this.props.transactionId }).then((data) => {
+        this.setState((state) => {
+          return {
+            ...state,
+            transaction: data.data[0],
+          };
+        });
       });
-    });
+    }
+  }
+
+  renderTransactionAsset(data, key) {
+    let subItem = null;
+    let isObject = false;
+    if (typeof data === "object") {
+      if (!data || data.length === 0 || data === "") {
+        subItem = (
+          <p
+            style={{
+              fontFamily: "Poppins, sans-serif",
+              fontSize: "14px",
+            }}
+          >
+            {"null"}
+          </p>
+        );
+      } else {
+        isObject = true;
+        subItem = Object.keys(data).map((subKey, subIndex) => {
+          return this.renderTransactionAsset(data[subKey], subKey);
+        });
+      }
+    } else {
+      subItem = (
+        <p
+          style={{
+            fontFamily: "Poppins, sans-serif",
+            fontSize: "14px",
+          }}
+        >
+          {data ? data.toString() : "null"}
+        </p>
+      );
+    }
+    return (
+      <div
+        className="row"
+        key={"transaction-" + this.props.transactionId + "-asset-" + key}
+      >
+        <div className="col-lg-3 details">
+          <h6
+            style={{
+              fontFamily: "Poppins, sans-serif",
+              marginBottom: "1rem",
+            }}
+          >
+            <strong>
+              {key}
+              {isObject ? ` [obj]` : null}
+            </strong>
+          </h6>
+        </div>
+        <div className="col details">{subItem}</div>
+      </div>
+    );
   }
 
   render() {
@@ -47,8 +108,9 @@ class TransactionDetailsDialog extends React.Component {
                   <button
                     type="button"
                     className="close"
-                    data-dismiss="modal"
-                    aria-label="Close"
+                    onClick={() => {
+                      window.$("#" + this.props.id).modal("hide");
+                    }}
                   >
                     <span aria-hidden="true">×</span>
                   </button>
@@ -110,7 +172,7 @@ class TransactionDetailsDialog extends React.Component {
                         }}
                       >
                         <div className="row">
-                          <div className="col-lg-4 details">
+                          <div className="col-lg-3 details">
                             <h6 style={{ fontFamily: "Poppins, sans-serif" }}>
                               <strong>Transaction Type</strong>
                             </h6>
@@ -128,7 +190,7 @@ class TransactionDetailsDialog extends React.Component {
                           </div>
                         </div>
                         <div className="row">
-                          <div className="col-lg-4 details">
+                          <div className="col-lg-3 details">
                             <h6 style={{ fontFamily: "Poppins, sans-serif" }}>
                               <strong>ID</strong>
                             </h6>
@@ -145,7 +207,7 @@ class TransactionDetailsDialog extends React.Component {
                           </div>
                         </div>
                         <div className="row">
-                          <div className="col-lg-4 details">
+                          <div className="col-lg-3 details">
                             <h6 style={{ fontFamily: "Poppins, sans-serif" }}>
                               <strong>Block ID</strong>
                             </h6>
@@ -162,7 +224,7 @@ class TransactionDetailsDialog extends React.Component {
                           </div>
                         </div>
                         <div className="row">
-                          <div className="col-lg-4 details">
+                          <div className="col-lg-3 details">
                             <h6 style={{ fontFamily: "Poppins, sans-serif" }}>
                               <strong>Block Height</strong>
                             </h6>
@@ -179,7 +241,7 @@ class TransactionDetailsDialog extends React.Component {
                           </div>
                         </div>
                         <div className="row">
-                          <div className="col-lg-4 details">
+                          <div className="col-lg-3 details">
                             <h6 style={{ fontFamily: "Poppins, sans-serif" }}>
                               <strong>Fee</strong>
                             </h6>
@@ -199,7 +261,7 @@ class TransactionDetailsDialog extends React.Component {
                           </div>
                         </div>
                         <div className="row">
-                          <div className="col-lg-4 details">
+                          <div className="col-lg-3 details">
                             <h6 style={{ fontFamily: "Poppins, sans-serif" }}>
                               <strong>Timestamp</strong>
                             </h6>
@@ -223,7 +285,7 @@ class TransactionDetailsDialog extends React.Component {
                           </div>
                         </div>
                         <div className="row">
-                          <div className="col-lg-4 details">
+                          <div className="col-lg-3 details">
                             <h6 style={{ fontFamily: "Poppins, sans-serif" }}>
                               <strong>Sender</strong>
                             </h6>
@@ -240,7 +302,7 @@ class TransactionDetailsDialog extends React.Component {
                           </div>
                         </div>
                         <div className="row">
-                          <div className="col-lg-4 details">
+                          <div className="col-lg-3 details">
                             <h6 style={{ fontFamily: "Poppins, sans-serif" }}>
                               <strong>Confirmation</strong>
                             </h6>
@@ -277,38 +339,9 @@ class TransactionDetailsDialog extends React.Component {
                       >
                         {Object.keys(this.state.transaction.asset).map(
                           (key, index) => {
-                            return (
-                              <div
-                                className="row"
-                                key={
-                                  "transaction-" +
-                                  this.props.transactionId +
-                                  "-asset-" +
-                                  key
-                                }
-                              >
-                                <div className="col-lg-4 details">
-                                  <h6
-                                    style={{
-                                      fontFamily: "Poppins, sans-serif",
-                                    }}
-                                  >
-                                    <strong>{key}</strong>
-                                  </h6>
-                                </div>
-                                <div className="col details">
-                                  <p
-                                    style={{
-                                      fontFamily: "Poppins, sans-serif",
-                                      fontSize: "14px",
-                                    }}
-                                  >
-                                    {this.state.transaction.asset[
-                                      key
-                                    ].toString()}
-                                  </p>
-                                </div>
-                              </div>
+                            return this.renderTransactionAsset(
+                              this.state.transaction.asset[key],
+                              key
                             );
                           }
                         )}

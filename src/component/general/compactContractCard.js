@@ -7,11 +7,16 @@ class CompactContractCard extends React.PureComponent {
     this.state = {
       isHover: false,
     };
-    this.toggleHover = this.toggleHover.bind(this);
+    this.toggleHoverTrue = this.toggleHoverTrue.bind(this);
+    this.toggleHoverFalse = this.toggleHoverFalse.bind(this);
   }
 
-  toggleHover() {
-    this.setState({ isHover: !this.state.isHover });
+  toggleHoverTrue() {
+    this.setState({ isHover: true });
+  }
+
+  toggleHoverFalse() {
+    this.setState({ isHover: false });
   }
 
   render() {
@@ -25,8 +30,8 @@ class CompactContractCard extends React.PureComponent {
           backgroundColor: bgColor,
           minHeight: "70px",
         }}
-        onMouseEnter={this.toggleHover}
-        onMouseLeave={this.toggleHover}
+        onMouseEnter={this.toggleHoverTrue}
+        onMouseLeave={this.toggleHoverFalse}
       >
         <div
           className="card-body"

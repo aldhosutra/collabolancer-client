@@ -1,4 +1,6 @@
 import { APIClient } from "@liskhq/lisk-api-client";
+import { Link } from "react-router-dom";
+import React from "react";
 import { toast } from "react-toastify";
 import config from "../config/config.json";
 import { MISCELLANEOUS } from "../transactions/constants";
@@ -6,6 +8,20 @@ const base91 = require("node-base91");
 const { getAddressFromPublicKey } = require("@liskhq/lisk-cryptography");
 
 const client = new APIClient(config.nodes);
+
+export const profileParser = (address, callback) => {
+  const onClick = callback || null;
+  return (
+    <Link
+      className="link"
+      style={{ textDecoration: "none" }}
+      to={`/app/profile/${address}`}
+      onClick={onClick}
+    >
+      {address}
+    </Link>
+  );
+};
 
 export const getTransactionName = (type) => {
   const transactionRegistry = {

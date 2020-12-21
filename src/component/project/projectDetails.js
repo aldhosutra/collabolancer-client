@@ -11,6 +11,7 @@ import LeaderTerminateDialog from "../dialog/leaderTerminateDialog";
 import ClaimDialog from "../dialog/claimDialog";
 import DisputeList from "../dispute/disputeList";
 import ProceedRefusalDialog from "../dialog/proceedRefusalDialog";
+import ProjectActivityDialog from "../dialog/projectActivityDialog";
 const dateFormat = require("dateformat");
 const { utils } = require("@liskhq/lisk-transactions");
 
@@ -130,6 +131,26 @@ class ProjectDetails extends React.Component {
             >
               {this.props.project.publicKey}
             </p>
+          </div>
+        </div>
+        <div className="row">
+          <div className="col-lg-4 details">
+            <h5 style={{ fontFamily: "Poppins, sans-serif" }}>
+              <strong>Project Activity</strong>
+            </h5>
+          </div>
+          <div className="col details">
+            <div
+              className="d-flex"
+              style={{
+                fontFamily: "Poppins, sans-serif",
+                overflowWrap: "break-word",
+                marginBottom: "1rem",
+              }}
+            >
+              <div>{this.props.project.asset.activity.length} Activity</div>
+              <ProjectActivityDialog project={this.props.project} />
+            </div>
           </div>
         </div>
         <div className="row">

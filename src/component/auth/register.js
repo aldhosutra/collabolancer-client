@@ -105,16 +105,17 @@ class Register extends React.Component {
               type="button"
               style={{ backgroundColor: "rgb(248,0,47)", width: "250px" }}
               disabled={!this.state.checked}
-              onClick={async () => {
+              onClick={() => {
                 try {
-                  const res = await action[this.props.index](
-                    this.state.account.passphrase
+                  action[this.props.index](this.state.account.passphrase).then(
+                    (res) => {
+                      if (res.meta.status) {
+                        toast.success("Login Successful! Happy Collaborating!");
+                        setSession("secret", this.state.account.passphrase);
+                        this.setState({ redirect: "/app" });
+                      }
+                    }
                   );
-                  if (res.meta.status) {
-                    toast.success("Login Successful! Happy Collaborating!");
-                    setSession("secret", this.state.account.passphrase);
-                    this.setState({ redirect: "/app" });
-                  }
                 } catch (err) {
                   toast.error(err.message);
                 }

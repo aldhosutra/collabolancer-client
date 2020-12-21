@@ -10,6 +10,7 @@ import { MISCELLANEOUS, STATUS } from "../../transactions/constants";
 import Countdown from "react-countdown";
 import { toast } from "react-toastify";
 import DescriptionCollapse from "../general/descriptionCollapse";
+import { profileParser } from "../../utils/tools";
 const { utils } = require("@liskhq/lisk-transactions");
 const dateFormat = require("dateformat");
 
@@ -108,7 +109,7 @@ class Proposal extends React.Component {
               }}
             >
               <strong style={{ lineHeight: "25px" }}>
-                {this.props.proposal.asset.leader}
+                {profileParser(this.props.proposal.asset.leader)}
               </strong>
               <p style={{ lineHeight: "15px", fontSize: "14px" }}>
                 {teamList.length > 0

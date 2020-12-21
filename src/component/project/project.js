@@ -1,6 +1,11 @@
 import React from "react";
 import Header from "../general/header";
-import { getAccounts, getProject, getSession } from "../../utils/tools";
+import {
+  getAccounts,
+  getProject,
+  getSession,
+  profileParser,
+} from "../../utils/tools";
 import { Redirect, withRouter } from "react-router-dom";
 import Quote from "../general/quote";
 import Footer from "../general/footer";
@@ -104,7 +109,9 @@ class Project extends React.Component {
                       paddingLeft: "25px",
                     }}
                   >
-                    <strong>{this.state.project.asset.employer}</strong>
+                    <strong>
+                      {profileParser(this.state.project.asset.employer)}
+                    </strong>
                   </h6>
                 </div>
                 <div

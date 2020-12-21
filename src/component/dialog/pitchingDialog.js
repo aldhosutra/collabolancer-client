@@ -4,6 +4,7 @@ import { STATUS } from "../../transactions/constants";
 import { renderAvatar } from "../avatar";
 import StartWorkButton from "./startWorkButton";
 import "./modal.css";
+import { profileParser } from "../../utils/tools";
 const parse = require("html-react-parser");
 
 class PitchingDialog extends React.PureComponent {
@@ -138,7 +139,12 @@ class PitchingDialog extends React.PureComponent {
                       paddingLeft: "30px",
                     }}
                   >
-                    <strong>{this.props.proposal.asset.leader}</strong>
+                    <strong>
+                      {profileParser(this.props.proposal.asset.leader, () => {
+                        window.$(".modal").modal("hide");
+                        window.$(".modal-backdrop").remove();
+                      })}
+                    </strong>
                   </p>
                   <div className="text-justify">
                     {parse(this.props.proposal.asset.pitching)}

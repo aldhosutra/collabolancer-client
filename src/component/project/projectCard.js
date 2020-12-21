@@ -1,5 +1,6 @@
 import React from "react";
 import { Link } from "react-router-dom";
+import { profileParser } from "../../utils/tools";
 import { renderAvatar } from "../avatar";
 const { htmlToText } = require("html-to-text");
 const { utils } = require("@liskhq/lisk-transactions");
@@ -10,11 +11,16 @@ class ProjectCard extends React.PureComponent {
     this.state = {
       isHover: false,
     };
-    this.toggleHover = this.toggleHover.bind(this);
+    this.toggleHoverTrue = this.toggleHoverTrue.bind(this);
+    this.toggleHoverFalse = this.toggleHoverFalse.bind(this);
   }
 
-  toggleHover() {
-    this.setState({ isHover: !this.state.isHover });
+  toggleHoverTrue() {
+    this.setState({ isHover: true });
+  }
+
+  toggleHoverFalse() {
+    this.setState({ isHover: false });
   }
 
   render() {
@@ -37,8 +43,8 @@ class ProjectCard extends React.PureComponent {
             marginBottom: "8px",
             backgroundColor: bgColor,
           }}
-          onMouseEnter={this.toggleHover}
-          onMouseLeave={this.toggleHover}
+          onMouseEnter={this.toggleHoverTrue}
+          onMouseLeave={this.toggleHoverFalse}
         >
           <div className="card-body">
             <div className="row">
@@ -78,7 +84,9 @@ class ProjectCard extends React.PureComponent {
                   color: "black",
                 }}
               >
-                <strong>{this.props.project.asset.employer}</strong>
+                <strong>
+                  {profileParser(this.props.project.asset.employer)}
+                </strong>
               </h6>
             </div>
             <p

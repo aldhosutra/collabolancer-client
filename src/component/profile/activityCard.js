@@ -11,16 +11,22 @@ class ActivityCard extends React.PureComponent {
     this.state = {
       isHover: false,
     };
-    this.toggleHover = this.toggleHover.bind(this);
+    this.toggleHoverTrue = this.toggleHoverTrue.bind(this);
+    this.toggleHoverFalse = this.toggleHoverFalse.bind(this);
   }
 
-  toggleHover() {
-    this.setState({ isHover: !this.state.isHover });
+  toggleHoverTrue() {
+    this.setState({ isHover: true });
+  }
+
+  toggleHoverFalse() {
+    this.setState({ isHover: false });
   }
 
   render() {
     const bgColor = this.state.isHover ? "#EDF2F4" : "white";
     const minusMultiplier = this.props.minus ? -1 : 1;
+    const showBalance = this.props.noBalance ? false : true;
     return (
       <div>
         <button
@@ -47,8 +53,8 @@ class ActivityCard extends React.PureComponent {
               marginBottom: "8px",
               backgroundColor: bgColor,
             }}
-            onMouseEnter={this.toggleHover}
-            onMouseLeave={this.toggleHover}
+            onMouseEnter={this.toggleHoverTrue}
+            onMouseLeave={this.toggleHoverFalse}
           >
             <div className="card-body">
               <div className="row">
@@ -78,28 +84,30 @@ class ActivityCard extends React.PureComponent {
                     {this.props.activity.id}
                   </div>
                 </div>
-                <div className="col-lg-3">
-                  <h4
-                    className="text-right"
-                    style={{
-                      color: utils
-                        .BigNum(this.props.activity.value)
-                        .mul(minusMultiplier)
-                        .gt(0)
-                        ? "#00b679"
-                        : "#d90429",
-                      fontWeight: "bold",
-                    }}
-                  >
-                    {utils.convertBeddowsToLSK(
-                      utils
-                        .BigNum(this.props.activity.value)
-                        .mul(minusMultiplier)
-                        .toString()
-                    )}{" "}
-                    CLNC
-                  </h4>
-                </div>
+                {showBalance ? (
+                  <div className="col-lg-3">
+                    <h4
+                      className="text-right"
+                      style={{
+                        color: utils
+                          .BigNum(this.props.activity.value)
+                          .mul(minusMultiplier)
+                          .gt(0)
+                          ? "#00b679"
+                          : "#d90429",
+                        fontWeight: "bold",
+                      }}
+                    >
+                      {utils.convertBeddowsToLSK(
+                        utils
+                          .BigNum(this.props.activity.value)
+                          .mul(minusMultiplier)
+                          .toString()
+                      )}{" "}
+                      CLNC
+                    </h4>
+                  </div>
+                ) : null}
               </div>
             </div>
           </div>

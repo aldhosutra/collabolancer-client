@@ -8,6 +8,7 @@ import { STATUS } from "../../transactions/constants";
 import CompactDisputeContractDetail from "../general/compactDisputeContractDetails";
 import SolverVoteDialog from "../dialog/solverVoteDialog";
 import DisputeReportDialog from "../dialog/disputeReportDialog";
+import { profileParser } from "../../utils/tools";
 
 class Dispute extends React.Component {
   constructor() {
@@ -57,7 +58,7 @@ class Dispute extends React.Component {
                 }}
               >
                 <strong style={{ lineHeight: "25px" }}>
-                  {this.props.dispute.asset.litigant}
+                  {profileParser(this.props.dispute.asset.litigant)}
                 </strong>
                 <p style={{ lineHeight: "15px", fontSize: "14px" }}>
                   Litigant [
@@ -101,7 +102,7 @@ class Dispute extends React.Component {
                 }}
               >
                 <strong style={{ lineHeight: "25px" }}>
-                  {this.props.dispute.asset.defendant}
+                  {profileParser(this.props.dispute.asset.defendant)}
                 </strong>
                 <p style={{ lineHeight: "15px", fontSize: "14px" }}>
                   Defendant [

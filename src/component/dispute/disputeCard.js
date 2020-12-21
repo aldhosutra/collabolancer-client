@@ -3,6 +3,7 @@ import Countdown from "react-countdown";
 import { Link } from "react-router-dom";
 import { renderAvatar } from "../avatar";
 import * as constants from "@liskhq/lisk-constants";
+import { profileParser } from "../../utils/tools";
 const { htmlToText } = require("html-to-text");
 const dateFormat = require("dateformat");
 const { utils } = require("@liskhq/lisk-transactions");
@@ -13,11 +14,16 @@ class DisputeCard extends React.PureComponent {
     this.state = {
       isHover: false,
     };
-    this.toggleHover = this.toggleHover.bind(this);
+    this.toggleHoverTrue = this.toggleHoverTrue.bind(this);
+    this.toggleHoverFalse = this.toggleHoverFalse.bind(this);
   }
 
-  toggleHover() {
-    this.setState({ isHover: !this.state.isHover });
+  toggleHoverTrue() {
+    this.setState({ isHover: true });
+  }
+
+  toggleHoverFalse() {
+    this.setState({ isHover: false });
   }
 
   render() {
@@ -46,8 +52,8 @@ class DisputeCard extends React.PureComponent {
             marginBottom: "8px",
             backgroundColor: bgColor,
           }}
-          onMouseEnter={this.toggleHover}
-          onMouseLeave={this.toggleHover}
+          onMouseEnter={this.toggleHoverTrue}
+          onMouseLeave={this.toggleHoverFalse}
         >
           <div className="card-body">
             <div className="row">
@@ -97,7 +103,9 @@ class DisputeCard extends React.PureComponent {
                   color: "black",
                 }}
               >
-                <strong>{this.props.dispute.asset.litigant}</strong>
+                <strong>
+                  {profileParser(this.props.dispute.asset.litigant)}
+                </strong>
               </h6>
               <h6
                 className="text-muted mb-2"
@@ -122,7 +130,9 @@ class DisputeCard extends React.PureComponent {
                   color: "black",
                 }}
               >
-                <strong>{this.props.dispute.asset.defendant}</strong>
+                <strong>
+                  {profileParser(this.props.dispute.asset.defendant)}
+                </strong>
               </h6>
             </div>
             <div className="d-flex flex-wrap">
