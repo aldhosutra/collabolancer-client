@@ -117,18 +117,24 @@ class Login extends React.Component {
           </div>
         </div>
         <div className="d-flex justify-content-xl-center">
-          <Link
-            className="link"
-            style={{ textDecoration: "none", marginRight: "8px" }}
-            to={`/app/project/`}
+          <div
+            className="btn text-center border link"
+            style={{
+              backgroundColor: "white",
+              width: "200px",
+              marginRight: "8px",
+            }}
+            onClick={() => {
+              toast.success("Happy Exploring as Guest!");
+              if (query.get("target") !== undefined) {
+                this.setState({ redirect: query.get("target") });
+              } else {
+                this.setState({ redirect: "/app/project" });
+              }
+            }}
           >
-            <div
-              className="text-center border"
-              style={{ width: "200px", padding: ".375rem .75rem" }}
-            >
-              Explore as Guest
-            </div>
-          </Link>
+            Explore as Guest
+          </div>
           <button
             className="btn btn-primary text-center border rounded-0"
             type="button"

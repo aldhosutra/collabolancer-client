@@ -104,6 +104,8 @@ export const getCategory = () =>
 export const getBatch = (publicKeyList) =>
   fetch(config.extendedAPI + "/api/batch?q=" + publicKeyList.toString());
 
+export const getStateCenter = () => fetch(config.extendedAPI + "/api/state");
+
 export const getAvailableProjects = (offset, limit) =>
   fetch(
     config.extendedAPI +

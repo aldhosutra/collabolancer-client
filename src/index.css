@@ -51,8 +51,8 @@ div::-webkit-scrollbar-thumb {
 }
 
 .link {
-  color: #000000;
+  color: #000000 !important;
 }
 .link:hover {
-  color: #ef233c;
+  color: #ef233c !important;
 }

@@ -176,6 +176,27 @@ class Header extends React.Component {
                     </button>
                   </Link>
                 </li>
+                <li className="nav-item" role="presentation">
+                  <Link
+                    style={{ textDecoration: "none" }}
+                    to={`/app/directory/`}
+                  >
+                    <button
+                      className={
+                        this.props.active === "Directory"
+                          ? "nav-link active"
+                          : "nav-link"
+                      }
+                      style={
+                        this.props.active === "Directory"
+                          ? activeMenuStyle
+                          : notActiveMenuStyle
+                      }
+                    >
+                      Directory
+                    </button>
+                  </Link>
+                </li>
                 <div
                   className="navdivider"
                   style={{ borderLeft: "1px solid #dee2e6" }}

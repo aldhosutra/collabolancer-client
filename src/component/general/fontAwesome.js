@@ -18,6 +18,9 @@ import {
   faBriefcase,
   faFileSignature,
   faInfoCircle,
+  faUserTie,
+  faUserCog,
+  faUserShield,
 } from "@fortawesome/free-solid-svg-icons";
 
 library.add(
@@ -38,5 +41,8 @@ library.add(
   faSuitcase,
   faBriefcase,
   faFileSignature,
-  faInfoCircle
+  faInfoCircle,
+  faUserTie,
+  faUserCog,
+  faUserShield
 );
