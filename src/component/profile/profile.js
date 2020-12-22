@@ -12,9 +12,7 @@ import NoData from "../general/nodata";
 import EmployerProfile from "./employerProfile";
 import WorkerProfile from "./workerProfile";
 import SolverProfile from "./solverProfile";
-const {
-  getAddressAndPublicKeyFromPassphrase,
-} = require("@liskhq/lisk-cryptography");
+import { getAddressAndPublicKeyFromPassphrase } from "@liskhq/lisk-cryptography";
 
 class Profile extends React.Component {
   constructor() {

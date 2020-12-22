@@ -5,7 +5,7 @@ import "./fontAwesome";
 import { ACCOUNT, MISCELLANEOUS } from "../../transactions/constants";
 import ProposalStatusJourneyDialog from "../dialog/proposalStatusJourney";
 import TeamStatusJourneyDialog from "../dialog/teamStatusJourney";
-const { utils } = require("@liskhq/lisk-transactions");
+import { utils } from "@liskhq/lisk-transactions";
 
 class CompactContractDetail extends React.PureComponent {
   render() {

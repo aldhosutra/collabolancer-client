@@ -5,7 +5,7 @@ import { renderAvatar } from "../avatar";
 import StartWorkButton from "./startWorkButton";
 import "./modal.css";
 import { profileParser } from "../../utils/tools";
-const parse = require("html-react-parser");
+import parse from "html-react-parser";
 
 class PitchingDialog extends React.PureComponent {
   constructor() {

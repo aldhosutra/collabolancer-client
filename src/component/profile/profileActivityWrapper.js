@@ -54,6 +54,7 @@ class ProfileActivityWrapper extends React.Component {
           paddingRight: "16px",
           marginLeft: "16px",
           marginRight: "16px",
+          marginTop: "16px",
           color: this.state.index === 0 ? "rgb(255,255,255)" : "rgb(0,0,0)",
           backgroundColor:
             this.state.index === 0 ? "#ef233c" : "rgb(255,255,255)",
@@ -79,6 +80,7 @@ class ProfileActivityWrapper extends React.Component {
           paddingRight: "16px",
           marginLeft: "16px",
           marginRight: "16px",
+          marginTop: "16px",
           color: this.state.index === 1 ? "rgb(255,255,255)" : "rgb(0,0,0)",
           backgroundColor:
             this.state.index === 1 ? "#ef233c" : "rgb(255,255,255)",
@@ -104,6 +106,7 @@ class ProfileActivityWrapper extends React.Component {
           paddingRight: "16px",
           marginLeft: "16px",
           marginRight: "16px",
+          marginTop: "16px",
           color: this.state.index === 2 ? "rgb(255,255,255)" : "rgb(0,0,0)",
           backgroundColor:
             this.state.index === 2 ? "#ef233c" : "rgb(255,255,255)",
@@ -223,7 +226,14 @@ class ProfileActivityWrapper extends React.Component {
       );
     }
     return (
-      <div className="border" style={{ padding: "16px" }}>
+      <div
+        className="border"
+        style={{
+          paddingLeft: "16px",
+          paddingRight: "16px",
+          paddingBottom: "16px",
+        }}
+      >
         <div className="text-center" style={{ marginBottom: "16px" }}>
           {activityCategoryOrderKey}
         </div>

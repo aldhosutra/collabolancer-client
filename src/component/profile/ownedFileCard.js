@@ -2,9 +2,9 @@ import React from "react";
 import * as constants from "@liskhq/lisk-constants";
 import { saveFile } from "../../utils/tools";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import config from "../../config/config.json";
+import config from "../../config/config";
 import { Link } from "react-router-dom";
-const dateFormat = require("dateformat");
+import dateFormat from "dateformat";
 
 class OwnedFileCard extends React.Component {
   constructor() {

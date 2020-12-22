@@ -13,10 +13,8 @@ import AvailableProjectList from "./availableProjectList";
 import PostProjectDialog from "../dialog/postProjectDialog";
 import "./browse.css";
 import Loading from "../general/loading";
-const { ACCOUNT } = require("../../transactions/constants");
-const {
-  getAddressAndPublicKeyFromPassphrase,
-} = require("@liskhq/lisk-cryptography");
+import { ACCOUNT } from "../../transactions/constants";
+import { getAddressAndPublicKeyFromPassphrase } from "@liskhq/lisk-cryptography";
 
 class BrowseProject extends React.Component {
   constructor() {

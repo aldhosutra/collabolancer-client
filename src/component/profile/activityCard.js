@@ -2,8 +2,8 @@ import React from "react";
 import * as constants from "@liskhq/lisk-constants";
 import { getTransactionName } from "../../utils/tools";
 import TransactionDetailsDialog from "../dialog/transactionDetails";
-const dateFormat = require("dateformat");
-const { utils } = require("@liskhq/lisk-transactions");
+import dateFormat from "dateformat";
+import { utils } from "@liskhq/lisk-transactions";
 
 class ActivityCard extends React.PureComponent {
   constructor() {
@@ -86,7 +86,7 @@ class ActivityCard extends React.PureComponent {
                 </div>
                 {showBalance ? (
                   <div className="col-lg-3">
-                    <h4
+                    <h5
                       className="text-right"
                       style={{
                         color: utils
@@ -96,6 +96,7 @@ class ActivityCard extends React.PureComponent {
                           ? "#00b679"
                           : "#d90429",
                         fontWeight: "bold",
+                        marginTop: "16px",
                       }}
                     >
                       {utils.convertBeddowsToLSK(
@@ -105,7 +106,7 @@ class ActivityCard extends React.PureComponent {
                           .toString()
                       )}{" "}
                       CLNC
-                    </h4>
+                    </h5>
                   </div>
                 ) : null}
               </div>

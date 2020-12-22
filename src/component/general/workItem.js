@@ -8,10 +8,10 @@ import LeaderRejectDialog from "../dialog/leaderRejectDialog";
 import EmployerRequestRevisionDialog from "../dialog/employerRequestRevision";
 import EmployerRejectDialog from "../dialog/employerRejectDialog";
 import { STATUS } from "../../transactions/constants";
-import config from "../../config/config.json";
+import config from "../../config/config";
 import EmployerAcceptFinishDialog from "../dialog/employerAcceptFinishDialog";
-const { htmlToText } = require("html-to-text");
-const dateFormat = require("dateformat");
+import { htmlToText } from "html-to-text";
+import dateFormat from "dateformat";
 
 class WorkItem extends React.Component {
   constructor() {

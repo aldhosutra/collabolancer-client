@@ -4,7 +4,7 @@ import { getSession } from "../../utils/tools";
 import { terminateWork } from "../../utils/transaction";
 import LeaderTerminateLogo from "../../asset/undraw_loading_frh4.svg";
 import terminatedLogo from "../../asset/undraw_warning_cyit.svg";
-import config from "../../config/config.json";
+import config from "../../config/config";
 import { MISCELLANEOUS, STATUS } from "../../transactions/constants";
 import * as constants from "@liskhq/lisk-constants";
 import Countdown from "react-countdown";

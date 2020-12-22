@@ -12,7 +12,7 @@ import {
 } from "../../utils/tools";
 import Countdown from "react-countdown";
 import SendCLNCDialog from "../dialog/sendCLNC";
-const { utils } = require("@liskhq/lisk-transactions");
+import { utils } from "@liskhq/lisk-transactions";
 
 class Header extends React.Component {
   constructor() {
@@ -251,7 +251,7 @@ class Header extends React.Component {
                                   style={{
                                     backgroundColor: "rgb(248,0,47)",
                                     display: "inline-block",
-                                    minWidth: "80px",
+                                    minWidth: "70px",
                                     color: "#ffffff",
                                     marginLeft: "10px",
                                     paddingLeft: "15px",
@@ -268,7 +268,7 @@ class Header extends React.Component {
                                   style={{
                                     backgroundColor: "rgb(248,0,47)",
                                     display: "inline-block",
-                                    minWidth: "80px",
+                                    minWidth: "70px",
                                     color: "#ffffff",
                                     marginLeft: "10px",
                                     paddingLeft: "15px",

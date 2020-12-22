@@ -4,10 +4,10 @@ import { toast } from "react-toastify";
 import { deflationaryMultiplier, getSession } from "../../utils/tools";
 import { postProposal } from "../../utils/transaction";
 import PostProposalLogo from "../../asset/undraw_resume_1hqp.svg";
-import config from "../../config/config.json";
+import config from "../../config/config";
 import "./modal.css";
 import { Editor } from "@tinymce/tinymce-react";
-const { utils } = require("@liskhq/lisk-transactions");
+import { utils } from "@liskhq/lisk-transactions";
 
 class PostProposalDialog extends React.Component {
   constructor() {
@@ -352,7 +352,7 @@ class PostProposalDialog extends React.Component {
                           className="btn btn-primary border rounded-0 top-button"
                           style={{
                             backgroundColor: "#EF233C",
-                            width: "200px",
+                            width: "240px",
                           }}
                           onClick={() => {
                             this.setState((state) => {
@@ -557,7 +557,6 @@ class PostProposalDialog extends React.Component {
                         className="col-auto form-fee"
                         style={{
                           marginRight: "5px",
-                          maxWidth: "400px",
                           wordWrap: "break-word",
                         }}
                       >

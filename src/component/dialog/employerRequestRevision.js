@@ -3,7 +3,7 @@ import { toast } from "react-toastify";
 import { getSession } from "../../utils/tools";
 import { employerRequestRevision } from "../../utils/transaction";
 import EmployerRequestRevisionLogo from "../../asset/undraw_feeling_blue_4b7q.svg";
-import config from "../../config/config.json";
+import config from "../../config/config";
 import "./modal.css";
 import { Editor } from "@tinymce/tinymce-react";
 
@@ -232,7 +232,6 @@ class EmployerRequestRevisionDialog extends React.Component {
                         className="col-auto form-fee"
                         style={{
                           marginRight: "5px",
-                          maxWidth: "400px",
                           wordWrap: "break-word",
                         }}
                       >

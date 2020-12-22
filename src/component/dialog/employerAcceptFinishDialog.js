@@ -3,7 +3,7 @@ import { toast } from "react-toastify";
 import { getSession } from "../../utils/tools";
 import { finishWork } from "../../utils/transaction";
 import EmployerAcceptFinishLogo from "../../asset/undraw_happy_music_g6wc.svg";
-import config from "../../config/config.json";
+import config from "../../config/config";
 
 class EmployerAcceptFinishDialog extends React.Component {
   constructor() {

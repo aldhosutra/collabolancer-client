@@ -17,10 +17,8 @@ import * as constants from "@liskhq/lisk-constants";
 import ProjectDetails from "./projectDetails";
 import ProposalList from "../proposal/proposalList";
 import DescriptionCollapse from "../general/descriptionCollapse";
-const dateFormat = require("dateformat");
-const {
-  getAddressAndPublicKeyFromPassphrase,
-} = require("@liskhq/lisk-cryptography");
+import dateFormat from "dateformat";
+import { getAddressAndPublicKeyFromPassphrase } from "@liskhq/lisk-cryptography";
 
 class Project extends React.Component {
   constructor() {
@@ -91,7 +89,7 @@ class Project extends React.Component {
               }}
             >
               <div>
-                <div style={{ marginBottom: "8px" }}>
+                <div style={{ marginBottom: "12px" }}>
                   <h4>
                     <strong>{this.state.project.asset.title}</strong>
                     <br />

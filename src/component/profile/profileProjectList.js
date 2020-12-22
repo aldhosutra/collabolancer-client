@@ -4,7 +4,6 @@ import Loading from "../general/loading";
 import NoData from "../general/nodata";
 import Pagination from "../general/pagination";
 import ProjectCard from "../project/projectCard";
-import "../app/availableItemList.css";
 
 class ProfileProjectList extends React.Component {
   constructor() {

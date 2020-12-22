@@ -6,9 +6,7 @@ import "./browse.css";
 import loadingLogo from "../../asset/undraw_synchronize_ccxk.svg";
 import logoColor from "../../asset/collabolancer.svg";
 import { ACCOUNT } from "../../transactions/constants";
-const {
-  getAddressAndPublicKeyFromPassphrase,
-} = require("@liskhq/lisk-cryptography");
+import { getAddressAndPublicKeyFromPassphrase } from "@liskhq/lisk-cryptography";
 
 class Browse extends React.Component {
   constructor() {

@@ -3,7 +3,6 @@ import { getBatch } from "../../utils/tools";
 import Loading from "../general/loading";
 import NoData from "../general/nodata";
 import Pagination from "../general/pagination";
-import "../app/availableItemList.css";
 import OwnedFileCard from "./ownedFileCard";
 
 class ProfileFileList extends React.Component {

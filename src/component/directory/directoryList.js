@@ -2,9 +2,8 @@ import React from "react";
 import Loading from "../general/loading";
 import NoData from "../general/nodata";
 import Pagination from "../general/pagination";
-import "../app/availableItemList.css";
 import DirectoryCard from "./directoryCard";
-const { getAddressFromPublicKey } = require("@liskhq/lisk-cryptography");
+import { getAddressFromPublicKey } from "@liskhq/lisk-cryptography";
 
 class DirectoryList extends React.Component {
   constructor() {

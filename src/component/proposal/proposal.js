@@ -11,8 +11,8 @@ import Countdown from "react-countdown";
 import { toast } from "react-toastify";
 import DescriptionCollapse from "../general/descriptionCollapse";
 import { profileParser } from "../../utils/tools";
-const { utils } = require("@liskhq/lisk-transactions");
-const dateFormat = require("dateformat");
+import { utils } from "@liskhq/lisk-transactions";
+import dateFormat from "dateformat";
 
 class Proposal extends React.Component {
   constructor() {

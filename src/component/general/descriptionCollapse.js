@@ -1,6 +1,6 @@
 import React from "react";
 import "./descriptionCollapse.css";
-const parse = require("html-react-parser");
+import parse from "html-react-parser";
 
 class DescriptionCollapse extends React.Component {
   constructor() {

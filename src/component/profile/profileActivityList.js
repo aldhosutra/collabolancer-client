@@ -2,7 +2,6 @@ import React from "react";
 import Loading from "../general/loading";
 import NoData from "../general/nodata";
 import Pagination from "../general/pagination";
-import "../app/availableItemList.css";
 import ActivityCard from "./activityCard";
 
 class ProfileActivityList extends React.Component {

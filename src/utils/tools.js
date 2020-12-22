@@ -2,10 +2,10 @@ import { APIClient } from "@liskhq/lisk-api-client";
 import { Link } from "react-router-dom";
 import React from "react";
 import { toast } from "react-toastify";
-import config from "../config/config.json";
+import config from "../config/config";
 import { MISCELLANEOUS } from "../transactions/constants";
-const base91 = require("node-base91");
-const { getAddressFromPublicKey } = require("@liskhq/lisk-cryptography");
+import base91 from "node-base91";
+import { getAddressFromPublicKey } from "@liskhq/lisk-cryptography";
 
 const client = new APIClient(config.nodes);
 

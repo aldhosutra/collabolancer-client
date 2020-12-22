@@ -4,7 +4,6 @@ import Loading from "../general/loading";
 import NoData from "../general/nodata";
 import Pagination from "../general/pagination";
 import DisputeCard from "../dispute/disputeCard";
-import "../app/availableItemList.css";
 
 class ProfileDisputeList extends React.Component {
   constructor() {

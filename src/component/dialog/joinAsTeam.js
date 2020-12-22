@@ -4,9 +4,9 @@ import { toast } from "react-toastify";
 import { deflationaryMultiplier, getSession } from "../../utils/tools";
 import { joinTeam } from "../../utils/transaction";
 import JoinAsTeamLogo from "../../asset/undraw_team_spirit_hrr4.svg";
-import config from "../../config/config.json";
+import config from "../../config/config";
 import "./modal.css";
-const { utils } = require("@liskhq/lisk-transactions");
+import { utils } from "@liskhq/lisk-transactions";
 
 class JoinAsTeamDialog extends React.Component {
   constructor() {
@@ -305,7 +305,6 @@ class JoinAsTeamDialog extends React.Component {
                         className="col-auto form-fee"
                         style={{
                           marginRight: "5px",
-                          maxWidth: "400px",
                           wordWrap: "break-word",
                         }}
                       >

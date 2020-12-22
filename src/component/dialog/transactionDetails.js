@@ -4,8 +4,8 @@ import { getTransactionName, getTransactions } from "../../utils/tools";
 import * as constants from "@liskhq/lisk-constants";
 import "./modal.css";
 import Loading from "../general/loading";
-const dateFormat = require("dateformat");
-const { utils } = require("@liskhq/lisk-transactions");
+import dateFormat from "dateformat";
+import { utils } from "@liskhq/lisk-transactions";
 
 class TransactionDetailsDialog extends React.Component {
   constructor() {
@@ -41,6 +41,7 @@ class TransactionDetailsDialog extends React.Component {
             style={{
               fontFamily: "Poppins, sans-serif",
               fontSize: "14px",
+              overflowWrap: "break-word",
             }}
           >
             {"null"}
@@ -58,6 +59,7 @@ class TransactionDetailsDialog extends React.Component {
           style={{
             fontFamily: "Poppins, sans-serif",
             fontSize: "14px",
+            overflowWrap: "break-word",
           }}
         >
           {data ? data.toString() : "null"}

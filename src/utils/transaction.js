@@ -1,13 +1,11 @@
-const { APIClient } = require("@liskhq/lisk-api-client");
-const { Mnemonic } = require("@liskhq/lisk-passphrase");
-const config = require("../config/config.json");
-const {
+import { Mnemonic } from "@liskhq/lisk-passphrase";
+import { utils, TransferTransaction } from "@liskhq/lisk-transactions";
+import {
   getNetworkIdentifier,
   getPrivateAndPublicKeyFromPassphrase,
   getAddressFromPublicKey,
-} = require("@liskhq/lisk-cryptography");
-const { utils, TransferTransaction } = require("@liskhq/lisk-transactions");
-const {
+} from "@liskhq/lisk-cryptography";
+import {
   RegisterEmployerTransaction,
   RegisterWorkerTransaction,
   RegisterSolverTransaction,
@@ -26,7 +24,10 @@ const {
   OpenDisputeTransaction,
   VoteDisputeTransaction,
   CloseDisputeTransaction,
-} = require("../transactions");
+} from "../transactions";
+import config from "../config/config";
+
+const { APIClient } = require("@liskhq/lisk-api-client");
 const networkIdentifier = getNetworkIdentifier(
   "23ce0366ef0a14a91e5fd4b1591fc880ffbef9d988ff8bebf8f3666b0c09597d",
   "Lisk"

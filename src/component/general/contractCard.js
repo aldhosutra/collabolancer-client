@@ -1,5 +1,5 @@
 import React from "react";
-const { utils } = require("@liskhq/lisk-transactions");
+import { utils } from "@liskhq/lisk-transactions";
 
 class ContractCard extends React.PureComponent {
   constructor() {

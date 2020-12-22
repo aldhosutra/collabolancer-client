@@ -5,13 +5,12 @@ import solverLogo from "../../asset/undraw_conference_speaker_6nt7.svg";
 import { toast } from "react-toastify";
 import { Redirect } from "react-router-dom";
 import { setSession } from "../../utils/tools";
-
-const {
+import {
   createAccount,
   registerEmployer,
   registerWorker,
   registerSolver,
-} = require("../../utils/transaction");
+} from "../../utils/transaction";
 
 class Register extends React.Component {
   constructor() {
@@ -36,7 +35,7 @@ class Register extends React.Component {
     ];
     return (
       <div className="row">
-        <div className="col-3 details">
+        <div className="col-md-3 details">
           <div>
             <img
               className="img-fluid d-md-flex d-lg-flex d-xl-flex justify-content-md-center justify-content-lg-center"
@@ -110,7 +109,9 @@ class Register extends React.Component {
                   action[this.props.index](this.state.account.passphrase).then(
                     (res) => {
                       if (res.meta.status) {
-                        toast.success("Login Successful! Happy Collaborating!");
+                        toast.success(
+                          "Register Account Successful! Happy Collaborating!"
+                        );
                         setSession("secret", this.state.account.passphrase);
                         this.setState({ redirect: "/app" });
                       }

@@ -3,7 +3,7 @@ import { toast } from "react-toastify";
 import { getSession } from "../../utils/tools";
 import { leaderRequestRevision } from "../../utils/transaction";
 import LeaderRejectLogo from "../../asset/undraw_cancel_u1it.svg";
-import config from "../../config/config.json";
+import config from "../../config/config";
 import "./modal.css";
 import { Editor } from "@tinymce/tinymce-react";
 
@@ -229,7 +229,6 @@ class LeaderRejectDialog extends React.Component {
                         className="col-auto form-fee"
                         style={{
                           marginRight: "5px",
-                          maxWidth: "400px",
                           wordWrap: "break-word",
                         }}
                       >

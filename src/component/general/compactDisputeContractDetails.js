@@ -1,7 +1,7 @@
 import React from "react";
 import CompactContractCard from "./compactContractCard";
 import "./fontAwesome";
-const { utils } = require("@liskhq/lisk-transactions");
+import { utils } from "@liskhq/lisk-transactions";
 
 class CompactDisputeContractDetail extends React.PureComponent {
   render() {

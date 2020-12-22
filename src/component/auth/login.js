@@ -11,7 +11,7 @@ import { Link, Redirect, withRouter } from "react-router-dom";
 import Register from "./register";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 
-const { ACCOUNT } = require("../../transactions/constants");
+import { ACCOUNT } from "../../transactions/constants";
 
 const login = async (userPassphrase) => {
   if (userPassphrase) {
@@ -116,13 +116,13 @@ class Login extends React.Component {
             </button>
           </div>
         </div>
-        <div className="d-flex justify-content-xl-center">
+        <div className="text-center">
           <div
-            className="btn text-center border link"
+            className="btn border link guest"
             style={{
               backgroundColor: "white",
               width: "200px",
-              marginRight: "8px",
+              marginBottom: "8px",
             }}
             onClick={() => {
               toast.success("Happy Exploring as Guest!");
@@ -136,9 +136,13 @@ class Login extends React.Component {
             Explore as Guest
           </div>
           <button
-            className="btn btn-primary text-center border rounded-0"
+            className="btn btn-primary border rounded-0"
             type="button"
-            style={{ width: "150px", backgroundColor: "#ef233c" }}
+            style={{
+              width: "200px",
+              backgroundColor: "#ef233c",
+              marginBottom: "8px",
+            }}
             onClick={async () => {
               if (await login(this.state.signInPassphrase)) {
                 if (query.get("target") !== undefined) {
@@ -155,8 +159,8 @@ class Login extends React.Component {
       </div>,
       <div className="row">
         <div
-          className="col details"
-          style={{ padding: "30px" }}
+          className="col-xs-12 col-md-4 details link"
+          style={{ padding: "30px", cursor: "pointer" }}
           onClick={() =>
             this.setState((state) => ({
               ...state,
@@ -166,7 +170,7 @@ class Login extends React.Component {
         >
           <div>
             <img
-              className="img-fluid d-md-flex d-lg-flex d-xl-flex justify-content-md-center justify-content-lg-center justify-content-xl-center"
+              className="img-fluid d-flex justify-content-center"
               src={workerLogo}
               style={{ height: "200px", margin: "auto", display: "block" }}
               alt="I Am A Worker"
@@ -177,6 +181,7 @@ class Login extends React.Component {
                 fontFamily: "Poppins, sans-serif",
                 fontSize: "25px",
                 marginTop: "20px",
+                fontWeight: "bolder",
               }}
             >
               I Am A Worker
@@ -184,8 +189,8 @@ class Login extends React.Component {
           </div>
         </div>
         <div
-          className="col details"
-          style={{ padding: "30px" }}
+          className="col-xs-12 col-md-4 details link"
+          style={{ padding: "30px", cursor: "pointer" }}
           onClick={() =>
             this.setState((state) => ({
               ...state,
@@ -195,7 +200,7 @@ class Login extends React.Component {
         >
           <div>
             <img
-              className="img-fluid d-md-flex d-lg-flex d-xl-flex justify-content-md-center justify-content-lg-center justify-content-xl-center"
+              className="img-fluid d-flex justify-content-center"
               src={employerLogo}
               style={{ margin: "auto", height: "200px", display: "block" }}
               alt="I Am An Employer"
@@ -206,6 +211,7 @@ class Login extends React.Component {
                 fontFamily: "Poppins, sans-serif",
                 fontSize: "25px",
                 marginTop: "20px",
+                fontWeight: "bolder",
               }}
             >
               I Am An Employer
@@ -213,8 +219,8 @@ class Login extends React.Component {
           </div>
         </div>
         <div
-          className="col details"
-          style={{ padding: "30px" }}
+          className="col-xs-12 col-md-4 details link"
+          style={{ padding: "30px", cursor: "pointer" }}
           onClick={() =>
             this.setState((state) => ({
               ...state,
@@ -224,7 +230,7 @@ class Login extends React.Component {
         >
           <div>
             <img
-              className="img-fluid d-md-flex d-lg-flex d-xl-flex justify-content-md-center justify-content-lg-center justify-content-xl-center"
+              className="img-fluid d-flex justify-content-center"
               src={solverLogo}
               style={{ height: "200px", display: "block" }}
               alt="I Am A Solver"
@@ -235,6 +241,7 @@ class Login extends React.Component {
                 fontFamily: "Poppins, sans-serif",
                 fontSize: "25px",
                 marginTop: "20px",
+                fontWeight: "bolder",
               }}
             >
               I Am A Solver
@@ -254,17 +261,15 @@ class Login extends React.Component {
           <div className="container">
             <Link to="/">
               <p
-                className="text-right"
+                className="text-right brand-login"
                 style={{
                   fontFamily: "Poppins, sans-serif",
                   color: "rgb(255,255,255)",
-                  fontSize: "30px",
                   letterSpacing: 0,
                   fontWeight: 900,
                   marginTop: 0,
                   marginBottom: "0px",
                   paddingTop: "30px",
-                  paddingRight: "30px",
                   fontStyle: "normal",
                   paddingBottom: "30px",
                 }}
@@ -278,8 +283,6 @@ class Login extends React.Component {
                 fontFamily: "Poppins, sans-serif",
                 fontWeight: "bold",
                 color: "rgb(255,255,255)",
-                paddingLeft: "30px",
-                paddingRight: "30px",
                 marginBottom: "30px",
               }}
             >
@@ -293,8 +296,6 @@ class Login extends React.Component {
                 margin: "auto",
                 paddingRight: "30px",
                 paddingLeft: "30px",
-                marginRight: "30px",
-                marginLeft: "30px",
                 paddingTop: "30px",
                 paddingBottom: "30px",
                 marginBottom: "30px",
@@ -302,10 +303,9 @@ class Login extends React.Component {
             >
               <div className="text-center" style={{ marginBottom: "30px" }}>
                 <button
-                  className="btn btn-primary border rounded-0"
+                  className="btn btn-primary border rounded-0 login-button"
                   type="button"
                   style={{
-                    width: "150px",
                     color:
                       this.state.index === 0
                         ? "rgb(255,255,255)"
@@ -323,10 +323,9 @@ class Login extends React.Component {
                   Login
                 </button>
                 <button
-                  className="btn btn-secondary border rounded-0"
+                  className="btn btn-secondary border rounded-0 login-button"
                   type="button"
                   style={{
-                    width: "150px",
                     color:
                       this.state.index === 1
                         ? "rgb(255,255,255)"

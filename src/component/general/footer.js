@@ -1,4 +1,5 @@
 import React from "react";
+import { Link } from "react-router-dom";
 import "./footer.css";
 
 class Footer extends React.PureComponent {
@@ -15,7 +16,13 @@ class Footer extends React.PureComponent {
           <div className="container">
             <div className="row">
               <div className="col-md-6 item text">
-                <h3>Collabolancer</h3>
+                <Link
+                  className="link-white"
+                  to={"/"}
+                  style={{ textDecoration: "none" }}
+                >
+                  <h3>Collabolancer</h3>
+                </Link>
                 <p>
                   Collabolancer is a decentralized Freelancing Platform powered
                   by Blockchain, providing trustless ecosystem and enabling

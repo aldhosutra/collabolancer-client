@@ -4,7 +4,7 @@ import { getSession } from "../../utils/tools";
 import { claimPrize } from "../../utils/transaction";
 import ClaimLogo from "../../asset/undraw_loading_frh4.svg";
 import claimedLogo from "../../asset/undraw_Beer_celebration_cefj.svg";
-import config from "../../config/config.json";
+import config from "../../config/config";
 import { STATUS } from "../../transactions/constants";
 import * as constants from "@liskhq/lisk-constants";
 import Countdown from "react-countdown";

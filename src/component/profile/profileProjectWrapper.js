@@ -61,6 +61,7 @@ class ProfileProjectWrapper extends React.Component {
             paddingRight: "16px",
             marginLeft: "16px",
             marginRight: "16px",
+            marginTop: "16px",
             color: this.state.index === i ? "rgb(255,255,255)" : "rgb(0,0,0)",
             backgroundColor:
               this.state.index === i ? "#ef233c" : "rgb(255,255,255)",
@@ -78,7 +79,14 @@ class ProfileProjectWrapper extends React.Component {
       );
     }
     return (
-      <div className="border" style={{ padding: "16px" }}>
+      <div
+        className="border"
+        style={{
+          paddingLeft: "16px",
+          paddingRight: "16px",
+          paddingBottom: "16px",
+        }}
+      >
         <div className="text-center" style={{ marginBottom: "16px" }}>
           {projectCategoryOrderKey}
         </div>

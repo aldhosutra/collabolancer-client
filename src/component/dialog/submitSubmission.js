@@ -5,10 +5,10 @@ import { getSession } from "../../utils/tools";
 import { submitWork } from "../../utils/transaction";
 import SubmitSubmissionLogo from "../../asset/undraw_upload_87y9.svg";
 import Dropzone from "react-dropzone";
-import config from "../../config/config.json";
+import config from "../../config/config";
 import "./modal.css";
-const base91 = require("node-base91");
-const mime = require("mime-types");
+import base91 from "node-base91";
+import mime from "mime-types";
 
 class SubmitSubmissionDialog extends React.Component {
   constructor() {

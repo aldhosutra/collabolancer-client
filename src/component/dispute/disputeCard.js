@@ -4,9 +4,9 @@ import { Link } from "react-router-dom";
 import { renderAvatar } from "../avatar";
 import * as constants from "@liskhq/lisk-constants";
 import { profileParser } from "../../utils/tools";
-const { htmlToText } = require("html-to-text");
-const dateFormat = require("dateformat");
-const { utils } = require("@liskhq/lisk-transactions");
+import { htmlToText } from "html-to-text";
+import dateFormat from "dateformat";
+import { utils } from "@liskhq/lisk-transactions";
 
 class DisputeCard extends React.PureComponent {
   constructor() {

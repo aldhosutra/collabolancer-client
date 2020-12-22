@@ -1,6 +1,7 @@
 import React from "react";
 import { Link } from "react-router-dom";
 import "./home.css";
+import "../general/header.css";
 import logoColor from "../../asset/collabolancer.svg";
 import headerImage from "../../asset/undraw_work_together_h63l.svg";
 import trustless from "../../asset/undraw_verified_tw20.svg";
@@ -13,6 +14,13 @@ import Footer from "../general/footer";
 import Quote from "../general/quote";
 
 class Home extends React.Component {
+  constructor() {
+    super();
+    this.state = {
+      navbarShow: false,
+    };
+  }
+
   render() {
     return (
       <div>
@@ -31,41 +39,66 @@ class Home extends React.Component {
                   backgroundSize: "contain",
                   backgroundRepeat: "no-repeat",
                   backgroundPosition: "left",
-                  paddingLeft: "35px",
+                  paddingLeft: "40px",
                 }}
               >
                 Collabolancer
               </h1>
               <button
                 className="navbar-toggler"
-                data-toggle="collapse"
-                data-target="#navcol-1"
+                onClick={() =>
+                  this.setState((state) => ({
+                    ...state,
+                    navbarShow: true,
+                  }))
+                }
               >
                 <span className="sr-only">Toggle navigation</span>
                 <span className="navbar-toggler-icon" />
               </button>
               <div
-                className="collapse navbar-collapse text-center"
+                className={`navbar-collapse ${
+                  this.state.navbarShow ? "show" : ""
+                }`}
                 id="navcol-1"
+                style={{
+                  transition:
+                    "visibility 0.6s ease-in-out, -webkit-transform 0.6s ease-in-out",
+                }}
               >
-                <ul className="nav navbar-nav mr-auto" />
-                <span className="navbar-text actions">
-                  {" "}
-                  <Link to="/auth">
-                    <h1
-                      className="btn btn-light border rounded-0 action-button"
-                      role="button"
-                      style={{
-                        backgroundColor: "#ef233c",
-                        width: "200px",
-                        fontFamily: "Poppins, sans-serif",
-                        fontSize: "14px",
-                      }}
-                    >
-                      <strong>Launch App</strong>
-                    </h1>
-                  </Link>
-                </span>
+                <div className="offcanvas-header mt-3">
+                  <button
+                    className="btn btn-outline-danger btn-close float-right"
+                    onClick={() =>
+                      this.setState((state) => ({
+                        ...state,
+                        navbarShow: false,
+                      }))
+                    }
+                  >
+                    x
+                  </button>
+                  <h5 className="py-2 text-black">Menu</h5>
+                </div>
+                <ul className="nav navbar-nav d-md-flex ml-auto justify-content-md-end">
+                  <li className="nav-item" role="presentation">
+                    <Link to="/auth">
+                      <h1
+                        className="btn btn-light border rounded-0 action-button"
+                        role="button"
+                        style={{
+                          backgroundColor: "#ef233c",
+                          width: "200px",
+                          fontFamily: "Poppins, sans-serif",
+                          fontSize: "14px",
+                          color: "white",
+                        }}
+                      >
+                        <strong>Launch App</strong>
+                      </h1>
+                    </Link>
+                  </li>
+                </ul>
               </div>
             </div>
           </nav>
@@ -80,7 +113,7 @@ class Home extends React.Component {
               paddingBottom: "10%",
             }}
           >
-            <div className="col-8 motto" style={{ padding: "60px" }}>
+            <div className="col-lg-8 motto" style={{ padding: "60px" }}>
               <h1
                 style={{
                   fontFamily: "Poppins, sans-serif",
@@ -144,7 +177,7 @@ class Home extends React.Component {
             <div className="row" style={{ marginBottom: "30px" }}>
               <div className="col" style={{ padding: "5px" }}>
                 <div
-                  className="shadow"
+                  className="whyusbox shadow"
                   style={{
                     backgroundColor: "#ffffff",
                     padding: "60px",
@@ -190,7 +223,7 @@ class Home extends React.Component {
               </div>
               <div className="col" style={{ padding: "5px" }}>
                 <div
-                  className="shadow"
+                  className="whyusbox shadow"
                   style={{
                     backgroundColor: "#ffffff",
                     padding: "60px",
@@ -236,7 +269,7 @@ class Home extends React.Component {
               </div>
               <div className="col" style={{ padding: "5px" }}>
                 <div
-                  className="shadow"
+                  className="whyusbox shadow"
                   style={{
                     margin: "10px",
                     backgroundColor: "#ffffff",
@@ -281,7 +314,7 @@ class Home extends React.Component {
               </div>
               <div className="col" style={{ padding: "5px" }}>
                 <div
-                  className="shadow"
+                  className="whyusbox shadow"
                   style={{
                     backgroundColor: "#ffffff",
                     padding: "60px",
@@ -327,7 +360,7 @@ class Home extends React.Component {
               </div>
               <div className="col" style={{ padding: "5px" }}>
                 <div
-                  className="shadow"
+                  className="whyusbox shadow"
                   style={{
                     backgroundColor: "#ffffff",
                     padding: "60px",
@@ -373,7 +406,7 @@ class Home extends React.Component {
               </div>
               <div className="col" style={{ padding: "5px" }}>
                 <div
-                  className="shadow"
+                  className="whyusbox shadow"
                   style={{
                     margin: "10px",
                     backgroundColor: "#ffffff",

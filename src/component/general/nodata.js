@@ -53,7 +53,7 @@ class NoData extends React.PureComponent {
                 type="button"
                 style={{
                   backgroundColor: "#d90429",
-                  width: "120px",
+                  width: "150px",
                   marginLeft: "auto",
                   marginRight: "auto",
                   display: "block",

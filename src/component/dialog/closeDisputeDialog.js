@@ -3,7 +3,7 @@ import { toast } from "react-toastify";
 import { getSession } from "../../utils/tools";
 import { closeDispute } from "../../utils/transaction";
 import CloseDisputeLogo from "../../asset/undraw_agreement_aajr.svg";
-import config from "../../config/config.json";
+import config from "../../config/config";
 
 class CloseDisputeDialog extends React.Component {
   constructor() {

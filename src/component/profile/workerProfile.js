@@ -6,7 +6,7 @@ import MiniCard from "../general/miniCard";
 import ProfileProjectWrapper from "./profileProjectWrapper";
 import ProfileActivityWrapper from "./profileActivityWrapper";
 import ProfileFileWrapper from "./profileFileWrapper";
-const { utils } = require("@liskhq/lisk-transactions");
+import { utils } from "@liskhq/lisk-transactions";
 
 class WorkerProfile extends React.Component {
   constructor() {
@@ -108,12 +108,12 @@ class WorkerProfile extends React.Component {
             />
           </div>
           <div className="col">
-            <h3
+            <h4
               className="text-center text-lg-left"
               style={{ fontFamily: "Poppins, sans-serif" }}
             >
               <strong>{this.props.profile.data.address}</strong>
-            </h3>
+            </h4>
             <h6
               className="text-center text-lg-left"
               style={{

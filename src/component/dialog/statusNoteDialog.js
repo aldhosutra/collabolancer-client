@@ -2,8 +2,8 @@ import React from "react";
 import * as constants from "@liskhq/lisk-constants";
 import StatusNoteLogo from "../../asset/undraw_ideas_s70l.svg";
 import "./modal.css";
-const parse = require("html-react-parser");
-const dateFormat = require("dateformat");
+import parse from "html-react-parser";
+import dateFormat from "dateformat";
 
 class StatusNoteDialog extends React.Component {
   render() {

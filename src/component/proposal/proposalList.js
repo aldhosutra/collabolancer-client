@@ -162,7 +162,7 @@ class ProposalList extends React.Component {
             }}
           >
             <div
-              className="d-flex justify-content-end"
+              className="d-flex justify-content-center justify-content-md-end"
               style={{ marginBottom: "8px" }}
             >
               {actionButton}

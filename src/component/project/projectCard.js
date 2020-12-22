@@ -1,8 +1,8 @@
 import React from "react";
 import { Link } from "react-router-dom";
 import { renderAvatar } from "../avatar";
-const { htmlToText } = require("html-to-text");
-const { utils } = require("@liskhq/lisk-transactions");
+import { htmlToText } from "html-to-text";
+import { utils } from "@liskhq/lisk-transactions";
 
 class ProjectCard extends React.PureComponent {
   constructor() {
@@ -47,8 +47,18 @@ class ProjectCard extends React.PureComponent {
         >
           <div className="card-body">
             <div className="row">
-              <div className="col" id="status">
-                <h4 style={{ fontWeight: "bold", color: "black" }}>
+              <div className="col-lg-10" id="status">
+                <h4
+                  style={{
+                    fontWeight: "bold",
+                    color: "black",
+                    whiteSpace: "nowrap",
+                    overflow: "hidden",
+                    display: "inline-block",
+                    textOverflow: "ellipsis",
+                    width: "100%",
+                  }}
+                >
                   {this.props.project.asset.title}
                 </h4>
               </div>

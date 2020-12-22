@@ -12,8 +12,8 @@ import ClaimDialog from "../dialog/claimDialog";
 import DisputeList from "../dispute/disputeList";
 import ProceedRefusalDialog from "../dialog/proceedRefusalDialog";
 import ProjectActivityDialog from "../dialog/projectActivityDialog";
-const dateFormat = require("dateformat");
-const { utils } = require("@liskhq/lisk-transactions");
+import dateFormat from "dateformat";
+import { utils } from "@liskhq/lisk-transactions";
 
 class ProjectDetails extends React.Component {
   render() {

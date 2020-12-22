@@ -3,7 +3,7 @@ import { toast } from "react-toastify";
 import { getSession } from "../../utils/tools";
 import { finishWork } from "../../utils/transaction";
 import refuseLogo from "../../asset/undraw_Notify_re_65on.svg";
-import config from "../../config/config.json";
+import config from "../../config/config";
 
 class ProceedRefusalDialog extends React.Component {
   constructor() {

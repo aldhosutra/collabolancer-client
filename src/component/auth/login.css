@@ -78,10 +78,18 @@
 }
 
 .main-head {
-  font-size: 30px;
+  font-size: 35px;
 }
 
-@media (min-width: 992px) {
+.brand-login {
+  font-size: 20px !important;
+}
+
+.login-button {
+  width: 125px !important;
+}
+
+@media (min-width: 1025px) {
   .main-head {
     font-size: 80px !important;
   }
@@ -89,7 +97,19 @@
 
 @media (min-width: 576px) {
   .main-head {
-    font-size: 60px;
+    font-size: 70px;
+  }
+
+  .brand-login {
+    font-size: 30px !important;
+  }
+
+  .login-button {
+    width: 150px !important;
+  }
+
+  .guest {
+    margin-right: 8px !important;
   }
 }
 

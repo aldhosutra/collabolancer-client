@@ -3,7 +3,7 @@ import { toast } from "react-toastify";
 import { STATUS } from "../../transactions/constants";
 import { getSession } from "../../utils/tools";
 import { startWork } from "../../utils/transaction";
-import config from "../../config/config.json";
+import config from "../../config/config";
 
 class StartWorkButton extends React.Component {
   constructor() {

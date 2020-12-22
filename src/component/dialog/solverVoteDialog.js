@@ -4,10 +4,10 @@ import { toast } from "react-toastify";
 import { getSession } from "../../utils/tools";
 import { voteDispute } from "../../utils/transaction";
 import SolverVoteLogo from "../../asset/undraw_voting_nvu7.svg";
-import config from "../../config/config.json";
+import config from "../../config/config";
 import "./modal.css";
 import { renderAvatar } from "../avatar";
-const { utils } = require("@liskhq/lisk-transactions");
+import { utils } from "@liskhq/lisk-transactions";
 
 class SolverVoteDialog extends React.Component {
   constructor() {
@@ -340,7 +340,7 @@ class SolverVoteDialog extends React.Component {
                       className="col-auto form-fee"
                       style={{
                         marginRight: "5px",
-                        maxWidth: "400px",
+
                         wordWrap: "break-word",
                       }}
                     >

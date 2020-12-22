@@ -2,8 +2,8 @@ import React from "react";
 import DisputeReportLogo from "../../asset/undraw_people_search_wctu.svg";
 import "./modal.css";
 import { renderAvatar } from "../avatar";
-const { utils } = require("@liskhq/lisk-transactions");
-const { getAddressFromPublicKey } = require("@liskhq/lisk-cryptography");
+import { utils } from "@liskhq/lisk-transactions";
+import { getAddressFromPublicKey } from "@liskhq/lisk-cryptography";
 
 class DisputeReportDialog extends React.Component {
   constructor() {

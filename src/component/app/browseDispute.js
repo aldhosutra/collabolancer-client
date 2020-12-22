@@ -7,9 +7,7 @@ import { getAccounts, getSession, guestProfile } from "../../utils/tools";
 import AvailableDisputeList from "./availableDisputeList";
 import "./browse.css";
 import Loading from "../general/loading";
-const {
-  getAddressAndPublicKeyFromPassphrase,
-} = require("@liskhq/lisk-cryptography");
+import { getAddressAndPublicKeyFromPassphrase } from "@liskhq/lisk-cryptography";
 
 class BrowseDispute extends React.Component {
   constructor() {

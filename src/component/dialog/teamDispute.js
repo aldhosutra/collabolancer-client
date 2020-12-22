@@ -6,12 +6,12 @@ import holdOnLogo from "../../asset/undraw_loading_frh4.svg";
 import { renderAvatar } from "../avatar";
 import { openDispute } from "../../utils/transaction";
 import { getSession, profileParser } from "../../utils/tools";
-import config from "../../config/config.json";
+import config from "../../config/config";
 import { toast } from "react-toastify";
 import CompactContractCard from "../general/compactContractCard";
 import "./modal.css";
 import { Editor } from "@tinymce/tinymce-react";
-const { utils } = require("@liskhq/lisk-transactions");
+import { utils } from "@liskhq/lisk-transactions";
 
 class TeamDisputeDialog extends React.Component {
   constructor() {
@@ -438,7 +438,7 @@ class TeamDisputeDialog extends React.Component {
                             className="col-auto form-fee"
                             style={{
                               marginRight: "5px",
-                              maxWidth: "400px",
+
                               wordWrap: "break-word",
                             }}
                           >

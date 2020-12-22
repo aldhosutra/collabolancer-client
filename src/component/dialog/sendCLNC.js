@@ -3,10 +3,10 @@ import { toast } from "react-toastify";
 import { getSession } from "../../utils/tools";
 import { transfer } from "../../utils/transaction";
 import SendLogo from "../../asset/undraw_transfer_money_rywa.svg";
-import config from "../../config/config.json";
+import config from "../../config/config";
 import "./modal.css";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-const { utils } = require("@liskhq/lisk-transactions");
+import { utils } from "@liskhq/lisk-transactions";
 
 class SendCLNCDialog extends React.PureComponent {
   constructor() {
@@ -250,7 +250,6 @@ class SendCLNCDialog extends React.PureComponent {
                         className="col-auto form-fee"
                         style={{
                           marginRight: "5px",
-                          maxWidth: "400px",
                           wordWrap: "break-word",
                         }}
                       >
