@@ -1,9 +1,9 @@
-const {
+import {
   BaseTransaction,
   TransactionError,
   utils,
-} = require("@liskhq/lisk-transactions");
-const CONSTANTS = require("./constants.json");
+} from "@liskhq/lisk-transactions";
+import CONSTANTS from "./constants";
 
 /**
  * DEVELOPMENT PURPOSE ONLY

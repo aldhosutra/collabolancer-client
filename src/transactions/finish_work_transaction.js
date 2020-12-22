@@ -1,10 +1,7 @@
-const { store_account_get } = require("./utils");
-const { STATUS, ACCOUNT, MISCELLANEOUS } = require("./constants");
-const {
-  BaseTransaction,
-  TransactionError,
-} = require("@liskhq/lisk-transactions");
-const { getAddressFromPublicKey } = require("@liskhq/lisk-cryptography");
+import { store_account_get } from "./utils";
+import { STATUS, ACCOUNT, MISCELLANEOUS } from "./constants";
+import { BaseTransaction, TransactionError } from "@liskhq/lisk-transactions";
+import { getAddressFromPublicKey } from "@liskhq/lisk-cryptography";
 
 /**
  * This custom transaction can only be executed by project owner.
@@ -262,4 +259,4 @@ class FinishWorkTransaction extends BaseTransaction {
   }
 }
 
-module.exports = FinishWorkTransaction;
+export default FinishWorkTransaction;

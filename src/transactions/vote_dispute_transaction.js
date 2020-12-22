@@ -1,14 +1,14 @@
 // eslint-disable-next-line no-redeclare
 /* global BigInt */
 
-const { store_account_get } = require("./utils");
-const { ACCOUNT, STATUS } = require("./constants");
-const {
+import { store_account_get } from "./utils";
+import { ACCOUNT, STATUS } from "./constants";
+import {
   BaseTransaction,
   TransactionError,
   utils,
-} = require("@liskhq/lisk-transactions");
-const { getAddressFromPublicKey } = require("@liskhq/lisk-cryptography");
+} from "@liskhq/lisk-transactions";
+import { getAddressFromPublicKey } from "@liskhq/lisk-cryptography";
 
 /**
  * This transaction can only be executed by solver.
@@ -257,4 +257,4 @@ class VoteDisputeTransaction extends BaseTransaction {
   }
 }
 
-module.exports = VoteDisputeTransaction;
+export default VoteDisputeTransaction;

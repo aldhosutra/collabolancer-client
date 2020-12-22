@@ -78,7 +78,7 @@ class Login extends React.Component {
             onKeyDown={async (e) => {
               if (e.key === "Enter") {
                 if (await login(this.state.signInPassphrase)) {
-                  if (query.get("target") !== undefined) {
+                  if (query.get("target")) {
                     this.setState({ redirect: query.get("target") });
                   } else {
                     this.setState({ redirect: "/app" });
@@ -126,7 +126,7 @@ class Login extends React.Component {
             }}
             onClick={() => {
               toast.success("Happy Exploring as Guest!");
-              if (query.get("target") !== undefined) {
+              if (query.get("target")) {
                 this.setState({ redirect: query.get("target") });
               } else {
                 this.setState({ redirect: "/app/project" });

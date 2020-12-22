@@ -1,11 +1,11 @@
-const { STATUS, ACCOUNT } = require("./constants");
-const { store_account_get } = require("./utils");
-const {
+import { STATUS, ACCOUNT } from "./constants";
+import { store_account_get } from "./utils";
+import {
   BaseTransaction,
   TransactionError,
   utils,
-} = require("@liskhq/lisk-transactions");
-const { getAddressFromPublicKey } = require("@liskhq/lisk-cryptography");
+} from "@liskhq/lisk-transactions";
+import { getAddressFromPublicKey } from "@liskhq/lisk-cryptography";
 
 /**
  * This custom transaction can only be executed by employer.
@@ -330,4 +330,4 @@ class CancelWorkTransaction extends BaseTransaction {
   }
 }
 
-module.exports = CancelWorkTransaction;
+export default CancelWorkTransaction;

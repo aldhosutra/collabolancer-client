@@ -1,11 +1,11 @@
-const { store_account_get } = require("./utils");
-const { STATUS, ACCOUNT, MISCELLANEOUS } = require("./constants");
-const {
+import { store_account_get } from "./utils";
+import { STATUS, ACCOUNT, MISCELLANEOUS } from "./constants";
+import {
   BaseTransaction,
   TransactionError,
   utils,
-} = require("@liskhq/lisk-transactions");
-const { getAddressFromPublicKey } = require("@liskhq/lisk-cryptography");
+} from "@liskhq/lisk-transactions";
+import { getAddressFromPublicKey } from "@liskhq/lisk-cryptography";
 
 /**
  * This custom transaction can only be executed by project owner (employer).
@@ -528,4 +528,4 @@ class EmployerRequestRevisionTransaction extends BaseTransaction {
   }
 }
 
-module.exports = EmployerRequestRevisionTransaction;
+export default EmployerRequestRevisionTransaction;

@@ -1,5 +1,5 @@
-const { MISCELLANEOUS } = require("../constants");
-const { APIClient } = require("@liskhq/lisk-api-client");
+import { MISCELLANEOUS } from "../constants";
+import { APIClient } from "@liskhq/lisk-api-client";
 const api = new APIClient(["http://localhost:4000"]);
 
 const deflationaryMultiplier = async () => {
@@ -22,4 +22,4 @@ const deflationaryMultiplier = async () => {
   return multiplier;
 };
 
-module.exports = deflationaryMultiplier;
+export default deflationaryMultiplier;

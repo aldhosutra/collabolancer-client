@@ -1,9 +1,5 @@
-const { getStateCenterAccount } = require("./state_center_account");
-const store_account_get = require("./get_account");
-const deflationaryMultiplier = require("./deflationary_multiplier");
+import { getStateCenterAccount } from "./state_center_account";
+import store_account_get from "./get_account";
+import deflationaryMultiplier from "./deflationary_multiplier";
 
-module.exports = {
-  getStateCenterAccount,
-  store_account_get,
-  deflationaryMultiplier,
-};
+export { getStateCenterAccount, store_account_get, deflationaryMultiplier };

@@ -1,11 +1,11 @@
-const { store_account_get, deflationaryMultiplier } = require("./utils");
-const { STATUS, ACCOUNT, MISCELLANEOUS } = require("./constants");
-const {
+import { store_account_get, deflationaryMultiplier } from "./utils";
+import { STATUS, ACCOUNT, MISCELLANEOUS } from "./constants";
+import {
   BaseTransaction,
   TransactionError,
   utils,
-} = require("@liskhq/lisk-transactions");
-const { getAddressFromPublicKey } = require("@liskhq/lisk-cryptography");
+} from "@liskhq/lisk-transactions";
+import { getAddressFromPublicKey } from "@liskhq/lisk-cryptography";
 
 /**
  * This custom transaction can only be executed by project member, whether is owner, leader, or team member.
@@ -639,4 +639,4 @@ class ClaimPrizeTransaction extends BaseTransaction {
   }
 }
 
-module.exports = ClaimPrizeTransaction;
+export default ClaimPrizeTransaction;

@@ -1,9 +1,6 @@
-const { getStateCenterAccount, store_account_get } = require("./utils");
-const { category, ACCOUNT } = require("./constants");
-const {
-  BaseTransaction,
-  TransactionError,
-} = require("@liskhq/lisk-transactions");
+import { getStateCenterAccount, store_account_get } from "./utils";
+import { category, ACCOUNT } from "./constants";
+import { BaseTransaction, TransactionError } from "@liskhq/lisk-transactions";
 
 /**
  * this custom transaction create new address and register it as solver.
@@ -183,4 +180,4 @@ class RegisterSolverTransaction extends BaseTransaction {
   }
 }
 
-module.exports = RegisterSolverTransaction;
+export default RegisterSolverTransaction;

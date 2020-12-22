@@ -1,11 +1,6 @@
-const category = require("./category.json");
-const STATUS = require("./status.json");
-const ACCOUNT = require("./account_type.json");
-const MISCELLANEOUS = require("./miscellaneous.json");
+import category from "./category";
+import STATUS from "./status";
+import ACCOUNT from "./account_type";
+import MISCELLANEOUS from "./miscellaneous";
 
-module.exports = {
-  category,
-  STATUS,
-  ACCOUNT,
-  MISCELLANEOUS,
-};
+export { category, STATUS, ACCOUNT, MISCELLANEOUS };

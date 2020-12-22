@@ -1,10 +1,7 @@
-const { STATUS, ACCOUNT, MISCELLANEOUS } = require("./constants");
-const { store_account_get } = require("./utils");
-const {
-  BaseTransaction,
-  TransactionError,
-} = require("@liskhq/lisk-transactions");
-const { getAddressFromPublicKey } = require("@liskhq/lisk-cryptography");
+import { STATUS, ACCOUNT, MISCELLANEOUS } from "./constants";
+import { store_account_get } from "./utils";
+import { BaseTransaction, TransactionError } from "@liskhq/lisk-transactions";
+import { getAddressFromPublicKey } from "@liskhq/lisk-cryptography";
 
 /**
  * This custom transaction can only be executed by leader.
@@ -239,4 +236,4 @@ class TerminateWorkTransaction extends BaseTransaction {
   }
 }
 
-module.exports = TerminateWorkTransaction;
+export default TerminateWorkTransaction;

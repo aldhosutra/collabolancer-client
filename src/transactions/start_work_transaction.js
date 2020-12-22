@@ -1,11 +1,11 @@
-const { getStateCenterAccount, store_account_get } = require("./utils");
-const { ACCOUNT, STATUS, MISCELLANEOUS } = require("./constants");
-const {
+import { getStateCenterAccount, store_account_get } from "./utils";
+import { ACCOUNT, STATUS, MISCELLANEOUS } from "./constants";
+import {
   BaseTransaction,
   TransactionError,
   utils,
-} = require("@liskhq/lisk-transactions");
-const { getAddressFromPublicKey } = require("@liskhq/lisk-cryptography");
+} from "@liskhq/lisk-transactions";
+import { getAddressFromPublicKey } from "@liskhq/lisk-cryptography";
 
 /**
  * This custom transaction can only be executed by employer (Project owner).
@@ -706,4 +706,4 @@ class StartWorkTransaction extends BaseTransaction {
   }
 }
 
-module.exports = StartWorkTransaction;
+export default StartWorkTransaction;

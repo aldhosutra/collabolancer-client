@@ -1,4 +1,4 @@
-const { getAddressFromPublicKey } = require("@liskhq/lisk-cryptography");
+import { getAddressFromPublicKey } from "@liskhq/lisk-cryptography";
 
 const store_account_get = (publicKey, store) => {
   let returned;
@@ -11,4 +11,4 @@ const store_account_get = (publicKey, store) => {
   return returned;
 };
 
-module.exports = store_account_get;
+export default store_account_get;

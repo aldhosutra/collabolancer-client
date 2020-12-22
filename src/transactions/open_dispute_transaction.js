@@ -1,14 +1,14 @@
 // eslint-disable-next-line no-redeclare
 /* global BigInt */
 
-const { getStateCenterAccount, store_account_get } = require("./utils");
-const { ACCOUNT, MISCELLANEOUS, STATUS } = require("./constants");
-const {
+import { getStateCenterAccount, store_account_get } from "./utils";
+import { ACCOUNT, MISCELLANEOUS, STATUS } from "./constants";
+import {
   BaseTransaction,
   TransactionError,
   utils,
-} = require("@liskhq/lisk-transactions");
-const { getAddressFromPublicKey } = require("@liskhq/lisk-cryptography");
+} from "@liskhq/lisk-transactions";
+import { getAddressFromPublicKey } from "@liskhq/lisk-cryptography";
 
 /**
  * Dispute are in two forms, Leader vs Employer, and Team Member vs Leader.
@@ -791,4 +791,4 @@ class OpenDisputeTransaction extends BaseTransaction {
   }
 }
 
-module.exports = OpenDisputeTransaction;
+export default OpenDisputeTransaction;

@@ -1,6 +1,6 @@
-const cryptography = require("@liskhq/lisk-cryptography");
-const { Mnemonic } = require("@liskhq/lisk-passphrase");
-const fs = require("fs");
+import cryptography from "@liskhq/lisk-cryptography";
+import { Mnemonic } from "@liskhq/lisk-passphrase";
+import fs from "fs";
 
 const createAccount = () => {
   const passphrase = Mnemonic.generateMnemonic();
@@ -36,8 +36,4 @@ const getStateCenterAccount = () => {
   return state_center;
 };
 
-module.exports = {
-  createAccount,
-  createStateCenterAccount,
-  getStateCenterAccount,
-};
+export { createAccount, createStateCenterAccount, getStateCenterAccount };

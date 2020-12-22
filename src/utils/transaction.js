@@ -34,7 +34,7 @@ const networkIdentifier = getNetworkIdentifier(
 
 const api = new APIClient(config.nodes);
 
-const transfer = async (recipientId, amount, passphrase) => {
+export const transfer = async (recipientId, amount, passphrase) => {
   let ret;
   const tx = new TransferTransaction({
     asset: {
@@ -57,7 +57,7 @@ const transfer = async (recipientId, amount, passphrase) => {
   return ret;
 };
 
-const createAccount = () => {
+export const createAccount = () => {
   const passphrase = Mnemonic.generateMnemonic();
   const keys = getPrivateAndPublicKeyFromPassphrase(passphrase);
   const credentials = {
@@ -69,7 +69,7 @@ const createAccount = () => {
   return credentials;
 };
 
-const registerEmployer = async (employerPassphrase) => {
+export const registerEmployer = async (employerPassphrase) => {
   let ret;
   const tx = new RegisterEmployerTransaction({
     networkIdentifier: networkIdentifier,
@@ -88,7 +88,7 @@ const registerEmployer = async (employerPassphrase) => {
   return ret;
 };
 
-const registerWorker = async (workerPassphrase) => {
+export const registerWorker = async (workerPassphrase) => {
   let ret;
   const tx = new RegisterWorkerTransaction({
     networkIdentifier: networkIdentifier,
@@ -107,7 +107,7 @@ const registerWorker = async (workerPassphrase) => {
   return ret;
 };
 
-const registerSolver = async (solverPassphrase) => {
+export const registerSolver = async (solverPassphrase) => {
   let ret;
   const tx = new RegisterSolverTransaction({
     networkIdentifier: networkIdentifier,
@@ -126,7 +126,7 @@ const registerSolver = async (solverPassphrase) => {
   return ret;
 };
 
-const postProject = async (
+export const postProject = async (
   senderPassphrase,
   title,
   description,
@@ -163,7 +163,7 @@ const postProject = async (
   return ret;
 };
 
-const postProposal = async (
+export const postProposal = async (
   senderPassphrase,
   projectPublicKey,
   pitching,
@@ -194,7 +194,11 @@ const postProposal = async (
   return ret;
 };
 
-const joinTeam = async (senderPassphrase, proposalPublicKey, roleIndex) => {
+export const joinTeam = async (
+  senderPassphrase,
+  proposalPublicKey,
+  roleIndex
+) => {
   let ret;
   const teamAccount = createAccount();
   const tx = new JoinTeamTransaction({
@@ -219,7 +223,7 @@ const joinTeam = async (senderPassphrase, proposalPublicKey, roleIndex) => {
   return ret;
 };
 
-const startWork = async (
+export const startWork = async (
   senderPassphrase,
   projectPublicKey,
   selectedProposalPublicKey
@@ -246,7 +250,7 @@ const startWork = async (
   return ret;
 };
 
-const submitContribution = async (
+export const submitContribution = async (
   senderPassphrase,
   teamPublicKey,
   fileextension,
@@ -281,7 +285,7 @@ const submitContribution = async (
   return ret;
 };
 
-const leaderRequestRevision = async (
+export const leaderRequestRevision = async (
   senderPassphrase,
   contributionPublicKey,
   reason
@@ -308,7 +312,7 @@ const leaderRequestRevision = async (
   return ret;
 };
 
-const submitWork = async (
+export const submitWork = async (
   senderPassphrase,
   proposalPublicKey,
   fileextension,
@@ -343,7 +347,7 @@ const submitWork = async (
   return ret;
 };
 
-const employerRequestRevision = async (
+export const employerRequestRevision = async (
   senderPassphrase,
   submissionPublicKey,
   reason
@@ -370,7 +374,7 @@ const employerRequestRevision = async (
   return ret;
 };
 
-const finishWork = async (senderPassphrase, projectPublicKey) => {
+export const finishWork = async (senderPassphrase, projectPublicKey) => {
   let ret;
   const tx = new FinishWorkTransaction({
     asset: {
@@ -392,7 +396,7 @@ const finishWork = async (senderPassphrase, projectPublicKey) => {
   return ret;
 };
 
-const claimPrize = async (senderPassphrase, projectPublicKey) => {
+export const claimPrize = async (senderPassphrase, projectPublicKey) => {
   let ret;
   const tx = new ClaimPrizeTransaction({
     asset: {
@@ -414,7 +418,7 @@ const claimPrize = async (senderPassphrase, projectPublicKey) => {
   return ret;
 };
 
-const terminateWork = async (senderPassphrase, projectPublicKey) => {
+export const terminateWork = async (senderPassphrase, projectPublicKey) => {
   let ret;
   const tx = new TerminateWorkTransaction({
     asset: {
@@ -436,7 +440,7 @@ const terminateWork = async (senderPassphrase, projectPublicKey) => {
   return ret;
 };
 
-const cancelWork = async (senderPassphrase, projectPublicKey) => {
+export const cancelWork = async (senderPassphrase, projectPublicKey) => {
   let ret;
   const tx = new CancelWorkTransaction({
     asset: {
@@ -458,7 +462,7 @@ const cancelWork = async (senderPassphrase, projectPublicKey) => {
   return ret;
 };
 
-const openDispute = async (
+export const openDispute = async (
   senderPassphrase,
   casePublicKey,
   projectPublicKey,
@@ -491,7 +495,11 @@ const openDispute = async (
   return ret;
 };
 
-const voteDispute = async (senderPassphrase, disputePublicKey, voteFor) => {
+export const voteDispute = async (
+  senderPassphrase,
+  disputePublicKey,
+  voteFor
+) => {
   let ret;
   const tx = new VoteDisputeTransaction({
     asset: {
@@ -514,7 +522,7 @@ const voteDispute = async (senderPassphrase, disputePublicKey, voteFor) => {
   return ret;
 };
 
-const closeDispute = async (senderPassphrase, disputePublicKey) => {
+export const closeDispute = async (senderPassphrase, disputePublicKey) => {
   let ret;
   const tx = new CloseDisputeTransaction({
     asset: {
@@ -534,27 +542,4 @@ const closeDispute = async (senderPassphrase, disputePublicKey) => {
       ret = err;
     });
   return ret;
-};
-
-module.exports = {
-  transfer,
-  createAccount,
-  registerEmployer,
-  registerWorker,
-  registerSolver,
-  postProject,
-  postProposal,
-  joinTeam,
-  startWork,
-  submitContribution,
-  leaderRequestRevision,
-  submitWork,
-  employerRequestRevision,
-  finishWork,
-  claimPrize,
-  terminateWork,
-  cancelWork,
-  openDispute,
-  voteDispute,
-  closeDispute,
 };

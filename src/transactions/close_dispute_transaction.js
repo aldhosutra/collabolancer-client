@@ -1,11 +1,11 @@
-const { getStateCenterAccount, store_account_get } = require("./utils");
-const { ACCOUNT, MISCELLANEOUS, STATUS } = require("./constants");
-const {
+import { getStateCenterAccount, store_account_get } from "./utils";
+import { ACCOUNT, MISCELLANEOUS, STATUS } from "./constants";
+import {
   BaseTransaction,
   TransactionError,
   utils,
-} = require("@liskhq/lisk-transactions");
-const { getAddressFromPublicKey } = require("@liskhq/lisk-cryptography");
+} from "@liskhq/lisk-transactions";
+import { getAddressFromPublicKey } from "@liskhq/lisk-cryptography";
 
 /**
  * This transaction can only be executed when dispute are exceeding the time limit by anybody.
@@ -963,4 +963,4 @@ class CloseDisputeTransaction extends BaseTransaction {
   }
 }
 
-module.exports = CloseDisputeTransaction;
+export default CloseDisputeTransaction;
