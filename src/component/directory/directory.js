@@ -74,6 +74,7 @@ class Directory extends React.Component {
       })
       .catch((err) => {
         toast.error(`Error: ${err.message}`);
+        this.setState({ stateCenter: "nodata" });
       });
   }
 
