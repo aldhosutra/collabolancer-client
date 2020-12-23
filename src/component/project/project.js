@@ -5,6 +5,7 @@ import {
   getProject,
   getSession,
   guestProfile,
+  parseDocumentTitle,
   profileParser,
 } from "../../utils/tools";
 import { withRouter } from "react-router-dom";
@@ -37,12 +38,31 @@ class Project extends React.Component {
       .then((response) => response.json())
       .then((res) => {
         if (res !== null) {
-          this.setState((state) => {
-            return {
-              ...state,
-              project: res.data[0],
-            };
-          });
+          this.setState(
+            (state) => {
+              return {
+                ...state,
+                project: res.data[0],
+              };
+            },
+            () => {
+              const projectTitle =
+                this.state.project.asset.title.length > 250
+                  ? this.state.project.asset.title.slice(0, 250) + "..."
+                  : this.state.project.asset.title;
+              document.title = parseDocumentTitle(
+                `${projectTitle} | ${this.state.project.asset.category
+                  .replaceAll("-", " ")
+                  .replace(/\w\S*/g, (txt) => {
+                    return (
+                      txt.charAt(0).toUpperCase() + txt.substr(1).toLowerCase()
+                    );
+                  })}`,
+                true,
+                this.state.account
+              );
+            }
+          );
         }
       });
   }

@@ -52,19 +52,28 @@ class DisputeList extends React.Component {
       return <div></div>;
     }
     const tab = [
-      <div style={{ display: this.state.index === 0 ? "block" : "none" }}>
+      <div
+        key={"opened-dispute"}
+        style={{ display: this.state.index === 0 ? "block" : "none" }}
+      >
         <OpenedDisputeList
           project={this.props.project}
           account={this.props.account}
         />
       </div>,
-      <div style={{ display: this.state.index === 1 ? "block" : "none" }}>
+      <div
+        key={"voted-dispute"}
+        style={{ display: this.state.index === 1 ? "block" : "none" }}
+      >
         <VotedDisputeList
           project={this.props.project}
           account={this.props.account}
         />
       </div>,
-      <div style={{ display: this.state.index === 2 ? "block" : "none" }}>
+      <div
+        key={"closed-dispute"}
+        style={{ display: this.state.index === 2 ? "block" : "none" }}
+      >
         <ClosedDisputeList
           project={this.props.project}
           account={this.props.account}
@@ -114,7 +123,6 @@ class DisputeList extends React.Component {
             className="border rounded-0"
             style={{
               marginTop: 0,
-              paddingTop: "8px",
               paddingRight: "16px",
               paddingBottom: "8px",
               paddingLeft: "16px",
@@ -122,11 +130,16 @@ class DisputeList extends React.Component {
           >
             <div className="text-center" style={{ marginBottom: "30px" }}>
               <button
-                className="btn btn-primary border rounded-0"
+                className="btn btn-primary border"
                 id="opened-dispute-tab"
                 type="button"
                 style={{
-                  width: "150px",
+                  paddingLeft: "24px",
+                  paddingRight: "24px",
+                  borderRadius: "25px",
+                  marginLeft: "8px",
+                  marginRight: "8px",
+                  marginTop: "16px",
                   color:
                     this.state.index === 0 ? "rgb(255,255,255)" : "rgb(0,0,0)",
                   backgroundColor:
@@ -143,11 +156,16 @@ class DisputeList extends React.Component {
               {this.props.account &&
               this.props.account.asset.type === ACCOUNT.SOLVER ? (
                 <button
-                  className="btn btn-primary border rounded-0"
+                  className="btn btn-primary border"
                   id="voted-dispute-tab"
                   type="button"
                   style={{
-                    width: "150px",
+                    paddingLeft: "24px",
+                    paddingRight: "24px",
+                    borderRadius: "25px",
+                    marginLeft: "8px",
+                    marginRight: "8px",
+                    marginTop: "16px",
                     color:
                       this.state.index === 1
                         ? "rgb(255,255,255)"
@@ -165,11 +183,16 @@ class DisputeList extends React.Component {
                 </button>
               ) : null}
               <button
-                className="btn btn-secondary border rounded-0"
+                className="btn btn-secondary border"
                 id="closed-dispute-tab"
                 type="button"
                 style={{
-                  width: "150px",
+                  paddingLeft: "24px",
+                  paddingRight: "24px",
+                  borderRadius: "25px",
+                  marginLeft: "8px",
+                  marginRight: "8px",
+                  marginTop: "16px",
                   color:
                     this.state.index === 2 ? "rgb(255,255,255)" : "rgb(0,0,0)",
                   backgroundColor:

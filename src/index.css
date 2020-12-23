@@ -63,6 +63,11 @@ div::-webkit-scrollbar-thumb {
   color: #ef233c !important;
 }
 
+.compact-card {
+  height: 90% !important;
+  margin-bottom: 10% !important;
+}
+
 @media (max-width: 362px) {
   .mt-xs-24 {
     margin-top: 24px !important;
@@ -81,6 +86,19 @@ div::-webkit-scrollbar-thumb {
   .mb-md-24 {
     margin-bottom: 24px !important;
   }
+
+  .compact-card {
+    height: 90% !important;
+    margin-bottom: 10% !important;
+  }
+
+  .mt-md-8 {
+    margin-top: 8px !important;
+  }
+
+  .mb-md-8 {
+    margin-bottom: 8px !important;
+  }
 }
 
 @media (max-width: 576px) {
@@ -96,8 +114,16 @@ div::-webkit-scrollbar-thumb {
     width: 50% !important;
   }
 
+  .w-sm-75 {
+    width: 75% !important;
+  }
+
   .mt-sm-24 {
     margin-top: 24px !important;
+  }
+
+  .h-sm-100 {
+    height: 100% !important;
   }
 
   .mb-sm-24 {
@@ -111,6 +137,58 @@ div::-webkit-scrollbar-thumb {
 
   .avatar-address {
     line-height: 30px !important;
+    font-size: 12px !important;
+  }
+
+  .avatar-address-subtitle {
+    line-height: 14px !important;
+    font-size: 10px !important;
+    margin-bottom: 0px !important;
+  }
+
+  .avatar-address-title {
+    line-height: 16px !important;
+    font-size: 12px !important;
+    margin-bottom: 0px !important;
+  }
+
+  .dispute-box {
+    margin-left: -17px !important;
+    margin-right: -17px !important;
+  }
+
+  .proposal-box {
+    margin-left: -17px !important;
+    margin-right: -17px !important;
+  }
+
+  .team-box {
+    margin-right: -21px !important;
+    margin-left: -21px !important;
+  }
+
+  .open-dispute-box {
+    margin-right: -21px !important;
+    margin-left: -21px !important;
+  }
+
+  .compact-card-title {
+    font-size: 14px !important;
+  }
+
+  .compact-card-value {
+    font-size: 16px !important;
+  }
+
+  .compact-card-body {
+    padding: 0.5rem 1.25rem !important;
+  }
+
+  .compact-card-img {
+    display: none;
+  }
+
+  .fs-sm-12 {
     font-size: 12px !important;
   }
 }

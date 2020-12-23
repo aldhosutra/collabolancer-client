@@ -2,6 +2,10 @@
   .navborder {
     display: none;
   }
+
+  .auth-button {
+    width: unset !important;
+  }
 }
 
 .offcanvas-header {

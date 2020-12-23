@@ -168,7 +168,7 @@ class Proposal extends React.Component {
           id={"proposal-" + this.props.proposal.publicKey + "-" + this.props.id}
         >
           <div
-            className="border rounded-0"
+            className="border rounded-0 proposal-box"
             style={{
               marginTop: "16px",
               paddingLeft: "20px",

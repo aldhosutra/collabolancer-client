@@ -8,6 +8,7 @@ import {
   getCategory,
   getSession,
   guestProfile,
+  parseDocumentTitle,
 } from "../../utils/tools";
 import AvailableProjectList from "./availableProjectList";
 import PostProjectDialog from "../dialog/postProjectDialog";
@@ -38,7 +39,13 @@ class BrowseProject extends React.Component {
             this.onLoad();
           }, timeout);
         } else {
-          this.setState({ account: res.data[0] });
+          this.setState({ account: res.data[0] }, () => {
+            document.title = parseDocumentTitle(
+              "Browse Project",
+              true,
+              this.state.account
+            );
+          });
           if (res.data[0].asset.type === ACCOUNT.EMPLOYER) {
             getCategory()
               .then((response) => response.json())
@@ -51,7 +58,13 @@ class BrowseProject extends React.Component {
         }
       });
     } else {
-      this.setState({ account: guestProfile });
+      this.setState({ account: guestProfile }, () => {
+        document.title = parseDocumentTitle(
+          "Browse Project",
+          true,
+          this.state.account
+        );
+      });
     }
   }
 
@@ -75,7 +88,7 @@ class BrowseProject extends React.Component {
               <div className="row">
                 <div className="col" style={{ marginBottom: "16px" }}>
                   <p
-                    className="d-xl-flex align-items-xl-center top-available"
+                    className="d-md-flex align-items-md-center top-available"
                     style={{
                       fontFamily: "Poppins, sans-serif",
                       fontSize: "24px",

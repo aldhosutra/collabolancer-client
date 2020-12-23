@@ -4,7 +4,7 @@ import workerLogo from "../../asset/undraw_Work_time_re_hdyv.svg";
 import solverLogo from "../../asset/undraw_conference_speaker_6nt7.svg";
 import { toast } from "react-toastify";
 import { Redirect } from "react-router-dom";
-import { setSession } from "../../utils/tools";
+import { parseDocumentTitle, setSession } from "../../utils/tools";
 import {
   createAccount,
   registerEmployer,
@@ -19,6 +19,13 @@ class Register extends React.Component {
       checked: false,
       account: createAccount(),
     };
+  }
+
+  componentDidMount() {
+    const role = ["Worker", "Employer", "Solver"];
+    document.title = parseDocumentTitle(
+      `Register as ${role[this.props.index]}`
+    );
   }
 
   render() {

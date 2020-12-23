@@ -3,9 +3,12 @@ import { Link } from "react-router-dom";
 import React from "react";
 import { toast } from "react-toastify";
 import config from "../config/config";
-import { MISCELLANEOUS } from "../transactions/constants";
+import { ACCOUNT, MISCELLANEOUS } from "../transactions/constants";
 import base91 from "node-base91";
-import { getAddressFromPublicKey } from "@liskhq/lisk-cryptography";
+import {
+  getAddressFromPublicKey,
+  getAddressFromPassphrase,
+} from "@liskhq/lisk-cryptography";
 
 const client = new APIClient(config.nodes);
 
@@ -14,13 +17,19 @@ export const profileParser = (address, callback) => {
   return (
     <Link
       className="link"
-      style={{ textDecoration: "none" }}
+      style={{ textDecoration: "none", overflowWrap: "break-word" }}
       to={`/app/profile/${address}`}
       onClick={onClick}
     >
       {address}
     </Link>
   );
+};
+
+export const parseDocumentTitle = (title, brand, account) => {
+  const isGuest = account && account.asset.type === "guest" ? "[Guest] " : "";
+  const useBrand = brand === false ? "" : " | Collabolancer";
+  return `${isGuest}${title}${useBrand}`;
 };
 
 export const getTransactionName = (type) => {
@@ -46,6 +55,37 @@ export const getTransactionName = (type) => {
     118: "Close Dispute Transaction",
   };
   return transactionRegistry[type];
+};
+
+export const login = async (userPassphrase) => {
+  if (userPassphrase) {
+    let ret = false;
+    const userAddress = getAddressFromPassphrase(userPassphrase);
+    await getAccounts({
+      limit: 1,
+      address: userAddress,
+    })
+      .then((res) => {
+        if (
+          [ACCOUNT.EMPLOYER, ACCOUNT.WORKER, ACCOUNT.SOLVER].includes(
+            res.data[0].asset.type
+          )
+        ) {
+          toast.success("Login Successful! Happy Collaborating!");
+          setSession("secret", userPassphrase);
+          ret = true;
+        } else {
+          toast.warning("No valid account found, check passphrase.");
+        }
+      })
+      .catch((err) => {
+        toast.warning("No valid account found, check passphrase.");
+      });
+    return ret;
+  } else {
+    toast.warning("Passphrase are empty, check again!");
+    return false;
+  }
 };
 
 export const saveFile = async (filePublicKey) => {

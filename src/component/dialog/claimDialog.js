@@ -121,7 +121,10 @@ class ClaimDialog extends React.Component {
               aria-hidden="true"
               style={{ fontFamily: "Poppins, sans-serif" }}
             >
-              <div className="modal-dialog modal-md" role="document">
+              <div
+                className="modal-dialog modal-dialog-centered modal-md"
+                role="document"
+              >
                 <div className="modal-content form-elegant">
                   <div
                     className="modal-header"
@@ -217,7 +220,10 @@ class ClaimDialog extends React.Component {
               aria-hidden="true"
               style={{ fontFamily: "Poppins, sans-serif" }}
             >
-              <div className="modal-dialog modal-md" role="document">
+              <div
+                className="modal-dialog modal-dialog-centered modal-md"
+                role="document"
+              >
                 <div className="modal-content form-elegant">
                   <div
                     className="modal-header text-center"

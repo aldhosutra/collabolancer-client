@@ -137,7 +137,12 @@ class Header extends React.Component {
                 >
                   x
                 </button>
-                <h5 className="py-2 text-black">Menu</h5>
+                <h5
+                  style={{ fontFamily: "Poppins, sans-serif" }}
+                  className="py-2 text-black"
+                >
+                  Menu
+                </h5>
               </div>
               <ul className="nav navbar-nav d-md-flex ml-auto justify-content-md-end">
                 <li className="nav-item" role="presentation">
@@ -253,6 +258,7 @@ class Header extends React.Component {
                                     paddingLeft: "15px",
                                     paddingRight: "15px",
                                     fontWeight: "bold",
+                                    fontSize: "14px",
                                   }}
                                 >
                                   Expired!
@@ -271,6 +277,7 @@ class Header extends React.Component {
                                     paddingRight: "15px",
                                     fontWeight: "bold",
                                     textAlign: "center",
+                                    fontSize: "14px",
                                   }}
                                 >
                                   {minutes}:{seconds}
@@ -331,13 +338,13 @@ class Header extends React.Component {
                   </li>
                 ) : (
                   <li
-                    className="dropdown nav-item"
+                    className="d-flex justify-content-center dropdown nav-item"
                     style={{
                       margin: "auto",
                     }}
                   >
                     <div
-                      className="d-flex justify-content-center"
+                      className="d-flex justify-content-center auth-button"
                       style={{
                         width: "250px",
                       }}

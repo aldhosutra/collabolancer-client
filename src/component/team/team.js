@@ -28,7 +28,7 @@ class Team extends React.Component {
     return (
       <div>
         <div
-          className="border rounded-0"
+          className="border rounded-0 team-box"
           style={{
             paddingTop: "8px",
             paddingBottom: "8px",
@@ -114,7 +114,7 @@ class Team extends React.Component {
                 </div>
               )}
             </div>
-            <div className="col-lg-4 d-flex justify-content-lg-end details mh-sm-60">
+            <div className="col-lg-4 d-flex justify-content-sm-end details mh-sm-60">
               {this.props.team === 0 ? (
                 <JoinAsTeamDialog
                   id={this.props.id}

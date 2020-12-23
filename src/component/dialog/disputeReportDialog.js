@@ -15,9 +15,9 @@ class DisputeReportDialog extends React.Component {
 
   render() {
     return (
-      <div className="d-flex justify-content-center justify-content-lg-center">
+      <div className="d-flex w-sm-100 h-sm-100">
         <button
-          className="btn btn-primary border rounded-0 top-button"
+          className="btn btn-primary border rounded-0 top-button w-sm-100 h-sm-100"
           type="button"
           data-toggle="modal"
           data-target={"#dispute-report-" + this.props.dispute.publicKey}
@@ -122,6 +122,7 @@ class DisputeReportDialog extends React.Component {
                       >
                         <div>
                           <div
+                            className="avatar-card"
                             style={{
                               fontFamily: "Poppins, sans-serif",
                               backgroundImage: `url('data:image/svg+xml,${renderAvatar(
@@ -139,8 +140,11 @@ class DisputeReportDialog extends React.Component {
                               width: "fit-content",
                             }}
                           >
-                            <strong>{this.props.dispute.asset.litigant}</strong>
+                            <strong className="avatar-address-title">
+                              {this.props.dispute.asset.litigant}
+                            </strong>
                             <p
+                              className="avatar-address-subtitle"
                               style={{
                                 lineHeight: "15px",
                                 fontSize: "14px",
@@ -281,6 +285,7 @@ class DisputeReportDialog extends React.Component {
                       >
                         <div>
                           <div
+                            className="avatar-card"
                             style={{
                               fontFamily: "Poppins, sans-serif",
                               backgroundImage: `url('data:image/svg+xml,${renderAvatar(
@@ -298,10 +303,11 @@ class DisputeReportDialog extends React.Component {
                               width: "fit-content",
                             }}
                           >
-                            <strong>
+                            <strong className="avatar-address-title">
                               {this.props.dispute.asset.defendant}
                             </strong>
                             <p
+                              className="avatar-address-subtitle"
                               style={{
                                 lineHeight: "15px",
                                 fontSize: "14px",
@@ -426,9 +432,9 @@ class DisputeReportDialog extends React.Component {
                   </h6>
                   <div
                     style={{
-                      height: "400px",
-                      overflow: "scroll",
-                      overflowX: "hidden",
+                      // height: "400px",
+                      // overflow: "scroll",
+                      // overflowX: "hidden",
                       marginTop: "16px",
                       marginBottom: "16px",
                     }}
@@ -437,6 +443,7 @@ class DisputeReportDialog extends React.Component {
                       (item) => {
                         return (
                           <div
+                            key={item}
                             style={{
                               paddingTop: "8px",
                               paddingBottom: "8px",
@@ -445,8 +452,8 @@ class DisputeReportDialog extends React.Component {
                             }}
                           >
                             <div className="col d-flex justify-content-start details">
-                              <p
-                                className="role-address"
+                              <div
+                                className="role-address avatar-card"
                                 style={{
                                   overflowWrap: "break-word",
                                   fontFamily: "Poppins, sans-serif",
@@ -464,8 +471,10 @@ class DisputeReportDialog extends React.Component {
                                   lineHeight: "40px",
                                 }}
                               >
-                                {getAddressFromPublicKey(item)}
-                              </p>
+                                <p className="avatar-address">
+                                  {getAddressFromPublicKey(item)}
+                                </p>
+                              </div>
                             </div>
                           </div>
                         );

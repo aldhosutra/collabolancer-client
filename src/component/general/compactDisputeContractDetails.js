@@ -7,7 +7,7 @@ class CompactDisputeContractDetail extends React.PureComponent {
   render() {
     return (
       <div className="row" style={{ marginBottom: "16px" }}>
-        <div className="col-lg-4">
+        <div className="col-lg-4 col-6">
           <CompactContractCard
             icon={"trophy"}
             name={"Winner"}
@@ -26,7 +26,7 @@ class CompactDisputeContractDetail extends React.PureComponent {
             tooltip={"Winner of the Dispute, after dispute closed"}
           />
         </div>
-        <div className="col-lg-4">
+        <div className="col-lg-4 col-6">
           <CompactContractCard
             icon={"vote-yea"}
             name={"Vote Count"}
@@ -39,7 +39,7 @@ class CompactDisputeContractDetail extends React.PureComponent {
             }
           />
         </div>
-        <div className="col-lg-4">
+        <div className="col-lg-4 col-6">
           <CompactContractCard
             icon={"receipt"}
             name={"Vote Commitment Fee"}
@@ -52,7 +52,7 @@ class CompactDisputeContractDetail extends React.PureComponent {
             }
           />
         </div>
-        <div className="col-lg-4">
+        <div className="col-lg-4 col-6">
           <CompactContractCard
             icon={"balance-scale-right"}
             name={"Dispute Freezed Fund"}
@@ -65,7 +65,7 @@ class CompactDisputeContractDetail extends React.PureComponent {
             }
           />
         </div>
-        <div className="col-lg-4">
+        <div className="col-lg-4 col-6">
           <CompactContractCard
             icon={"suitcase"}
             name={"Litigant Freezed Fee"}
@@ -79,7 +79,7 @@ class CompactDisputeContractDetail extends React.PureComponent {
             }
           />
         </div>
-        <div className="col-lg-4">
+        <div className="col-lg-4 col-6">
           <CompactContractCard
             icon={"briefcase"}
             name={"Defendant Freezed Fee"}

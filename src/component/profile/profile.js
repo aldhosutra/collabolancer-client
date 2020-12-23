@@ -3,7 +3,12 @@ import React from "react";
 import Footer from "../general/footer";
 import Header from "../general/header";
 import Quote from "../general/quote";
-import { getAccounts, getSession, guestProfile } from "../../utils/tools";
+import {
+  getAccounts,
+  getSession,
+  guestProfile,
+  parseDocumentTitle,
+} from "../../utils/tools";
 import { withRouter } from "react-router-dom";
 import Loading from "../general/loading";
 import { toast } from "react-toastify";
@@ -38,7 +43,19 @@ class Profile extends React.Component {
                 res.data[0].asset.type
               )
             ) {
-              this.setState({ profile: { code: 200, data: res.data[0] } });
+              this.setState(
+                { profile: { code: 200, data: res.data[0] } },
+                () => {
+                  document.title = parseDocumentTitle(
+                    this.state.account.address ===
+                      this.state.profile.data.address
+                      ? "Your Profile"
+                      : `Profile (${this.state.profile.data.address})`,
+                    true,
+                    this.state.account
+                  );
+                }
+              );
             } else {
               this.setState({
                 profile: {
@@ -73,17 +90,20 @@ class Profile extends React.Component {
             this.onLoad();
           }, timeout);
         } else {
-          this.setState({ account: res.data[0] });
+          this.setState({ account: res.data[0] }, () => {
+            this.loadProfile();
+          });
         }
       });
     } else {
-      this.setState({ account: guestProfile });
+      this.setState({ account: guestProfile }, () => {
+        this.loadProfile();
+      });
     }
   }
 
   componentDidMount() {
     this.loadAccount();
-    this.loadProfile();
   }
 
   componentDidUpdate(prevProps) {

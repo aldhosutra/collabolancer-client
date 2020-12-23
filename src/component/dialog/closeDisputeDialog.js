@@ -60,17 +60,17 @@ class CloseDisputeDialog extends React.Component {
 
   render() {
     return (
-      <div className="d-flex justify-content-center justify-content-lg-center details">
+      <div className="d-flex w-sm-100 h-sm-100">
         <button
-          className="btn btn-primary border rounded-0 top-button"
+          className="btn btn-primary border rounded-0 top-button w-sm-100 h-sm-100 fs-sm-12"
           type="button"
           data-toggle="modal"
           data-target={"#close-dispute-modal-" + this.props.dispute.publicKey}
           style={{
             width: "195px",
-            marginRight: "8px",
             backgroundColor: "#ef233c",
-            margin: "auto",
+            marginTop: "auto",
+            marginBottom: "auto",
             fontFamily: "Poppins, sans-serif",
           }}
         >
@@ -84,7 +84,10 @@ class CloseDisputeDialog extends React.Component {
           aria-hidden="true"
           style={{ fontFamily: "Poppins, sans-serif" }}
         >
-          <div className="modal-dialog modal-md" role="document">
+          <div
+            className="modal-dialog modal-dialog-centered modal-md"
+            role="document"
+          >
             <div className="modal-content form-elegant">
               <div className="modal-header" style={{ borderBottom: "0 none" }}>
                 <button
@@ -153,11 +156,11 @@ class CloseDisputeDialog extends React.Component {
                 </div>
               </div>
               <div
-                className="modal-footer mx-5 pt-3 mb-1"
+                className="modal-footer mx-lg-5 pt-3 mb-1"
                 style={{ borderTop: "0 none", justifyContent: "center" }}
               >
-                <div className="row">
-                  <div className="col">
+                <div style={{ width: "100%" }}>
+                  <div className="text-center">
                     <button
                       className="btn btn-primary border rounded-0 top-button"
                       style={{
@@ -165,7 +168,7 @@ class CloseDisputeDialog extends React.Component {
                         marginTop: "auto",
                         marginBottom: "auto",
                         fontFamily: "Poppins, sans-serif",
-                        width: "150px",
+                        width: "50%",
                       }}
                       onClick={() => {
                         window
@@ -185,7 +188,7 @@ class CloseDisputeDialog extends React.Component {
                         marginTop: "auto",
                         marginBottom: "auto",
                         fontFamily: "Poppins, sans-serif",
-                        width: "150px",
+                        width: "50%",
                       }}
                       disabled={!this.state.checked}
                       onClick={() => {

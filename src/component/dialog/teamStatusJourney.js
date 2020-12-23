@@ -61,7 +61,10 @@ class TeamStatusJourneyDialog extends React.PureComponent {
           aria-hidden="true"
           style={{ fontFamily: "Poppins, sans-serif" }}
         >
-          <div className="modal-dialog modal-lg" role="document">
+          <div
+            className="modal-dialog modal-dialog-centered modal-lg"
+            role="document"
+          >
             <div className="modal-content form-elegant">
               <div
                 className="modal-header text-center"

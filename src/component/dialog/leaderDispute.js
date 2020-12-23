@@ -144,7 +144,7 @@ class LeaderDisputeDialog extends React.Component {
     return (
       <div>
         <button
-          className="btn btn-primary border rounded-0 top-button"
+          className="btn btn-primary border rounded-0 top-button mb-sm-24"
           type="button"
           data-toggle="modal"
           data-target={
@@ -238,6 +238,7 @@ class LeaderDisputeDialog extends React.Component {
                           <strong>Dispute Details:</strong>
                         </h6>
                         <div
+                          className="open-dispute-box"
                           style={{
                             padding: "20px",
                             borderWidth: 2,
@@ -248,8 +249,9 @@ class LeaderDisputeDialog extends React.Component {
                           }}
                         >
                           <div className="row" style={{ marginBottom: "16px" }}>
-                            <div className="col-lg-5">
+                            <div className="col-md-5 d-flex justify-content-center">
                               <div
+                                className="avatar-card"
                                 style={{
                                   fontFamily: "Poppins, sans-serif",
                                   backgroundImage: `url('data:image/svg+xml,${renderAvatar(
@@ -265,6 +267,7 @@ class LeaderDisputeDialog extends React.Component {
                                 }}
                               >
                                 <p
+                                  className="avatar-address-subtitle"
                                   style={{
                                     lineHeight: "15px",
                                     fontSize: "14px",
@@ -273,7 +276,7 @@ class LeaderDisputeDialog extends React.Component {
                                 >
                                   Litigant [YOU]
                                 </p>
-                                <strong>
+                                <strong className="avatar-address-title">
                                   {profileParser(
                                     this.props.account.address,
                                     () => {
@@ -284,13 +287,14 @@ class LeaderDisputeDialog extends React.Component {
                                 </strong>
                               </div>
                             </div>
-                            <div className="col-lg-2">
+                            <div className="col-md-2 d-flex justify-content-center">
                               <h3 className="w-100 font-weight-bold text-center">
                                 VS
                               </h3>
                             </div>
-                            <div className="col-lg-5">
+                            <div className="col-md-5 d-flex justify-content-center">
                               <div
+                                className="avatar-card"
                                 style={{
                                   fontFamily: "Poppins, sans-serif",
                                   backgroundImage: `url('data:image/svg+xml,${renderAvatar(
@@ -306,6 +310,7 @@ class LeaderDisputeDialog extends React.Component {
                                 }}
                               >
                                 <p
+                                  className="avatar-address-subtitle"
                                   style={{
                                     lineHeight: "15px",
                                     fontSize: "14px",
@@ -314,7 +319,7 @@ class LeaderDisputeDialog extends React.Component {
                                 >
                                   Defendant [Employer]
                                 </p>
-                                <strong>
+                                <strong className="avatar-address-title">
                                   {profileParser(
                                     this.props.project.asset.employer,
                                     () => {
@@ -327,7 +332,7 @@ class LeaderDisputeDialog extends React.Component {
                             </div>
                           </div>
                           <div className="row">
-                            <div className="col-lg-4 details">
+                            <div className="col-md-4 details">
                               <CompactContractCard
                                 icon={"comment-dollar"}
                                 name={"Defendant Fund Locked"}
@@ -341,7 +346,7 @@ class LeaderDisputeDialog extends React.Component {
                                 }
                               />
                             </div>
-                            <div className="col-lg-4 details">
+                            <div className="col-md-4 details">
                               <CompactContractCard
                                 icon={"comment-dollar"}
                                 name={"Litigant Fee Locked"}
@@ -355,7 +360,7 @@ class LeaderDisputeDialog extends React.Component {
                                 }
                               />
                             </div>
-                            <div className="col-lg-4 details">
+                            <div className="col-md-4 details">
                               <CompactContractCard
                                 icon={"comment-dollar"}
                                 name={"Defendant Fee Locked"}
@@ -498,7 +503,10 @@ class LeaderDisputeDialog extends React.Component {
               aria-hidden="true"
               style={{ fontFamily: "Poppins, sans-serif" }}
             >
-              <div className="modal-dialog modal-md" role="document">
+              <div
+                className="modal-dialog modal-dialog-centered modal-md"
+                role="document"
+              >
                 <div className="modal-content form-elegant">
                   <div
                     className="modal-header text-center"

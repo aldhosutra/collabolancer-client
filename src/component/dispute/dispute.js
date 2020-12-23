@@ -9,6 +9,7 @@ import CompactDisputeContractDetail from "../general/compactDisputeContractDetai
 import SolverVoteDialog from "../dialog/solverVoteDialog";
 import DisputeReportDialog from "../dialog/disputeReportDialog";
 import { profileParser } from "../../utils/tools";
+import { withRouter } from "react-router-dom";
 
 class Dispute extends React.Component {
   constructor() {
@@ -16,6 +17,20 @@ class Dispute extends React.Component {
     this.state = {
       collapsed: false,
     };
+  }
+
+  componentDidMount() {
+    if (
+      this.props.location.hash.split("#dispute-")[1] ===
+      this.props.dispute.publicKey
+    ) {
+      this.setState((state) => {
+        return {
+          ...state,
+          collapsed: true,
+        };
+      });
+    }
   }
 
   render() {
@@ -30,7 +45,7 @@ class Dispute extends React.Component {
       >
         <div className="row">
           <div
-            className="col details"
+            className="col details mb-md-24"
             data-toggle="collapse"
             aria-expanded="false"
             aria-controls={"dispute-" + this.props.dispute.publicKey}
@@ -40,87 +55,111 @@ class Dispute extends React.Component {
               return this.setState({ collapsed: !this.state.collapsed });
             }}
           >
-            <div className="d-flex flex-wrap" style={{ height: "60px" }}>
+            <div className="row" style={{ minHeight: "60px" }}>
               <div
+                className="col-md-5 d-flex justify-content-center"
                 style={{
-                  fontFamily: "Poppins, sans-serif",
-                  backgroundImage: `url('data:image/svg+xml,${renderAvatar(
-                    this.props.dispute.asset.litigant,
-                    250
-                  )}')`,
-                  backgroundRepeat: "no-repeat",
-                  backgroundSize: "contain",
-                  backgroundPosition: "left",
-                  paddingLeft: "50px",
                   marginTop: "auto",
                   marginBottom: "auto",
-                  height: "40px",
                 }}
               >
-                <strong style={{ lineHeight: "25px" }}>
-                  {profileParser(this.props.dispute.asset.litigant)}
-                </strong>
-                <p style={{ lineHeight: "15px", fontSize: "14px" }}>
-                  Litigant [
-                  {this.props.dispute.asset.disputeType
-                    .split("-vs-")[0]
-                    .replaceAll("-", " ")
-                    .replace(/\w\S*/g, (txt) => {
-                      return (
-                        txt.charAt(0).toUpperCase() +
-                        txt.substr(1).toLowerCase()
-                      );
-                    })}
-                  ]
-                </p>
+                <div
+                  style={{
+                    fontFamily: "Poppins, sans-serif",
+                    backgroundImage: `url('data:image/svg+xml,${renderAvatar(
+                      this.props.dispute.asset.litigant,
+                      250
+                    )}')`,
+                    backgroundRepeat: "no-repeat",
+                    backgroundSize: "contain",
+                    backgroundPosition: "left",
+                    paddingLeft: "50px",
+                    marginTop: "auto",
+                    marginBottom: "auto",
+                    height: "40px",
+                  }}
+                >
+                  <strong style={{ lineHeight: "25px" }}>
+                    {profileParser(this.props.dispute.asset.litigant)}
+                  </strong>
+                  <p style={{ lineHeight: "15px", fontSize: "14px" }}>
+                    Litigant [
+                    {this.props.dispute.asset.disputeType
+                      .split("-vs-")[0]
+                      .replaceAll("-", " ")
+                      .replace(/\w\S*/g, (txt) => {
+                        return (
+                          txt.charAt(0).toUpperCase() +
+                          txt.substr(1).toLowerCase()
+                        );
+                      })}
+                    ]
+                  </p>
+                </div>
               </div>
               <div
+                className="col-md-2 d-flex justify-content-center mt-md-8 mb-md-8"
                 style={{
-                  marginLeft: "10px",
-                  marginRight: "10px",
                   marginTop: "auto",
                   marginBottom: "auto",
-                  color: "#ef233c",
                 }}
               >
-                <strong>VS</strong>
+                <div
+                  style={{
+                    marginLeft: "10px",
+                    marginRight: "10px",
+                    marginTop: "auto",
+                    marginBottom: "auto",
+                    color: "#ef233c",
+                  }}
+                >
+                  <strong>VS</strong>
+                </div>
               </div>
               <div
+                className="col-md-5 d-flex justify-content-center"
                 style={{
-                  fontFamily: "Poppins, sans-serif",
-                  backgroundImage: `url('data:image/svg+xml,${renderAvatar(
-                    this.props.dispute.asset.defendant,
-                    250
-                  )}')`,
-                  backgroundRepeat: "no-repeat",
-                  backgroundSize: "contain",
-                  backgroundPosition: "left",
                   marginTop: "auto",
                   marginBottom: "auto",
-                  paddingLeft: "50px",
-                  height: "40px",
                 }}
               >
-                <strong style={{ lineHeight: "25px" }}>
-                  {profileParser(this.props.dispute.asset.defendant)}
-                </strong>
-                <p style={{ lineHeight: "15px", fontSize: "14px" }}>
-                  Defendant [
-                  {this.props.dispute.asset.disputeType
-                    .split("-vs-")[1]
-                    .replaceAll("-", " ")
-                    .replace(/\w\S*/g, (txt) => {
-                      return (
-                        txt.charAt(0).toUpperCase() +
-                        txt.substr(1).toLowerCase()
-                      );
-                    })}
-                  ]
-                </p>
+                <div
+                  style={{
+                    fontFamily: "Poppins, sans-serif",
+                    backgroundImage: `url('data:image/svg+xml,${renderAvatar(
+                      this.props.dispute.asset.defendant,
+                      250
+                    )}')`,
+                    backgroundRepeat: "no-repeat",
+                    backgroundSize: "contain",
+                    backgroundPosition: "left",
+                    marginTop: "auto",
+                    marginBottom: "auto",
+                    paddingLeft: "50px",
+                    height: "40px",
+                  }}
+                >
+                  <strong style={{ lineHeight: "25px" }}>
+                    {profileParser(this.props.dispute.asset.defendant)}
+                  </strong>
+                  <p style={{ lineHeight: "15px", fontSize: "14px" }}>
+                    Defendant [
+                    {this.props.dispute.asset.disputeType
+                      .split("-vs-")[1]
+                      .replaceAll("-", " ")
+                      .replace(/\w\S*/g, (txt) => {
+                        return (
+                          txt.charAt(0).toUpperCase() +
+                          txt.substr(1).toLowerCase()
+                        );
+                      })}
+                    ]
+                  </p>
+                </div>
               </div>
             </div>
           </div>
-          <div className="col-auto d-flex justify-content-center justify-content-lg-center details">
+          <div className="col-lg-auto d-flex justify-content-end details">
             {this.props.dispute.asset.status === STATUS.DISPUTE.OPEN ? (
               <Countdown
                 date={
@@ -140,15 +179,17 @@ class Dispute extends React.Component {
                   } else {
                     return (
                       <div
-                        className="btn btn-primary border rounded-0 top-button"
+                        className="btn btn-primary border rounded-0 top-button w-sm-100 fs-sm-12 h-sm-100"
                         style={{
                           color: "#2B2D42",
                           width: "195px",
-                          marginRight: "8px",
                           backgroundColor: "white",
-                          margin: "auto",
+                          marginTop: "auto",
+                          marginBottom: "auto",
                           fontFamily: "Poppins, sans-serif",
                           cursor: "unset",
+                          fontSize: "16px",
+                          minHeight: "38px",
                         }}
                       >
                         <strong>
@@ -167,7 +208,7 @@ class Dispute extends React.Component {
               />
             )}
             <a
-              className="btn btn-primary border rounded-0 top-button"
+              className="btn btn-primary border rounded-0 top-button w-sm-75 h-sm-100"
               data-toggle="collapse"
               aria-expanded="false"
               aria-controls={"dispute-" + this.props.dispute.publicKey}
@@ -175,7 +216,8 @@ class Dispute extends React.Component {
               href={"#dispute-" + this.props.dispute.publicKey}
               style={{
                 backgroundColor: "rgb(239, 35, 60)",
-                margin: "auto",
+                marginTop: "auto",
+                marginBottom: "auto",
                 minWidth: "40px",
               }}
               onClick={() => {
@@ -197,7 +239,7 @@ class Dispute extends React.Component {
           id={"dispute-" + this.props.dispute.publicKey}
         >
           <div
-            className="border rounded-0 "
+            className="border rounded-0 dispute-box"
             style={{
               marginTop: "16px",
               paddingLeft: "20px",
@@ -246,4 +288,4 @@ class Dispute extends React.Component {
   }
 }
 
-export default Dispute;
+export default withRouter(Dispute);

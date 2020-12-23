@@ -8,6 +8,7 @@ import {
   getStateCenter,
   getSession,
   guestProfile,
+  parseDocumentTitle,
 } from "../../utils/tools";
 import Loading from "../general/loading";
 import { withRouter } from "react-router-dom";
@@ -41,11 +42,23 @@ class Directory extends React.Component {
             this.onLoad();
           }, timeout);
         } else {
-          this.setState({ account: res.data[0] });
+          this.setState({ account: res.data[0] }, () => {
+            document.title = parseDocumentTitle(
+              "Account Directory",
+              true,
+              this.state.account
+            );
+          });
         }
       });
     } else {
-      this.setState({ account: guestProfile });
+      this.setState({ account: guestProfile }, () => {
+        document.title = parseDocumentTitle(
+          "Account Directory",
+          true,
+          this.state.account
+        );
+      });
     }
   }
 

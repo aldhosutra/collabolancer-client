@@ -3,7 +3,12 @@ import React from "react";
 import Footer from "../general/footer";
 import Header from "../general/header";
 import Quote from "../general/quote";
-import { getAccounts, getSession, guestProfile } from "../../utils/tools";
+import {
+  getAccounts,
+  getSession,
+  guestProfile,
+  parseDocumentTitle,
+} from "../../utils/tools";
 import AvailableDisputeList from "./availableDisputeList";
 import "./browse.css";
 import Loading from "../general/loading";
@@ -30,11 +35,23 @@ class BrowseDispute extends React.Component {
             this.onLoad();
           }, timeout);
         } else {
-          this.setState({ account: res.data[0] });
+          this.setState({ account: res.data[0] }, () => {
+            document.title = parseDocumentTitle(
+              "Browse Dispute",
+              true,
+              this.state.account
+            );
+          });
         }
       });
     } else {
-      this.setState({ account: guestProfile });
+      this.setState({ account: guestProfile }, () => {
+        document.title = parseDocumentTitle(
+          "Browse Dispute",
+          true,
+          this.state.account
+        );
+      });
     }
   }
 

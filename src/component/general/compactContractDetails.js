@@ -2,7 +2,7 @@ import React from "react";
 import CompactContractCard from "./compactContractCard";
 import StatusCard from "./statusCard";
 import "./fontAwesome";
-import { ACCOUNT, MISCELLANEOUS } from "../../transactions/constants";
+import { ACCOUNT, MISCELLANEOUS, STATUS } from "../../transactions/constants";
 import ProposalStatusJourneyDialog from "../dialog/proposalStatusJourney";
 import TeamStatusJourneyDialog from "../dialog/teamStatusJourney";
 import { utils } from "@liskhq/lisk-transactions";
@@ -11,18 +11,23 @@ class CompactContractDetail extends React.PureComponent {
   render() {
     const contractType = this.props.contract.asset.type;
     let bonusRate = 0;
+    let claimedStatus;
     switch (contractType) {
       case ACCOUNT.PROJECT:
         bonusRate = MISCELLANEOUS.EMPLOYER_CASHBACK_PERCENTAGE * 100;
+        claimedStatus = STATUS.PROJECT.CLAIMED;
         break;
       case ACCOUNT.PROPOSAL:
         bonusRate = MISCELLANEOUS.LEADER_CASHBACK_PERCENTAGE * 100;
+        claimedStatus = STATUS.PROPOSAL.CLAIMED;
         break;
       case ACCOUNT.TEAM:
         bonusRate = MISCELLANEOUS.TEAM_CASHBACK_PERCENTAGE * 100;
+        claimedStatus = STATUS.TEAM.CLAIMED;
         break;
       default:
         bonusRate = 0;
+        claimedStatus = "unknown";
         break;
     }
     const proposalBonus =
@@ -50,7 +55,7 @@ class CompactContractDetail extends React.PureComponent {
     }
     return (
       <div className="row" style={{ marginBottom: "16px" }}>
-        <div className="col-lg-4">
+        <div className="col-lg-4 col-6">
           <StatusCard
             contract={this.props.contract}
             compact={true}
@@ -70,7 +75,7 @@ class CompactContractDetail extends React.PureComponent {
           />
           {statusDialog}
         </div>
-        <div className="col-lg-4">
+        <div className="col-lg-4 col-6">
           <CompactContractCard
             icon={"comment-dollar"}
             type={this.props.contract.asset.type}
@@ -86,7 +91,7 @@ class CompactContractDetail extends React.PureComponent {
             }
           />
         </div>
-        <div className="col-lg-4">
+        <div className="col-lg-4 col-6">
           <CompactContractCard
             icon={"gavel"}
             type={this.props.contract.asset.type}
@@ -98,12 +103,16 @@ class CompactContractDetail extends React.PureComponent {
             }
           />
         </div>
-        <div className="col-lg-4">
+        <div className="col-lg-4 col-6">
           <CompactContractCard
             icon={"hand-holding-usd"}
             type={this.props.contract.asset.type}
             status={this.props.contract.asset.status}
-            name={"Fund Vault"}
+            name={
+              this.props.contract.asset.status === claimedStatus
+                ? "Fund Claimed"
+                : "Fund Vault"
+            }
             value={
               utils.convertBeddowsToLSK(this.props.contract.asset.freezedFund) +
               " CLNC"
@@ -113,12 +122,16 @@ class CompactContractDetail extends React.PureComponent {
             }
           />
         </div>
-        <div className="col-lg-4">
+        <div className="col-lg-4 col-6">
           <CompactContractCard
             icon={"funnel-dollar"}
             type={this.props.contract.asset.type}
             status={this.props.contract.asset.status}
-            name={"Fee Vault"}
+            name={
+              this.props.contract.asset.status === claimedStatus
+                ? "Fee Claimed"
+                : "Fee Vault"
+            }
             value={
               utils.convertBeddowsToLSK(this.props.contract.asset.freezedFee) +
               " CLNC"
@@ -128,12 +141,16 @@ class CompactContractDetail extends React.PureComponent {
             }
           />
         </div>
-        <div className="col-lg-4">
+        <div className="col-lg-4 col-6">
           <CompactContractCard
             icon={"gift"}
             type={this.props.contract.asset.type}
             status={this.props.contract.asset.status}
-            name={"Bonus Vault"}
+            name={
+              this.props.contract.asset.status === claimedStatus
+                ? "Bonus Claimed"
+                : "Bonus Vault"
+            }
             value={
               utils.convertBeddowsToLSK(this.props.contract.asset.cashback) +
               " CLNC"

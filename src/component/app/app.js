@@ -1,6 +1,6 @@
 /* eslint-disable jsx-a11y/anchor-is-valid */
 import React from "react";
-import { getAccounts, getSession } from "../../utils/tools";
+import { getAccounts, getSession, parseDocumentTitle } from "../../utils/tools";
 import { Redirect } from "react-router-dom";
 import "./browse.css";
 import loadingLogo from "../../asset/undraw_synchronize_ccxk.svg";
@@ -44,6 +44,7 @@ class Browse extends React.Component {
   }
 
   componentDidMount() {
+    document.title = parseDocumentTitle("Loading...", false);
     this.onLoad();
   }
 

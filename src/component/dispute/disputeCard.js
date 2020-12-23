@@ -58,7 +58,7 @@ class DisputeCard extends React.PureComponent {
                     })}
                 </h4>
               </div>
-              <div className="col-lg-2">
+              <div className="col-sm-4">
                 <h4
                   className="text-right"
                   style={{ color: "#d90429", fontWeight: "bold" }}

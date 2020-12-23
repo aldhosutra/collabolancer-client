@@ -207,15 +207,16 @@ class StatusCard extends React.PureComponent {
       </div>
     ) : (
       <div
-        className="card"
+        className="card compact-card"
         style={{
           fontFamily: "Poppins, sans-serif",
           marginBottom: "8px",
           backgroundColor: bgColor,
           minHeight: "70px",
+          height: "100%",
         }}
-        onMouseEnter={this.toggleHover}
-        onMouseLeave={this.toggleHover}
+        onMouseEnter={this.toggleHoverTrue}
+        onMouseLeave={this.toggleHoverFalse}
       >
         <button
           style={{
@@ -231,14 +232,17 @@ class StatusCard extends React.PureComponent {
           onClick={this.props.onClick}
         >
           <div
-            className="card-body"
+            className="card-body compact-card-body"
             style={{ marginTop: "auto", marginBottom: "auto" }}
             data-toggle="tooltip"
             data-placement="top"
             title={this.props.tooltip}
           >
             <div className="row">
-              <div className="col-3" style={{ margin: "auto" }}>
+              <div
+                className="col-3 col-sm-3 compact-card-img"
+                style={{ margin: "auto" }}
+              >
                 <div
                   className="mb-xs-24"
                   style={{ marginTop: "auto", marginBottom: "auto" }}
@@ -254,7 +258,7 @@ class StatusCard extends React.PureComponent {
                 </div>
               </div>
               <div className="col">
-                <h6 className="w-100 dark-grey-text font-weight-bold my-1">
+                <h6 className="w-100 dark-grey-text font-weight-bold my-1 compact-card-title">
                   <strong>
                     {this.props.contract.asset.type
                       .replaceAll("-", " ")
@@ -268,6 +272,7 @@ class StatusCard extends React.PureComponent {
                   </strong>
                 </h6>
                 <div
+                  className="compact-card-value"
                   style={{
                     fontFamily: "Poppins, sans-serif",
                     fontSize: "22px",

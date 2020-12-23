@@ -1,7 +1,6 @@
 import React from "react";
 import "./login.css";
-import { getAccounts, setSession, getSession } from "../../utils/tools";
-import { getAddressFromPassphrase } from "@liskhq/lisk-cryptography";
+import { login, getSession, parseDocumentTitle } from "../../utils/tools";
 import employerLogo from "../../asset/undraw_businessman_97x4.svg";
 import workerLogo from "../../asset/undraw_Work_time_re_hdyv.svg";
 import solverLogo from "../../asset/undraw_conference_speaker_6nt7.svg";
@@ -9,39 +8,6 @@ import { toast } from "react-toastify";
 import { Link, Redirect, withRouter } from "react-router-dom";
 import Register from "./register";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-
-import { ACCOUNT } from "../../transactions/constants";
-
-const login = async (userPassphrase) => {
-  if (userPassphrase) {
-    let ret = false;
-    const userAddress = getAddressFromPassphrase(userPassphrase);
-    await getAccounts({
-      limit: 1,
-      address: userAddress,
-    })
-      .then((res) => {
-        if (
-          [ACCOUNT.EMPLOYER, ACCOUNT.WORKER, ACCOUNT.SOLVER].includes(
-            res.data[0].asset.type
-          )
-        ) {
-          toast.success("Login Successful! Happy Collaborating!");
-          setSession("secret", userPassphrase);
-          ret = true;
-        } else {
-          toast.warning("No valid account found, check passphrase.");
-        }
-      })
-      .catch((err) => {
-        toast.warning("No valid account found, check passphrase.");
-      });
-    return ret;
-  } else {
-    toast.warning("Passphrase are empty, check again!");
-    return false;
-  }
-};
 
 class Login extends React.Component {
   constructor() {
@@ -52,6 +18,14 @@ class Login extends React.Component {
       regIndex: -1,
       passwordShow: false,
     };
+  }
+
+  componentDidMount() {
+    document.title = parseDocumentTitle("Login");
+  }
+
+  componentDidUpdate() {
+    if (this.state.index === 0) document.title = parseDocumentTitle("Login");
   }
 
   render() {
@@ -283,6 +257,7 @@ class Login extends React.Component {
                 fontWeight: "bold",
                 color: "rgb(255,255,255)",
                 marginBottom: "30px",
+                overflowWrap: "break-word",
               }}
             >
               COLLABORATING IS JUST A FEW CLICKS AWAY
@@ -302,9 +277,12 @@ class Login extends React.Component {
             >
               <div className="text-center" style={{ marginBottom: "30px" }}>
                 <button
-                  className="btn btn-primary border rounded-0 login-button"
+                  className="btn btn-primary border login-button"
                   type="button"
                   style={{
+                    marginLeft: "4px",
+                    marginRight: "4px",
+                    borderRadius: "25px",
                     color:
                       this.state.index === 0
                         ? "rgb(255,255,255)"
@@ -322,9 +300,12 @@ class Login extends React.Component {
                   Login
                 </button>
                 <button
-                  className="btn btn-secondary border rounded-0 login-button"
+                  className="btn btn-secondary border login-button"
                   type="button"
                   style={{
+                    marginLeft: "4px",
+                    marginRight: "4px",
+                    borderRadius: "25px",
                     color:
                       this.state.index === 1
                         ? "rgb(255,255,255)"

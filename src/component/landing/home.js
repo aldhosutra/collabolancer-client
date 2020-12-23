@@ -12,6 +12,7 @@ import immutable from "../../asset/undraw_security_o890.svg";
 import democratize from "../../asset/undraw_voting_nvu7.svg";
 import Footer from "../general/footer";
 import Quote from "../general/quote";
+import { parseDocumentTitle } from "../../utils/tools";
 
 class Home extends React.Component {
   constructor() {
@@ -21,12 +22,16 @@ class Home extends React.Component {
     };
   }
 
+  componentDidMount() {
+    document.title = parseDocumentTitle("Home");
+  }
+
   render() {
     return (
       <div>
         <div>
           <nav
-            className="navbar navbar-light navbar-expand-md fixed-top border rounded-0 navigation-clean-button"
+            className="navbar navbar-light navbar-expand-lg fixed-top border rounded-0 navigation-clean-button"
             style={{ height: "70px" }}
           >
             <div className="container">
@@ -78,10 +83,15 @@ class Home extends React.Component {
                   >
                     x
                   </button>
-                  <h5 className="py-2 text-black">Menu</h5>
+                  <h5
+                    style={{ fontFamily: "Poppins, sans-serif" }}
+                    className="py-2 text-black"
+                  >
+                    Menu
+                  </h5>
                 </div>
                 <ul className="nav navbar-nav d-md-flex ml-auto justify-content-md-end">
-                  <li className="nav-item" role="presentation">
+                  <li className="nav-item text-center" role="presentation">
                     <Link to="/auth">
                       <h1
                         className="btn btn-light border rounded-0 action-button"

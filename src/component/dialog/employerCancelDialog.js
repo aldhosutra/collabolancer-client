@@ -123,7 +123,10 @@ class EmployerCancelDialog extends React.Component {
               aria-hidden="true"
               style={{ fontFamily: "Poppins, sans-serif" }}
             >
-              <div className="modal-dialog modal-md" role="document">
+              <div
+                className="modal-dialog modal-dialog-centered modal-md"
+                role="document"
+              >
                 <div className="modal-content form-elegant">
                   <div
                     className="modal-header"
@@ -194,11 +197,11 @@ class EmployerCancelDialog extends React.Component {
                     </div>
                   </div>
                   <div
-                    className="modal-footer mx-5 pt-3 mb-1"
+                    className="modal-footer mx-lg-5 pt-3 mb-1"
                     style={{ borderTop: "0 none", justifyContent: "center" }}
                   >
-                    <div className="row">
-                      <div className="col">
+                    <div style={{ width: "100%" }}>
+                      <div className="text-center">
                         <button
                           className="btn btn-primary border rounded-0 top-button"
                           style={{
@@ -206,7 +209,7 @@ class EmployerCancelDialog extends React.Component {
                             marginTop: "auto",
                             marginBottom: "auto",
                             fontFamily: "Poppins, sans-serif",
-                            width: "150px",
+                            width: "50%",
                           }}
                           onClick={() => {
                             window
@@ -228,7 +231,7 @@ class EmployerCancelDialog extends React.Component {
                             marginTop: "auto",
                             marginBottom: "auto",
                             fontFamily: "Poppins, sans-serif",
-                            width: "150px",
+                            width: "50%",
                           }}
                           disabled={!this.state.checked}
                           onClick={() => {
@@ -259,7 +262,10 @@ class EmployerCancelDialog extends React.Component {
               aria-hidden="true"
               style={{ fontFamily: "Poppins, sans-serif" }}
             >
-              <div className="modal-dialog modal-md" role="document">
+              <div
+                className="modal-dialog modal-dialog-centered modal-md"
+                role="document"
+              >
                 <div className="modal-content form-elegant">
                   <div
                     className="modal-header text-center"
