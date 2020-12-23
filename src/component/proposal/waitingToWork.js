@@ -9,7 +9,7 @@ class WaitingToWork extends React.PureComponent {
         <div
           className="d-flex justify-content-center"
           style={{
-            width: "250px",
+            width: "200px",
             margin: "auto",
             paddingTop: height / 5 + "vh",
           }}

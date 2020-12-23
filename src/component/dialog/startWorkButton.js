@@ -78,24 +78,22 @@ class StartWorkButton extends React.Component {
       this.props.project.asset.status === STATUS.PROJECT.OPEN
     ) {
       return (
-        <div>
-          <button
-            className="btn btn-light"
-            type="button"
-            data-dismiss="modal"
-            style={{
-              width: "150px",
-              backgroundColor: "#ef233c",
-              color: "rgb(255,255,255)",
-            }}
-            disabled={!this.props.enabled}
-            onClick={() => {
-              this.onStartWork();
-            }}
-          >
-            Hire Me
-          </button>
-        </div>
+        <button
+          className="btn btn-light"
+          type="button"
+          data-dismiss="modal"
+          style={{
+            width: "150px",
+            backgroundColor: "#ef233c",
+            color: "rgb(255,255,255)",
+          }}
+          disabled={!this.props.enabled}
+          onClick={() => {
+            this.onStartWork();
+          }}
+        >
+          Hire Me
+        </button>
       );
     } else {
       return null;

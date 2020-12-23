@@ -23,7 +23,7 @@ class PitchingDialog extends React.PureComponent {
       this.props.account.address === this.props.project.asset.employer &&
       this.props.project.asset.status === STATUS.PROJECT.OPEN
     ) {
-      hireMe = " / Hire Me";
+      hireMe = " / Hire";
       hireCheckbox = (
         <div style={{ paddingLeft: "24px" }}>
           <input
@@ -46,7 +46,7 @@ class PitchingDialog extends React.PureComponent {
       );
     }
     return (
-      <div className="d-flex justify-content-center justify-content-lg-center details">
+      <div className="d-flex w-sm-50">
         <button
           className="btn btn-primary border rounded-0 top-button"
           type="button"
@@ -57,6 +57,7 @@ class PitchingDialog extends React.PureComponent {
             backgroundColor: "#2B2D42",
             margin: "auto",
             fontFamily: "Poppins, sans-serif",
+            width: "100%",
           }}
         >
           <strong>Pitching{hireMe}</strong>
@@ -154,24 +155,26 @@ class PitchingDialog extends React.PureComponent {
               </div>
               <div className="container">
                 <div className="modal-footer" style={{ borderTop: "0 none" }}>
-                  <button
-                    className="btn btn-light"
-                    type="button"
-                    data-dismiss="modal"
-                    style={{
-                      width: "150px",
-                      backgroundColor: "#2B2D42",
-                      color: "rgb(255,255,255)",
-                    }}
-                  >
-                    OK
-                  </button>
-                  <StartWorkButton
-                    enabled={this.state.checked}
-                    proposal={this.props.proposal}
-                    account={this.props.account}
-                    project={this.props.project}
-                  />
+                  <div className="text-center">
+                    <button
+                      className="btn btn-light"
+                      type="button"
+                      data-dismiss="modal"
+                      style={{
+                        width: "150px",
+                        backgroundColor: "#2B2D42",
+                        color: "rgb(255,255,255)",
+                      }}
+                    >
+                      OK
+                    </button>
+                    <StartWorkButton
+                      enabled={this.state.checked}
+                      proposal={this.props.proposal}
+                      account={this.props.account}
+                      project={this.props.project}
+                    />
+                  </div>
                 </div>
               </div>
             </div>

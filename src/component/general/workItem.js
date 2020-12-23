@@ -138,6 +138,7 @@ class WorkItem extends React.Component {
         ) {
           actionButton = (
             <div
+              className="d-inline d-md-flex d-lg-inline justify-content-center"
               style={{
                 marginBottom: "auto",
                 marginTop: "auto",
@@ -160,6 +161,7 @@ class WorkItem extends React.Component {
         } else {
           actionButton = (
             <div
+              className="d-inline d-md-flex d-lg-inline justify-content-center"
               style={{
                 marginBottom: "auto",
                 marginTop: "auto",
@@ -274,7 +276,10 @@ class WorkItem extends React.Component {
                 {iconBanner}
               </button>
             </div>
-            <div className="col-lg-5 details" style={{ margin: "auto" }}>
+            <div
+              className="col-lg-5 details mt-md-24 mb-md-24"
+              style={{ margin: "auto" }}
+            >
               <a
                 style={{
                   marginBottom: "0px",

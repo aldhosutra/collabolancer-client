@@ -13,9 +13,15 @@ class TransactionDetailsDialog extends React.Component {
     this.state = {
       transaction: null,
     };
+    this.getTransactionData = this.getTransactionData.bind(this);
   }
 
-  async componentDidUpdate() {
+  componentDidUpdate() {
+    this.getTransactionData();
+  }
+
+  async getTransactionData() {
+    const timeout = 1000;
     if (
       (window.$("#" + this.props.id).data("bs.modal") || {})._isShown &&
       this.state.transaction === null
@@ -28,6 +34,10 @@ class TransactionDetailsDialog extends React.Component {
           };
         });
       });
+    } else {
+      setTimeout(() => {
+        this.getTransactionData();
+      }, timeout);
     }
   }
 

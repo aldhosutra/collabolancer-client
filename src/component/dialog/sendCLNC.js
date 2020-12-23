@@ -247,7 +247,7 @@ class SendCLNCDialog extends React.PureComponent {
                   >
                     <div className="row">
                       <div
-                        className="col-auto form-fee"
+                        className="col-lg-auto form-fee"
                         style={{
                           marginRight: "5px",
                           wordWrap: "break-word",

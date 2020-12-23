@@ -97,7 +97,7 @@ class SubmitSubmissionDialog extends React.Component {
     return (
       <div>
         <button
-          className="btn btn-primary border rounded-0 top-button"
+          className="btn btn-primary border rounded-0 top-button mb-sm-24"
           type="button"
           data-toggle="modal"
           data-target={
@@ -234,7 +234,7 @@ class SubmitSubmissionDialog extends React.Component {
                           </p>
                         </div>
                         <div
-                          className="col-lg-6 details"
+                          className="col-lg-6 details mt-sm-24 mb-sm-24"
                           style={{ margin: "auto" }}
                         >
                           <p
@@ -258,13 +258,12 @@ class SubmitSubmissionDialog extends React.Component {
                           style={{ margin: "auto" }}
                         >
                           <button
-                            className="btn btn-primary border rounded-0 top-button"
+                            className="btn btn-primary border rounded-0 top-button w-sm-100"
                             type="button"
                             style={{
                               paddingRight: "24px",
                               paddingLeft: "24px",
                               backgroundColor: "#EF233C",
-                              marginRight: "10px",
                               fontFamily: "Poppins, sans-serif",
                               marginBottom: "10px",
                             }}

@@ -65,7 +65,7 @@ class Team extends React.Component {
               }
             }}
           >
-            <div className="col d-flex justify-content-start details">
+            <div className="col-lg-4 d-flex justify-content-start details mh-sm-60">
               <p
                 style={{
                   fontFamily: "Poppins, sans-serif",
@@ -76,29 +76,45 @@ class Team extends React.Component {
                 <strong>{this.props.role}</strong>
               </p>
             </div>
-            <div className="col d-flex justify-content-start details">
-              <p
-                className="role-address"
-                style={{
-                  overflowWrap: "break-word",
-                  fontFamily: "Poppins, sans-serif",
-                  backgroundImage: teamAvatar,
-                  backgroundRepeat: "no-repeat",
-                  backgroundSize: "contain",
-                  backgroundPosition: "left",
-                  paddingLeft: "50px",
-                  marginTop: "auto",
-                  marginBottom: "auto",
-                  height: "40px",
-                  lineHeight: "40px",
-                }}
-              >
-                {teamPublicKey === 0
-                  ? "No Team Applied"
-                  : profileParser(this.props.team.asset.worker)}
-              </p>
+            <div className="col-lg-4 d-flex justify-content-start details mh-sm-60">
+              {teamPublicKey === 0 ? (
+                <p
+                  className="role-address"
+                  style={{
+                    overflowWrap: "break-word",
+                    fontFamily: "Poppins, sans-serif",
+                    marginTop: "auto",
+                    marginBottom: "auto",
+                    height: "40px",
+                    lineHeight: "40px",
+                  }}
+                >
+                  No Team Applied
+                </p>
+              ) : (
+                <div
+                  className="role-address avatar-card"
+                  style={{
+                    overflowWrap: "break-word",
+                    fontFamily: "Poppins, sans-serif",
+                    backgroundImage: teamAvatar,
+                    backgroundRepeat: "no-repeat",
+                    backgroundSize: "contain",
+                    backgroundPosition: "left",
+                    paddingLeft: "50px",
+                    marginTop: "auto",
+                    marginBottom: "auto",
+                    height: "40px",
+                    lineHeight: "40px",
+                  }}
+                >
+                  <p className="avatar-address">
+                    {profileParser(this.props.team.asset.worker)}
+                  </p>
+                </div>
+              )}
             </div>
-            <div className="col d-flex justify-content-lg-end details">
+            <div className="col-lg-4 d-flex justify-content-lg-end details mh-sm-60">
               {this.props.team === 0 ? (
                 <JoinAsTeamDialog
                   id={this.props.id}
@@ -110,7 +126,7 @@ class Team extends React.Component {
                 />
               ) : (
                 <a
-                  className="btn btn-primary border rounded-0 top-button"
+                  className="btn btn-primary border rounded-0 top-button w-sm-100"
                   style={{
                     backgroundColor: "rgb(239, 35, 60)",
                     minWidth: "40px",
@@ -166,7 +182,7 @@ class Team extends React.Component {
               }}
             >
               <div
-                className="d-flex justify-content-end"
+                className="d-flex justify-content-center justify-content-md-end"
                 style={{ marginTop: "16px" }}
               >
                 <SubmitContributionDialog

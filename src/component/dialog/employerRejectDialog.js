@@ -137,7 +137,7 @@ class EmployerRejectDialog extends React.Component {
     return (
       <div>
         <button
-          className="btn btn-primary border rounded-0 top-button"
+          className="btn btn-primary border rounded-0 top-button d-inline d-md-flex d-lg-inline justify-content-center"
           type="button"
           data-toggle="modal"
           data-target={

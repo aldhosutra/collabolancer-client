@@ -52,6 +52,7 @@ class DirectoryCard extends React.PureComponent {
           >
             <div className="card-body">
               <div
+                className="avatar-card"
                 style={{
                   fontFamily: "Poppins, sans-serif",
                   backgroundImage: `url('data:image/svg+xml,${renderAvatar(
@@ -65,7 +66,10 @@ class DirectoryCard extends React.PureComponent {
                   height: "40px",
                 }}
               >
-                <strong style={{ lineHeight: "40px", fontSize: "18px" }}>
+                <strong
+                  className="avatar-address"
+                  style={{ lineHeight: "40px", fontSize: "18px" }}
+                >
                   {this.props.address}
                 </strong>
               </div>

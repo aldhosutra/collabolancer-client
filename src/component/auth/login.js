@@ -6,7 +6,6 @@ import employerLogo from "../../asset/undraw_businessman_97x4.svg";
 import workerLogo from "../../asset/undraw_Work_time_re_hdyv.svg";
 import solverLogo from "../../asset/undraw_conference_speaker_6nt7.svg";
 import { toast } from "react-toastify";
-
 import { Link, Redirect, withRouter } from "react-router-dom";
 import Register from "./register";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";

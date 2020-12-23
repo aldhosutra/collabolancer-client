@@ -120,14 +120,14 @@ class Proposal extends React.Component {
               </p>
             </div>
           </div>
-          <div className="col-auto d-flex justify-content-center justify-content-lg-center details">
+          <div className="col-lg-auto d-flex justify-content-end details">
             <PitchingDialog
               project={this.props.project}
               proposal={this.props.proposal}
               account={this.props.account}
             />
             <a
-              className="btn btn-primary border rounded-0 top-button"
+              className="btn btn-primary border rounded-0 top-button w-sm-50"
               data-toggle="collapse"
               aria-expanded="false"
               aria-controls={
@@ -145,7 +145,8 @@ class Proposal extends React.Component {
               }
               style={{
                 backgroundColor: "rgb(239, 35, 60)",
-                margin: "auto",
+                marginTop: "auto",
+                marginBottom: "auto",
                 minWidth: "40px",
               }}
               onClick={() => {

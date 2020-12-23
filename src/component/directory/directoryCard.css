@@ -1,0 +1,11 @@
+@media (max-width: 576px) {
+  .avatar-card {
+    padding-left: 40px !important;
+    height: 30px !important;
+  }
+
+  .avatar-address {
+    line-height: 30px !important;
+    font-size: 12px !important;
+  }
+}

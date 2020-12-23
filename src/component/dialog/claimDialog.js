@@ -86,9 +86,9 @@ class ClaimDialog extends React.Component {
 
   render() {
     return (
-      <div>
+      <div className="w-sm-100">
         <button
-          className="btn btn-primary border rounded-0 top-button"
+          className="btn btn-primary border rounded-0 top-button w-sm-100"
           type="button"
           data-toggle="modal"
           data-target={

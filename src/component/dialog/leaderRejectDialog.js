@@ -112,7 +112,7 @@ class LeaderRejectDialog extends React.Component {
     return (
       <div>
         <button
-          className="btn btn-primary border rounded-0 top-button"
+          className="btn btn-primary border rounded-0 top-button w-sm-100"
           type="button"
           data-toggle="modal"
           data-target={

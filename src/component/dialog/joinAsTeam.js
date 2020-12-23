@@ -1,5 +1,5 @@
 import React from "react";
-import { MISCELLANEOUS, STATUS } from "../../transactions/constants";
+import { ACCOUNT, MISCELLANEOUS, STATUS } from "../../transactions/constants";
 import { toast } from "react-toastify";
 import { deflationaryMultiplier, getSession } from "../../utils/tools";
 import { joinTeam } from "../../utils/transaction";
@@ -82,6 +82,7 @@ class JoinAsTeamDialog extends React.Component {
       this.props.proposal.asset.status !== STATUS.PROPOSAL.APPLIED ||
       this.props.account.address === this.props.proposal.asset.employer ||
       this.props.account.address === this.props.proposal.asset.leader ||
+      this.props.account.asset.type !== ACCOUNT.WORKER ||
       this.props.proposal.asset.team
         .filter((item) => item !== 0)
         .map((item) => item.asset.worker)
@@ -94,9 +95,12 @@ class JoinAsTeamDialog extends React.Component {
       deflationaryRate = rate;
     });
     return (
-      <div>
+      <div
+        className="w-sm-100"
+        style={{ marginTop: "auto", marginBottom: "auto" }}
+      >
         <button
-          className="btn btn-primary border rounded-0 top-button"
+          className="btn btn-primary border rounded-0 top-button w-sm-100"
           type="button"
           data-toggle="modal"
           data-target={

@@ -152,8 +152,8 @@ export const getSession = (key) => {
   if (localStorage.getItem(key) === null) {
     return null;
   }
-  if (Date.now() > JSON.parse(localStorage.getItem(key)).expireAt) {
-    toast.error("Session Expire, Please Login Again!");
+  if (Date.now() >= JSON.parse(localStorage.getItem(key)).expireAt) {
+    toast.error("Session Expire, Please Authenticate Again!");
     removeSession(key);
     return null;
   } else {

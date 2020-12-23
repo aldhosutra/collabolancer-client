@@ -239,11 +239,14 @@ class StatusCard extends React.PureComponent {
           >
             <div className="row">
               <div className="col-3" style={{ margin: "auto" }}>
-                <div style={{ marginTop: "auto", marginBottom: "auto" }}>
+                <div
+                  className="mb-xs-24"
+                  style={{ marginTop: "auto", marginBottom: "auto" }}
+                >
                   <img
                     role="status"
                     style={{
-                      height: "40px",
+                      width: "40px",
                     }}
                     alt="status"
                     src={imgLogo}

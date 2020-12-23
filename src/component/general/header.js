@@ -60,7 +60,7 @@ class Header extends React.Component {
     return (
       <div style={{ fontFamily: "Poppins, sans-serif", height: "70px" }}>
         <nav
-          className="navbar navbar-light navbar-expand-md navigation-clean border-bottom rounded-0 fixed-top"
+          className="navbar navbar-light navbar-expand-lg navigation-clean border-bottom rounded-0 fixed-top"
           style={{ height: "70px", backgroundColor: "white" }}
         >
           <div className="container">
@@ -238,11 +238,7 @@ class Header extends React.Component {
                           onComplete={() => {
                             window.$(".modal").modal("hide");
                             window.$(".modal-backdrop").remove();
-                            removeSession("secret");
                             window.location.reload();
-                            toast.error(
-                              "Session Expire, Please Authenticate Again!"
-                            );
                           }}
                           renderer={({ minutes, seconds, completed }) => {
                             if (completed) {
