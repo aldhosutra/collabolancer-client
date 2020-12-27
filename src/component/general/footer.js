@@ -1,9 +1,55 @@
 import React from "react";
 import { Link } from "react-router-dom";
+import config from "../../config/config";
 import "./footer.css";
 
 class Footer extends React.PureComponent {
   render() {
+    let footerButton = [];
+    if (config.explorerURL !== "") {
+      footerButton.push(
+        <div key={"explorer"}>
+          <a
+            className="btn btn-secondary border-0 login-button"
+            type="button"
+            href={config.explorerURL}
+            rel="noreferrer"
+            target="_blank"
+            style={{
+              marginLeft: "4px",
+              marginRight: "4px",
+              borderRadius: "25px",
+              color: "white",
+              backgroundColor: "#ef233c",
+            }}
+          >
+            Explorer
+          </a>
+        </div>
+      );
+    }
+    if (config.faucetURL !== "") {
+      footerButton.push(
+        <div key={"faucet"}>
+          <a
+            className="btn btn-secondary border-0 login-button"
+            type="button"
+            href={config.faucetURL}
+            rel="noreferrer"
+            target="_blank"
+            style={{
+              marginLeft: "4px",
+              marginRight: "4px",
+              borderRadius: "25px",
+              color: "white",
+              backgroundColor: "#ef233c",
+            }}
+          >
+            Faucet
+          </a>
+        </div>
+      );
+    }
     return (
       <div
         className="footer-dark"
@@ -28,6 +74,14 @@ class Footer extends React.PureComponent {
                   by Blockchain, providing trustless ecosystem and enabling
                   collaboration
                 </p>
+                {footerButton.length > 0 ? (
+                  <div
+                    className="d-flex justify-content-center justify-content-md-start"
+                    style={{ marginTop: "16px" }}
+                  >
+                    {footerButton}
+                  </div>
+                ) : null}
               </div>
               <div className="col-sm-6 col-md-3 item">
                 <h3>Source Code</h3>
