@@ -29,9 +29,9 @@ import config from "../config/config";
 
 const { APIClient } = require("@liskhq/lisk-api-client");
 const networkIdentifier = getNetworkIdentifier(
-  process.env.REACT_APP_NETWORK_HASH ||
+  window._env_.REACT_APP_NETWORK_HASH ||
     "23ce0366ef0a14a91e5fd4b1591fc880ffbef9d988ff8bebf8f3666b0c09597d",
-  process.env.REACT_APP_NETWORK_NAME || "Lisk"
+  window._env_.REACT_APP_NETWORK_NAME || "Lisk"
 );
 
 const api = new APIClient(config.nodes);
