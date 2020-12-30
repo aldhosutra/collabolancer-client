@@ -36,7 +36,7 @@ class SendCLNCDialog extends React.PureComponent {
     try {
       if (this.state["passphrase"] === getSession("secret")) {
         transfer(
-          this.state["recipientId"],
+          this.state["recipientId"].replace(/\s+/g, ""),
           utils.convertLSKToBeddows(this.state["amount"]).toString(),
           getSession("secret")
         )

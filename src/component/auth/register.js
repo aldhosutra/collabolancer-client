@@ -113,17 +113,25 @@ class Register extends React.Component {
               disabled={!this.state.checked}
               onClick={() => {
                 try {
-                  action[this.props.index](this.state.account.passphrase).then(
-                    (res) => {
-                      if (res.meta.status) {
+                  action[this.props.index](this.state.account.passphrase)
+                    .then((res) => {
+                      if (!res.errors) {
                         toast.success(
                           "Register Account Successful! Happy Collaborating!"
                         );
                         setSession("secret", this.state.account.passphrase);
                         this.setState({ redirect: "/app" });
+                      } else {
+                        toast.error(
+                          res.message +
+                            ": " +
+                            res.errors.map((err) => err.message).toString()
+                        );
                       }
-                    }
-                  );
+                    })
+                    .catch((err) => {
+                      toast.error(err.message);
+                    });
                 } catch (err) {
                   toast.error(err.message);
                 }
