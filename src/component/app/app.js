@@ -92,9 +92,11 @@ class Browse extends React.Component {
               textAlign: "center",
             }}
           >
-            {
-              "Loading current account information, This will only happen once after the account is registered..."
-            }
+            Initializing account,
+            <br />
+            This will only happen once
+            <br />
+            after the account is registered...
           </p>
           <div
             className="text-center"

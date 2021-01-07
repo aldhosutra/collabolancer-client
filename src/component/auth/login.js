@@ -8,6 +8,7 @@ import { toast } from "react-toastify";
 import { Link, Redirect, withRouter } from "react-router-dom";
 import Register from "./register";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { ACCOUNT } from "../../transactions/constants";
 
 class Login extends React.Component {
   constructor() {
@@ -50,11 +51,16 @@ class Login extends React.Component {
             }}
             onKeyDown={async (e) => {
               if (e.key === "Enter") {
-                if (await login(this.state.signInPassphrase)) {
+                const user = await login(this.state.signInPassphrase);
+                if (user !== false) {
                   if (query.get("target")) {
                     this.setState({ redirect: query.get("target") });
                   } else {
-                    this.setState({ redirect: "/app" });
+                    if (user.asset.type === ACCOUNT.SOLVER) {
+                      this.setState({ redirect: "/app/dispute" });
+                    } else {
+                      this.setState({ redirect: "/app/project" });
+                    }
                   }
                 }
               }
@@ -117,11 +123,16 @@ class Login extends React.Component {
               marginBottom: "8px",
             }}
             onClick={async () => {
-              if (await login(this.state.signInPassphrase)) {
-                if (query.get("target") !== undefined) {
+              const user = await login(this.state.signInPassphrase);
+              if (user !== false) {
+                if (query.get("target")) {
                   this.setState({ redirect: query.get("target") });
                 } else {
-                  this.setState({ redirect: "/app" });
+                  if (user.asset.type === ACCOUNT.SOLVER) {
+                    this.setState({ redirect: "/app/dispute" });
+                  } else {
+                    this.setState({ redirect: "/app/project" });
+                  }
                 }
               }
             }}
@@ -224,7 +235,7 @@ class Login extends React.Component {
       </div>,
     ];
     return getSession("secret") ? (
-      <Redirect push to={{ pathname: "/app" }} />
+      <Redirect push to={{ pathname: "/app/project" }} />
     ) : (
       <div
         className="login-dark"

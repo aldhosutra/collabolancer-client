@@ -73,7 +73,7 @@ export const login = async (userPassphrase) => {
         ) {
           toast.success("Login Successful! Happy Collaborating!");
           setSession("secret", userPassphrase);
-          ret = true;
+          ret = res.data[0];
         } else {
           toast.warning("No valid account found, check passphrase.");
         }
