@@ -325,11 +325,12 @@ class PostProjectDialog extends React.Component {
                           htmlFor="form-maxtime"
                           style={{ fontWeight: "bold" }}
                         >
-                          How Much Time Limit You Will Set For This Project?
+                          How Much Time Limit (in days) You Will Set For This
+                          Project?
                         </label>
                         <input
                           type="number"
-                          placeholder="After work is started, your worker will have time limit to submit the finished work"
+                          placeholder="After work is started, your worker will have time limit until given days to submit the finished work"
                           id="form-maxtime"
                           name="form-maxtime"
                           value={this.state["form-maxtime"]}

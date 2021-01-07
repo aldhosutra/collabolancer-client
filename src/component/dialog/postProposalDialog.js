@@ -411,11 +411,12 @@ class PostProposalDialog extends React.Component {
                             htmlFor="form-term-maxtime"
                             style={{ fontWeight: "bold" }}
                           >
-                            How Long Your Team Should Finishing Project?
+                            How Long (in days) Your Team Should Finishing
+                            Project?
                           </label>
                           <input
                             type="number"
-                            placeholder="After this time limit, employer will be able to cancel the project!"
+                            placeholder="After this given days limit are runs out, employer will be able to cancel the project!"
                             id="form-term-maxtime"
                             name="form-term-maxtime"
                             value={this.state["form-term-maxtime"]}

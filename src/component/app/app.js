@@ -17,7 +17,7 @@ class Browse extends React.Component {
 
   onLoad() {
     if (getSession("secret")) {
-      const timeout = 3000;
+      const timeout = 1000;
       getAccounts({
         address: getAddressAndPublicKeyFromPassphrase(getSession("secret"))
           .address,
@@ -92,7 +92,9 @@ class Browse extends React.Component {
               textAlign: "center",
             }}
           >
-            {"Loading current account information..."}
+            {
+              "Loading current account information, This will only happen once after the account is registered..."
+            }
           </p>
           <div
             className="text-center"
